@@ -1,9 +1,9 @@
 @model Autowriter.Features.Home.IndexViewModel
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "AutoWriter | Welcome";
 }
 
-<div>
-    <h1>Welcome 👋🏻</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<h1>Welcome to Autowriter👋🏻</h1>
+<h2>Step one: <a asp-controller="Upload">upload some writing</a></h2>
+<h2>Step two: <a asp-controller="Generate">generate some new writing</a>!</h2>

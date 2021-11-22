@@ -1,18 +1,43 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin-bottom: 60px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+header {
+    padding: 0.25rem;
+    border-width: 1px;
+    border-bottom-style: solid;
+    border-color: black;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    display: inline;
+}
+
+header h1 {
+    margin: 0;
+    display: block;
+}
+
+header a {
+    padding: 0 0.5rem;
+    color: black;
+}
+
+header a:hover {
+    text-decoration: none;
+}
+
+main {
+    padding: 1rem;
 }
