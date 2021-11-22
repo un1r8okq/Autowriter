@@ -1,4 +1,5 @@
 using Autowriter;
+using Autowriter.Database;
 using Microsoft.AspNetCore.Mvc.Razor;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.Configure<RazorViewEngineOptions>(options =>
     options.ViewLocationExpanders.Add(new FeatureViewLocationExpander()));
+
+builder.Services.AddSingleton<IDbBootstrapper, DbBootstrapper>();
 
 var app = builder.Build();
 
@@ -24,5 +27,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Services.GetService<IDbBootstrapper>().Bootstrap();
 
 app.Run();
