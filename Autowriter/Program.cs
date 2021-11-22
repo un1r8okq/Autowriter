@@ -1,11 +1,13 @@
 using Autowriter;
 using Autowriter.Database;
+using MediatR;
 using Microsoft.AspNetCore.Mvc.Razor;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddMediatR(typeof(Program));
 builder.Services.Configure<RazorViewEngineOptions>(options =>
     options.ViewLocationExpanders.Add(new FeatureViewLocationExpander()));
 
