@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc.Testing;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -8,24 +10,26 @@ namespace IntegrationTests
     public class UploadPageTests
     {
         private const string Url = "/upload";
-        private readonly WebApplicationFactory<Program> _app = new();
+        private readonly HttpClient _client;
+
+        public UploadPageTests()
+        {
+            var app = new WebApplicationFactory<Program>();
+            _client = app.CreateClient();
+        }
 
         [Fact]
         public async Task Get_Index_ReturnsOK()
         {
-            var client = _app.CreateClient();
+            var response = await _client.GetAsync(Url);
 
-            var response = await client.GetAsync(Url);
-
-            response.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
         [Fact]
         public async Task Get_Index_BodyContainsText()
         {
-            var client = _app.CreateClient();
-
-            var response = await client.GetAsync(Url);
+            var response = await _client.GetAsync(Url);
             var body = await response.Content.ReadAsStringAsync();
 
             Assert.Contains("Before you can generate writing, you will need to upload some source material!", body);
@@ -34,11 +38,10 @@ namespace IntegrationTests
         [Fact]
         public async Task Get_Index_LatencyLessThan10Milliseconds()
         {
-            var client = _app.CreateClient();
             var stopwatch = new Stopwatch();
-            
+
             stopwatch.Start();
-            await client.GetAsync(Url);
+            await _client.GetAsync(Url);
             stopwatch.Stop();
 
             Assert.InRange(stopwatch.ElapsedMilliseconds, 0, 10);
