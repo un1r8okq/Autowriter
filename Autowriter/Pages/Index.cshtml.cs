@@ -1,7 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Autowriter.Features.Upload
+namespace Autowriter.Pages
 {
     public class Index : PageModel
     {
@@ -14,14 +14,14 @@ namespace Autowriter.Features.Upload
 
         public ViewModel Data { get; private set; }
 
-        public async Task GetTaskAsync(Query query)
+        public async Task OnGetAsync(Query query)
         {
             Data = await _mediator.Send(query);
         }
 
         public class ViewModel { }
 
-        public class Query : IRequest<ViewModel> { }
+        public class Query : IRequest<ViewModel> {}
 
         public class Handler : IRequestHandler<Query, ViewModel>
         {
