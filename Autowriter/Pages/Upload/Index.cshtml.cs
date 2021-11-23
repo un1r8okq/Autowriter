@@ -1,5 +1,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Data;
+using Dapper;
+using Autowriter.Database;
 
 namespace Autowriter.Pages.Upload
 {
@@ -19,14 +22,37 @@ namespace Autowriter.Pages.Upload
             Data = await _mediator.Send(query);
         }
 
-        public class ViewModel { }
+        public class ViewModel
+        {
+            public IEnumerable<Upload> Uploads { get; set; }
+
+            public class Upload
+            {
+                public int Id { get; set; }
+
+                public DateTime Created { get; set; }
+
+                public string Text { get; set; }
+            }
+        }
 
         public class Query : IRequest<ViewModel> { }
 
         public class Handler : IRequestHandler<Query, ViewModel>
         {
-            public Task<ViewModel> Handle(Query request, CancellationToken cancellationToken)
-                => Task.FromResult(new ViewModel());
+            private readonly IDbConnection _connection;
+
+            public Handler(IDbConnection connection)
+            {
+                _connection = connection;
+            }
+
+            public async Task<ViewModel> Handle(Query request, CancellationToken cancellationToken)
+            {
+                var uploads = await _connection.QueryAsync<ViewModel.Upload>($"SELECT * FROM {TableNames.Uploads}");
+
+                return new ViewModel { Uploads = uploads };
+            }
         }
     }
 }

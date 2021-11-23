@@ -1,5 +1,7 @@
 using Autowriter.Database;
 using MediatR;
+using Microsoft.Data.Sqlite;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddMediatR(typeof(Program));
 builder.Services.AddSingleton<IDbBootstrapper, DbBootstrapper>();
+builder.Services.AddSingleton<IDbConnection>((serviceProvider) =>
+    new SqliteConnection(builder.Configuration.GetSection("DatabaseName").Value));
 
 var app = builder.Build();
 
