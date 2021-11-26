@@ -1,5 +1,5 @@
 @page
-@model Index
+@model IndexPage
 
 @{
     ViewData["Title"] = "AutoWriter | Upload";
@@ -10,18 +10,23 @@
     <p>
         Before you can generate writing, you will need to upload some source material!
     </p>
+    <form method="post">
+        <fieldset>
+            <legend>Upload source material</legend>
+            <textarea name="text"></textarea>
+            <input type="submit" value="Upload" />
+        </fieldset>
+    </form>
 
     <h1>Previous uploads</h1>
-    @if (@Model.Data.Uploads.Any())
+    @if (@Model.Data.Writings.Any())
     {
-        @foreach (var upload in @Model.Data.Uploads)
+        @foreach (var upload in @Model.Data.Writings)
         {
-            <p>
+            <div>
                 <p>Uploaded on @upload.Created.ToString("D") at @upload.Created.ToString("T")</p>
-                <blockquote>
-                    @upload.Text
-                </blockquote>
-            </p>
+                <blockquote>@upload.Content</blockquote>
+            </div>
         }
     }
     else

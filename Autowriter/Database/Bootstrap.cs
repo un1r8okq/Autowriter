@@ -53,12 +53,12 @@ namespace Autowriter.Database
 
         private void SeedUploadsTable()
         {
-            var uploads = new Pages.Upload.Index.ViewModel.Upload[]
+            var uploads = new Pages.Upload.IndexPage.ViewModel.Writing[]
             {
-                new Pages.Upload.Index.ViewModel.Upload
+                new Pages.Upload.IndexPage.ViewModel.Writing
                 {
                     Created = new DateTime(1995, 12, 12, 15, 14, 00),
-                    Text = "This is a quick story about being born. Wait, how can I write?",
+                    Content = "This is a quick story about being born. Wait, how can I write?",
                 },
             };
             _connection.Insert(uploads);
