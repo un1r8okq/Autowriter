@@ -8,6 +8,8 @@ namespace Autowriter.Pages.Upload
     {
         public class Model
         {
+            public int Id { get; set; }
+
             public DateTime Created { get; set; }
 
             public string Text { get; set; } = string.Empty;
@@ -26,7 +28,7 @@ namespace Autowriter.Pages.Upload
 
             protected override IEnumerable<Model> Handle(Query request) =>
                 _data
-                    .Query<Model>($"SELECT created, text FROM {TableNames.SourceMaterial}")
+                    .Query<Model>($"SELECT id, created, text FROM {TableNames.SourceMaterial}")
                     .OrderByDescending(model => model.Created);
         }
     }

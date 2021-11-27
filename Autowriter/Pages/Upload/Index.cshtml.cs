@@ -24,6 +24,7 @@ namespace Autowriter.Pages.Upload
             {
                 Sources = sources.Select(t => new ViewModel.Source
                 {
+                    Id = t.Id,
                     Created = t.Created,
                     Content = t.Text,
                 }),
@@ -39,6 +40,7 @@ namespace Autowriter.Pages.Upload
                 TextWasEmpty = result.TextWasEmpty,
                 Sources = result.Sources.Select(t => new ViewModel.Source
                 {
+                    Id = t.Id,
                     Created = t.Created,
                     Content = t.Text,
                 }),
@@ -53,6 +55,8 @@ namespace Autowriter.Pages.Upload
 
             public class Source
             {
+                public int Id { get; set; }
+
                 public DateTime Created { get; set; }
 
                 public string Content { get; set; } = string.Empty;

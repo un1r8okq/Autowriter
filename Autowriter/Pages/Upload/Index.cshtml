@@ -22,12 +22,12 @@
     <h1>Previously uploaded source material</h1>
     @if (@Model.Data.Sources.Any())
     {
-        @foreach (var sourceMaterial in @Model.Data.Sources)
+        @foreach (var source in @Model.Data.Sources)
         {
-            var created = sourceMaterial.Created.ToLocalTime();
+            var created = source.Created.ToLocalTime();
             <div>
-                <p>Uploaded on @created.ToString("D") at @created.ToString("T")</p>
-                <blockquote>@sourceMaterial.Content</blockquote>
+                <p>Uploaded on @created.ToString("D") at @created.ToString("T") (<a href="/upload/details?id=@source.Id">details</a>)</p>
+                <blockquote>@source.Content</blockquote>
             </div>
         }
     }

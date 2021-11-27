@@ -14,6 +14,8 @@ namespace Autowriter.Pages.Upload
 
             public class Source
             {
+                public int Id { get; set; }
+
                 public DateTime Created { get; set; }
 
                 public string Text { get; set; } = string.Empty;
@@ -50,7 +52,7 @@ namespace Autowriter.Pages.Upload
                 _data.Execute(insertQuery, parameters);
 
                 var sources = _data
-                    .Query<Model.Source>($"SELECT created, text FROM {TableNames.SourceMaterial}")
+                    .Query<Model.Source>($"SELECT id, created, text FROM {TableNames.SourceMaterial}")
                     .OrderByDescending(model => model.Created);
 
                 return new Model
