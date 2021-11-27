@@ -1,5 +1,4 @@
 using Dapper;
-using Dapper.Contrib.Extensions;
 using System.Data;
 
 namespace Autowriter.Database
@@ -23,7 +22,6 @@ namespace Autowriter.Database
             if (UploadsTableDoesNotExist())
             {
                 CreateUploadsTable();
-                SeedUploadsTable();
             }
         }
 
@@ -49,19 +47,6 @@ namespace Autowriter.Database
                 "text BLOB NOT NULL" +
                 ");";
             _connection.Execute(query);
-        }
-
-        private void SeedUploadsTable()
-        {
-            var uploads = new Pages.Upload.IndexPage.ViewModel.Writing[]
-            {
-                new Pages.Upload.IndexPage.ViewModel.Writing
-                {
-                    Created = new DateTime(1995, 12, 12, 15, 14, 00),
-                    Content = "This is a quick story about being born. Wait, how can I write?",
-                },
-            };
-            _connection.Insert(uploads);
         }
     }
 }
