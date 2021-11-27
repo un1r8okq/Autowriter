@@ -18,15 +18,15 @@
         </fieldset>
     </form>
 
-    <h1>Previous uploads</h1>
-    @if (@Model.Data.Writings.Any())
+    <h1>Previously uploaded source material</h1>
+    @if (@Model.Data.SourceMaterials.Any())
     {
-        @foreach (var upload in @Model.Data.Writings)
+        @foreach (var sourceMaterial in @Model.Data.SourceMaterials)
         {
-            var created = @upload.Created.ToLocalTime();
+            var created = sourceMaterial.Created.ToLocalTime();
             <div>
                 <p>Uploaded on @created.ToString("D") at @created.ToString("T")</p>
-                <blockquote>@upload.Content</blockquote>
+                <blockquote>@sourceMaterial.Content</blockquote>
             </div>
         }
     }

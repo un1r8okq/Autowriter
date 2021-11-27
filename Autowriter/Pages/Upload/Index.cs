@@ -27,7 +27,7 @@ namespace Autowriter.Pages.Upload
 
             protected override IEnumerable<Model> Handle(Query request) =>
                 _connection
-                    .Query<Model>($"SELECT created, text FROM {TableNames.Uploads}")
+                    .Query<Model>($"SELECT created, text FROM {TableNames.SourceMaterial}")
                     .OrderByDescending(model => model.Created);
         }
     }

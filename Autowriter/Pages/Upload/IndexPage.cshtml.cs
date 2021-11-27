@@ -22,7 +22,7 @@ namespace Autowriter.Pages.Upload
 
             Data = new ViewModel
             {
-                Writings = writings.Select(t => new ViewModel.Writing
+                SourceMaterials = writings.Select(t => new ViewModel.SourceMaterial
                 {
                     Created = t.Created,
                     Content = t.Text,
@@ -36,7 +36,7 @@ namespace Autowriter.Pages.Upload
 
             Data = new ViewModel
             {
-                Writings = writings.Select(t => new ViewModel.Writing
+                SourceMaterials = writings.Select(t => new ViewModel.SourceMaterial
                 {
                     Created = t.Created,
                     Content = t.Text,
@@ -46,9 +46,9 @@ namespace Autowriter.Pages.Upload
 
         public class ViewModel
         {
-            public IEnumerable<Writing> Writings { get; set; } = Array.Empty<Writing>();
+            public IEnumerable<SourceMaterial> SourceMaterials { get; set; } = Array.Empty<SourceMaterial>();
 
-            public class Writing
+            public class SourceMaterial
             {
                 public DateTime Created { get; set; }
 

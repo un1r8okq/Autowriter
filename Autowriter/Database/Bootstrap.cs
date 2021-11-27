@@ -32,16 +32,16 @@ namespace Autowriter.Database
 
         private bool UploadsTableDoesNotExist()
         {
-            var query = "SELECT name FROM sqlite_master WHERE type='table' AND name = 'uploads';";
-            var queryParams = new { tabeName = TableNames.Uploads };
-            var queryResult = _connection.QueryFirstOrDefault<string>(query, queryParams);
+            var query = $"SELECT name FROM sqlite_master WHERE type='table' AND name = '{TableNames.SourceMaterial}';";
+            var parameters = new { tabeName = TableNames.SourceMaterial };
+            var result = _connection.QueryFirstOrDefault<string>(query, parameters);
 
-            return queryResult == null || queryResult != TableNames.Uploads;
+            return result == null || result != TableNames.SourceMaterial;
         }
 
         private void CreateUploadsTable()
         {
-            var query = $"CREATE TABLE {TableNames.Uploads} (" +
+            var query = $"CREATE TABLE {TableNames.SourceMaterial} (" +
                 "id INTEGER PRIMARY KEY," +
                 "created TEXT NOT NULL," +
                 "text BLOB NOT NULL" +

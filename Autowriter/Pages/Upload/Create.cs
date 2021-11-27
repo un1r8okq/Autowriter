@@ -30,7 +30,7 @@ namespace Autowriter.Pages.Upload
 
             protected override IEnumerable<Model> Handle(Command command)
             {
-                var insertQuery = $"INSERT INTO {TableNames.Uploads} (created, text) VALUES (@created, @text)";
+                var insertQuery = $"INSERT INTO {TableNames.SourceMaterial} (created, text) VALUES (@created, @text)";
                 var parameters = new
                 {
                     created = DateTime.UtcNow,
@@ -38,7 +38,7 @@ namespace Autowriter.Pages.Upload
                 };
                 _connection.Execute(insertQuery, parameters);
                 return _connection
-                    .Query<Model>($"SELECT created, text FROM {TableNames.Uploads}")
+                    .Query<Model>($"SELECT created, text FROM {TableNames.SourceMaterial}")
                     .OrderByDescending(model => model.Created);
             }
         }
