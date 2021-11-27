@@ -4,11 +4,11 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace IntegrationTests.Pages.Upload
+namespace IntegrationTests.Pages.Generate
 {
     public class IndexTests
     {
-        private const string Url = "/upload";
+        private const string Url = "/generate";
         private readonly HttpClient _client;
 
         public IndexTests()
@@ -31,7 +31,7 @@ namespace IntegrationTests.Pages.Upload
             var response = await _client.GetAsync(Url);
             var body = await response.Content.ReadAsStringAsync();
 
-            Assert.Contains("Before you can generate writing, you will need to upload some source material!", body);
+            Assert.Contains("It's time to get generating!", body);
         }
     }
 }

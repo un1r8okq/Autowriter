@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Autowriter.Pages.Upload
 {
-    public class Create
+    public class CreateHandler
     {
         public class Model
         {

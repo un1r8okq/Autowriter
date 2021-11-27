@@ -17,8 +17,8 @@ namespace UnitTests.Pages.UploadTests
         public async Task WhenTextIsNullOrEmpty_EmptyTextFlagIsTrue(string text)
         {
             var db = Mock.Of<IDataRepository>();
-            IRequestHandler<Create.Command, Create.Model> sut = new Create.Handler(db);
-            var command = new Create.Command { Text = text };
+            IRequestHandler<CreateHandler.Command, CreateHandler.Model> sut = new CreateHandler.Handler(db);
+            var command = new CreateHandler.Command { Text = text };
 
             var result = await sut.Handle(command, CancellationToken.None);
 
@@ -29,8 +29,8 @@ namespace UnitTests.Pages.UploadTests
         public async Task WhenTextHasContent_EmptyTextFlagIsFalse()
         {
             var db = Mock.Of<IDataRepository>();
-            IRequestHandler<Create.Command, Create.Model> sut = new Create.Handler(db);
-            var command = new Create.Command { Text = "Some text" };
+            IRequestHandler<CreateHandler.Command, CreateHandler.Model> sut = new CreateHandler.Handler(db);
+            var command = new CreateHandler.Command { Text = "Some text" };
 
             var result = await sut.Handle(command, CancellationToken.None);
 
@@ -44,8 +44,8 @@ namespace UnitTests.Pages.UploadTests
             db
                 .Setup(x => x.Execute(IsAny<string>(), IsAny<object>()))
                 .Returns(1);
-            IRequestHandler<Create.Command, Create.Model> sut = new Create.Handler(db.Object);
-            var command = new Create.Command { Text = "Some text" };
+            IRequestHandler<CreateHandler.Command, CreateHandler.Model> sut = new CreateHandler.Handler(db.Object);
+            var command = new CreateHandler.Command { Text = "Some text" };
 
             var result = await sut.Handle(command, CancellationToken.None);
 

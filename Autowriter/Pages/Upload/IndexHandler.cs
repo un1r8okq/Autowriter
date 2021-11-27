@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Autowriter.Pages.Upload
 {
-    public class Index
+    public class IndexHandler
     {
         public class Model
         {

@@ -1,0 +1,23 @@
+@page
+@model Index
+
+@{
+    ViewData["Title"] = "AutoWriter | Generate";
+    var sourceCount = Model.Data.SourceCount;
+}
+
+<div>
+    <h1>Generate writing</h1>
+    <p>
+        It's time to get generating!
+    </p>
+
+    @if (@sourceCount == 0)
+    {
+        <p>You need to <a href="/upload">upload some source material</a> before you can generate some writing from it!</p>
+    }
+    else
+    {
+        <p>You have uploaded @sourceCount piece@(sourceCount == 1 ? "" : "s") of source material so far.</p>
+    }
+</div>

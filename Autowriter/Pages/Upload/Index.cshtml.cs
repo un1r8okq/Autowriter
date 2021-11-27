@@ -16,7 +16,7 @@ namespace Autowriter.Pages.Upload
 
         public ViewModel Data { get; private set; }
 
-        public async Task OnGetAsync(Index.Query query)
+        public async Task OnGetAsync(IndexHandler.Query query)
         {
             var sources = await _mediator.Send(query);
 
@@ -30,7 +30,7 @@ namespace Autowriter.Pages.Upload
             };
         }
 
-        public async Task OnPostAsync(Create.Command command)
+        public async Task OnPostAsync(CreateHandler.Command command)
         {
             var result = await _mediator.Send(command);
 
