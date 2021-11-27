@@ -22,13 +22,11 @@ namespace Autowriter.Pages.Upload
 
             Data = new ViewModel
             {
-                Writings = writings
-                    .Select(t => new ViewModel.Writing
-                    {
-                        Created = t.Created.ToLocalTime(),
-                        Content = t.Text,
-                    })
-                    .OrderByDescending(t => t.Created),
+                Writings = writings.Select(t => new ViewModel.Writing
+                {
+                    Created = t.Created,
+                    Content = t.Text,
+                }),
             };
         }
 
@@ -38,13 +36,11 @@ namespace Autowriter.Pages.Upload
 
             Data = new ViewModel
             {
-                Writings = writings
-                    .Select(t => new ViewModel.Writing
-                    {
-                        Created = t.Created.ToLocalTime(),
-                        Content = t.Text,
-                    })
-                    .OrderByDescending(t => t.Created),
+                Writings = writings.Select(t => new ViewModel.Writing
+                {
+                    Created = t.Created,
+                    Content = t.Text,
+                }),
             };
         }
 

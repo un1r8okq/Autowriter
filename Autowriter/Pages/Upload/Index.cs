@@ -11,7 +11,7 @@ namespace Autowriter.Pages.Upload
         {
             public DateTime Created { get; set; }
 
-            public string Text { get; set; }
+            public string Text { get; set; } = string.Empty;
         }
 
         public class Query : IRequest<IEnumerable<Model>> { }
@@ -26,7 +26,9 @@ namespace Autowriter.Pages.Upload
             }
 
             protected override IEnumerable<Model> Handle(Query request) =>
-                _connection.Query<Model>($"SELECT created, text FROM {TableNames.Uploads}");
+                _connection
+                    .Query<Model>($"SELECT created, text FROM {TableNames.Uploads}")
+                    .OrderByDescending(model => model.Created);
         }
     }
 }

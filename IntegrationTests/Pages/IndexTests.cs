@@ -5,14 +5,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace IntegrationTests
+namespace IntegrationTests.Pages
 {
-    public class LandingPageTests
+    public class IndexTests
     {
         private const string Url = "/";
         private readonly HttpClient _client;
 
-        public LandingPageTests()
+        public IndexTests()
         {
             var app = new WebApplicationFactory<Program>();
             _client = app.CreateClient();

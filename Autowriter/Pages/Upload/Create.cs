@@ -1,6 +1,5 @@
 using Autowriter.Database;
 using Dapper;
-using Dapper.Contrib.Extensions;
 using MediatR;
 using System.Data;
 
@@ -38,7 +37,9 @@ namespace Autowriter.Pages.Upload
                     text = command.Text,
                 };
                 _connection.Execute(insertQuery, parameters);
-                return _connection.Query<Model>($"SELECT created, text FROM {TableNames.Uploads}");
+                return _connection
+                    .Query<Model>($"SELECT created, text FROM {TableNames.Uploads}")
+                    .OrderByDescending(model => model.Created);
             }
         }
     }

@@ -5,14 +5,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace IntegrationTests
+namespace IntegrationTests.Pages.Upload
 {
-    public class UploadPageTests
+    public class IndexTests
     {
         private const string Url = "/upload";
         private readonly HttpClient _client;
 
-        public UploadPageTests()
+        public IndexTests()
         {
             var app = new WebApplicationFactory<Program>();
             _client = app.CreateClient();

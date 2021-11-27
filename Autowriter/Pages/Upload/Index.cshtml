@@ -23,8 +23,9 @@
     {
         @foreach (var upload in @Model.Data.Writings)
         {
+            var created = @upload.Created.ToLocalTime();
             <div>
-                <p>Uploaded on @upload.Created.ToString("D") at @upload.Created.ToString("T")</p>
+                <p>Uploaded on @created.ToString("D") at @created.ToString("T")</p>
                 <blockquote>@upload.Content</blockquote>
             </div>
         }
