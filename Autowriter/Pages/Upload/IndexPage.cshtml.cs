@@ -18,11 +18,11 @@ namespace Autowriter.Pages.Upload
 
         public async Task OnGetAsync(Index.Query query)
         {
-            var writings = await _mediator.Send(query);
+            var sources = await _mediator.Send(query);
 
             Data = new ViewModel
             {
-                SourceMaterials = writings.Select(t => new ViewModel.SourceMaterial
+                Sources = sources.Select(t => new ViewModel.Source
                 {
                     Created = t.Created,
                     Content = t.Text,
@@ -32,11 +32,12 @@ namespace Autowriter.Pages.Upload
 
         public async Task OnPostAsync(Create.Command command)
         {
-            var writings = await _mediator.Send(command);
+            var result = await _mediator.Send(command);
 
             Data = new ViewModel
             {
-                SourceMaterials = writings.Select(t => new ViewModel.SourceMaterial
+                TextWasEmpty = result.TextWasEmpty,
+                Sources = result.Sources.Select(t => new ViewModel.Source
                 {
                     Created = t.Created,
                     Content = t.Text,
@@ -46,9 +47,11 @@ namespace Autowriter.Pages.Upload
 
         public class ViewModel
         {
-            public IEnumerable<SourceMaterial> SourceMaterials { get; set; } = Array.Empty<SourceMaterial>();
+            public bool TextWasEmpty { get; set; }
 
-            public class SourceMaterial
+            public IEnumerable<Source> Sources { get; set; } = Array.Empty<Source>();
+
+            public class Source
             {
                 public DateTime Created { get; set; }
 

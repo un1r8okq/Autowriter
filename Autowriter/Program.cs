@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddMediatR(typeof(Program));
 builder.Services.AddSingleton<IDbBootstrapper, DbBootstrapper>();
+builder.Services.AddSingleton<IDataRepository, DataRepository>();
 builder.Services.AddSingleton<IDbConnection>((serviceProvider) =>
     new SqliteConnection(builder.Configuration.GetSection("DatabaseName").Value));
 

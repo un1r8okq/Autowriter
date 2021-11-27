@@ -1,5 +1,4 @@
 using Autowriter.Database;
-using Dapper;
 using MediatR;
 using System.Data;
 
@@ -18,15 +17,15 @@ namespace Autowriter.Pages.Upload
 
         public class Handler : RequestHandler<Query, IEnumerable<Model>>
         {
-            private readonly IDbConnection _connection;
+            private readonly IDataRepository _data;
 
-            public Handler(IDbConnection connection)
+            public Handler(IDataRepository data)
             {
-                _connection = connection;
+                _data = data;
             }
 
             protected override IEnumerable<Model> Handle(Query request) =>
-                _connection
+                _data
                     .Query<Model>($"SELECT created, text FROM {TableNames.SourceMaterial}")
                     .OrderByDescending(model => model.Created);
         }

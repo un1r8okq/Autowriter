@@ -12,13 +12,17 @@
     </p>
     <form method="post">
             <textarea name="text"></textarea>
-            <input type="submit" value="Upload" />
+            @if (@Model.Data.TextWasEmpty)
+            {
+                <span class="error">You can't submit an empty source</span>
+            }
+        <input type="submit" value="Upload" />
     </form>
 
     <h1>Previously uploaded source material</h1>
-    @if (@Model.Data.SourceMaterials.Any())
+    @if (@Model.Data.Sources.Any())
     {
-        @foreach (var sourceMaterial in @Model.Data.SourceMaterials)
+        @foreach (var sourceMaterial in @Model.Data.Sources)
         {
             var created = sourceMaterial.Created.ToLocalTime();
             <div>

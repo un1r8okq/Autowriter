@@ -6,3 +6,8 @@ textarea {
 input {
     float: right;
 }
+
+.error {
+    /* From https://clrs.cc/ */
+    color: #FF4136;
+}
