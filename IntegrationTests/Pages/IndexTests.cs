@@ -19,7 +19,7 @@ namespace IntegrationTests.Pages
         }
 
         [Fact]
-        public async Task Get_Index_ReturnsOK()
+        public async Task ReturnsOK()
         {
             var response = await _client.GetAsync(Url);
 
@@ -27,16 +27,27 @@ namespace IntegrationTests.Pages
         }
 
         [Fact]
-        public async Task Get_Index_BodyContainsText()
+        public async Task BodyContainsNav()
+        {
+            var response = await _client.GetAsync(Url);
+            var body = await response.Content.ReadAsStringAsync();
+
+            Assert.Contains("<nav>", body);
+        }
+
+        [Fact]
+        public async Task BodyContainsWelcomeMessage()
         {
             var response = await _client.GetAsync(Url);
             var body = await response.Content.ReadAsStringAsync();
 
             Assert.Contains("Welcome to Autowriter 👋🏻", body);
+            Assert.Contains("<h2>Step one: <a href=\"/upload\">upload some source material</a></h2>", body);
+            Assert.Contains("<h2>Step two: <a href=\"/generate\">generate some new writing</a>!</h2>", body);
         }
 
         [Fact]
-        public async Task Get_Index_LatencyLessThan10Milliseconds()
+        public async Task LatencyLessThan10Milliseconds()
         {
             var stopwatch = new Stopwatch();
             

@@ -19,9 +19,12 @@ namespace Autowriter.Database
 
         public void Bootstrap()
         {
-            if (UploadsTableDoesNotExist())
+            lock (_connection)
             {
-                CreateUploadsTable();
+                if (UploadsTableDoesNotExist())
+                {
+                    CreateUploadsTable();
+                }
             }
         }
 

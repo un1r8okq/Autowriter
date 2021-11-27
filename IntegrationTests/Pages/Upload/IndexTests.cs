@@ -19,7 +19,7 @@ namespace IntegrationTests.Pages.Upload
         }
 
         [Fact]
-        public async Task Get_Index_ReturnsOK()
+        public async Task ReturnsOK()
         {
             var response = await _client.GetAsync(Url);
 
@@ -27,7 +27,7 @@ namespace IntegrationTests.Pages.Upload
         }
 
         [Fact]
-        public async Task Get_Index_BodyContainsText()
+        public async Task BodyContainsInstructions()
         {
             var response = await _client.GetAsync(Url);
             var body = await response.Content.ReadAsStringAsync();
@@ -36,7 +36,7 @@ namespace IntegrationTests.Pages.Upload
         }
 
         [Fact]
-        public async Task Get_Index_LatencyLessThan10Milliseconds()
+        public async Task LatencyLessThan10Milliseconds()
         {
             var stopwatch = new Stopwatch();
 
