@@ -1,24 +1,29 @@
-using Autowriter.Database;
+using AutoMapper;
+using Autowriter;
+using Autowriter.Data;
 using Autowriter.Pages.Upload;
 using MediatR;
 using Moq;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
-using static Moq.It;
 
 namespace UnitTests.Pages.UploadTests
 {
     public class CreateTests
     {
+        private readonly IMapper _mapper =
+            new MapperConfiguration(cfg => cfg.AddProfile(new AutoMapperProfile())).CreateMapper();
+
         [Theory]
         [InlineData(null)]
         [InlineData("")]
         public async Task WhenTextIsNullOrEmpty_EmptyTextFlagIsTrue(string text)
         {
-            var db = Mock.Of<IDataRepository>();
-            IRequestHandler<CreateHandler.Command, CreateHandler.Model> sut = new CreateHandler.Handler(db);
-            var command = new CreateHandler.Command { Text = text };
+            var repository = Mock.Of<ISourceMaterialRepository>();
+            IRequestHandler<CreateHandler.Command, CreateHandler.Response> sut = new CreateHandler.Handler(repository, _mapper);
+            var command = new CreateHandler.Command { Content = text };
 
             var result = await sut.Handle(command, CancellationToken.None);
 
@@ -28,9 +33,9 @@ namespace UnitTests.Pages.UploadTests
         [Fact]
         public async Task WhenTextHasContent_EmptyTextFlagIsFalse()
         {
-            var db = Mock.Of<IDataRepository>();
-            IRequestHandler<CreateHandler.Command, CreateHandler.Model> sut = new CreateHandler.Handler(db);
-            var command = new CreateHandler.Command { Text = "Some text" };
+            var repository = Mock.Of<ISourceMaterialRepository>();
+            IRequestHandler<CreateHandler.Command, CreateHandler.Response> sut = new CreateHandler.Handler(repository, _mapper);
+            var command = new CreateHandler.Command { Content = "Some text" };
 
             var result = await sut.Handle(command, CancellationToken.None);
 
@@ -40,16 +45,13 @@ namespace UnitTests.Pages.UploadTests
         [Fact]
         public async Task WhenTextHasContent_QueryIsExecuted()
         {
-            var db = new Mock<IDataRepository>();
-            db
-                .Setup(x => x.Execute(IsAny<string>(), IsAny<object>()))
-                .Returns(1);
-            IRequestHandler<CreateHandler.Command, CreateHandler.Model> sut = new CreateHandler.Handler(db.Object);
-            var command = new CreateHandler.Command { Text = "Some text" };
+            var repository = new Mock<ISourceMaterialRepository>();
+            IRequestHandler<CreateHandler.Command, CreateHandler.Response> sut = new CreateHandler.Handler(repository.Object, _mapper);
+            var command = new CreateHandler.Command { Content = "Some text" };
 
             var result = await sut.Handle(command, CancellationToken.None);
 
-            db.Verify(x => x.Execute(IsAny<string>(), IsAny<object>()), Times.Once);
+            repository.Verify(x => x.CreateSource(It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
         }
     }
 }

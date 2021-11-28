@@ -1,12 +1,12 @@
-using Autowriter.Database;
+using AutoMapper;
+using Autowriter.Data;
 using MediatR;
-using System.Data;
 
 namespace Autowriter.Pages.Upload
 {
     public class CreateHandler
     {
-        public class Model
+        public class Response
         {
             public bool TextWasEmpty { get; set; }
 
@@ -18,47 +18,41 @@ namespace Autowriter.Pages.Upload
 
                 public DateTime Created { get; set; }
 
-                public string Text { get; set; } = string.Empty;
+                public string Content { get; set; } = string.Empty;
             }
         }
 
-        public class Command : IRequest<Model>
+        public class Command : IRequest<Response>
         {
-            public string Text { get; set; } = string.Empty;
+            public string Content { get; set; } = string.Empty;
         }
 
-        public class Handler : RequestHandler<Command, Model>
+        public class Handler : RequestHandler<Command, Response>
         {
-            private readonly IDataRepository _data;
+            private readonly ISourceMaterialRepository _repository;
+            private readonly IMapper _mapper;
 
-            public Handler(IDataRepository data)
+            public Handler(ISourceMaterialRepository repository, IMapper mapper)
             {
-                _data = data;
+                _mapper = mapper;
+                _repository = repository;
             }
 
-            protected override Model Handle(Command command)
+            protected override Response Handle(Command command)
             {
-                if (command.Text is null || command.Text == string.Empty)
+                if (command.Content is null || command.Content == string.Empty)
                 {
-                    return new Model { TextWasEmpty = true };
+                    return new Response { TextWasEmpty = true };
                 }
 
-                var insertQuery = $"INSERT INTO {TableNames.SourceMaterial} (created, text) VALUES (@created, @text)";
-                var parameters = new
-                {
-                    created = DateTime.UtcNow,
-                    text = command.Text,
-                };
-                _data.Execute(insertQuery, parameters);
+                _repository.CreateSource(DateTime.UtcNow, command.Content);
 
-                var sources = _data
-                    .Query<Model.Source>($"SELECT id, created, text FROM {TableNames.SourceMaterial}")
-                    .OrderByDescending(model => model.Created);
-
-                return new Model
+                return new Response
                 {
                     TextWasEmpty = false,
-                    Sources = sources,
+                    Sources = _repository
+                        .GetSources()
+                        .Select(source => _mapper.Map<Response.Source>(source)),
                 };
             }
         }

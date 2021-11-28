@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc.Testing;
+using Autowriter;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -6,15 +6,14 @@ using Xunit;
 
 namespace IntegrationTests.Pages
 {
-    public class IndexTests
+    public class IndexTests : IClassFixture<MockDataWebAppFactory<Startup>>
     {
         private const string Url = "/";
         private readonly HttpClient _client;
 
-        public IndexTests()
+        public IndexTests(MockDataWebAppFactory<Startup> factory)
         {
-            var app = new WebApplicationFactory<Program>();
-            _client = app.CreateClient();
+            _client = factory.CreateClient();
         }
 
         [Fact]

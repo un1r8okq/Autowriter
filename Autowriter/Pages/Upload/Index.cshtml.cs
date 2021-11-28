@@ -26,7 +26,7 @@ namespace Autowriter.Pages.Upload
                 {
                     Id = t.Id,
                     Created = t.Created,
-                    Content = t.Text,
+                    Content = t.Content,
                 }),
             };
         }
@@ -42,7 +42,7 @@ namespace Autowriter.Pages.Upload
                 {
                     Id = t.Id,
                     Created = t.Created,
-                    Content = t.Text,
+                    Content = t.Content,
                 }),
             };
         }

@@ -1,4 +1,4 @@
-using Autowriter.Database;
+using Autowriter.Data;
 using MediatR;
 
 namespace Autowriter.Pages.Generate
@@ -14,21 +14,18 @@ namespace Autowriter.Pages.Generate
 
         public class Handler : RequestHandler<Query, Model>
         {
-            private readonly IDataRepository _data;
+            private readonly ISourceMaterialRepository _repository;
 
-            public Handler(IDataRepository data)
+            public Handler(ISourceMaterialRepository repository)
             {
-                _data = data;
+                _repository = repository;
             }
 
-            protected override Model Handle(Query request)
-            {
-                var sourceCount  = _data
-                    .Query<int>($"SELECT count(*) FROM {TableNames.SourceMaterial}")
-                    .First();
-
-                return new Model { SourceCount = sourceCount };
-            }
+            protected override Model Handle(Query request) =>
+                new()
+                {
+                    SourceCount = _repository.GetSources().Count(),
+                };
         }
     }
 }

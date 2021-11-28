@@ -1,47 +1,38 @@
-using Autowriter.Database;
+using AutoMapper;
+using Autowriter.Data;
 using MediatR;
-using System.Data;
 
 namespace Autowriter.Pages.Upload
 {
     public class DetailsHandler
     {
-        public class Model
+        public class Response
         {
             public int Id { get; set; }
 
             public DateTime Created { get; set; }
 
-            public string Text { get; set; } = string.Empty;
+            public string Content { get; set; } = string.Empty;
         }
 
-        public class Query : IRequest<Model>
+        public class Query : IRequest<Response>
         {
             public int Id { get; set; }
         }
 
-        public class Handler : RequestHandler<Query, Model>
+        public class Handler : RequestHandler<Query, Response>
         {
-            private readonly IDataRepository _data;
+            private readonly ISourceMaterialRepository _repository;
+            private readonly IMapper _mapper;
 
-            public Handler(IDataRepository data)
+            public Handler(ISourceMaterialRepository repository, IMapper mapper)
             {
-                _data = data;
+                _mapper = mapper;
+                _repository = repository;
             }
 
-            protected override Model Handle(Query request)
-            {
-                var query = "SELECT id, created, text " +
-                    $"FROM {TableNames.SourceMaterial} " +
-                    "WHERE id = @id";
-                var parameters = new { id = request.Id };
-                var source = _data
-                    .Query<Model>(query, parameters)
-                    .OrderByDescending(model => model.Created)
-                    .FirstOrDefault();
-
-                return source;
-            }
+            protected override Response Handle(Query request) =>
+                _mapper.Map<Response>(_repository.GetSource(request.Id));
         }
     }
 }

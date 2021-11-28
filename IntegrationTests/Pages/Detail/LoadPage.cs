@@ -1,20 +1,19 @@
-using Microsoft.AspNetCore.Mvc.Testing;
+using Autowriter;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace IntegrationTests.Pages.Generate
+namespace IntegrationTests.Pages.Detail
 {
-    public class IndexTests
+    public class LoadPage : IClassFixture<MockDataWebAppFactory<Startup>>
     {
-        private const string Url = "/generate";
+        private const string Url = "/upload/details?id=1";
         private readonly HttpClient _client;
 
-        public IndexTests()
+        public LoadPage(MockDataWebAppFactory<Startup> factory)
         {
-            var app = new WebApplicationFactory<Program>();
-            _client = app.CreateClient();
+            _client = factory.CreateClient();
         }
 
         [Fact]
@@ -26,12 +25,12 @@ namespace IntegrationTests.Pages.Generate
         }
 
         [Fact]
-        public async Task BodyContainsInstructions()
+        public async Task BodyContainsSourceMaterialText()
         {
             var response = await _client.GetAsync(Url);
             var body = await response.Content.ReadAsStringAsync();
 
-            Assert.Contains("It's time to get generating!", body);
+            Assert.Contains("Integration test", body);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Autowriter.Pages.Upload
             {
                 Id = source.Id,
                 Created = source.Created,
-                Content = source.Text,
+                Content = source.Content,
             };
             return Page();
         }
@@ -37,18 +37,6 @@ namespace Autowriter.Pages.Upload
         public async Task<IActionResult> OnPostAsync(DeleteHandler.Command command)
         {
             var result = await _mediator.Send(command);
-
-            if (result.Error != string.Empty)
-            {
-                Data = new ViewModel
-                {
-                    Id = result.Id,
-                    Created = result.Created,
-                    Content = result.Text,
-                    ErrorMessage = result.Error,
-                };
-                return Page();
-            }
             return Redirect("/upload");
         }
 
