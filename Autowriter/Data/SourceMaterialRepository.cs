@@ -16,21 +16,15 @@ namespace Autowriter.Data
 
         internal class SourceCreationException : Exception { }
 
-        private const string TableName = "source_material";
         private readonly IDbConnection _connection;
 
         public SourceMaterialRepository(IDbConnection connection)
         {
             _connection = connection;
-
-            lock (_connection)
-            {
-                if (SourceMaterialTableDoesNotExist())
-                {
-                    CreateSourceMaterialTable();
-                }
-            }
+            DbHelpers.EnsureDbIsInitialised(connection);
         }
+
+        public const string TableName = "source_material";
 
         public void CreateSource(DateTime createdDateTime, string content)
         {
@@ -62,23 +56,5 @@ namespace Autowriter.Data
         public void DeleteSource(int id) =>
             _connection
                 .Execute($"DELETE FROM {TableName} WHERE id = @id", new { id });
-
-        private bool SourceMaterialTableDoesNotExist()
-        {
-            var query = $"SELECT name FROM sqlite_master WHERE type = 'table' AND name = '{TableName}';";
-            var result = _connection.QueryFirstOrDefault<string>(query);
-
-            return result == null;
-        }
-
-        private void CreateSourceMaterialTable()
-        {
-            var query = $"CREATE TABLE {TableName} (" +
-                "id INTEGER PRIMARY KEY," +
-                "created TEXT NOT NULL," +
-                "content BLOB NOT NULL" +
-                ");";
-            _connection.Execute(query);
-        }
     }
 }
