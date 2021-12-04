@@ -26,12 +26,12 @@ namespace IntegrationTests.Pages.Generate
         }
 
         [Fact]
-        public async Task BodyContainsInstructions()
+        public async Task BodyContainsTitle()
         {
             var response = await _client.GetAsync(Url);
             var body = await response.Content.ReadAsStringAsync();
 
-            Assert.Contains("It's time to get generating!", body);
+            Assert.Contains("Generate writing", body);
         }
     }
 }

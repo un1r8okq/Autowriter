@@ -4,13 +4,11 @@
 @{
     ViewData["Title"] = "AutoWriter | Generate";
     var sourceCount = Model.Data.SourceCount;
+    var writing = Model.Data.Writing;
 }
 
 <div>
     <h1>Generate writing</h1>
-    <p>
-        It's time to get generating!
-    </p>
 
     @if (@sourceCount == 0)
     {
@@ -19,5 +17,24 @@
     else
     {
         <p>You have uploaded @sourceCount piece@(sourceCount == 1 ? "" : "s") of source material so far.</p>
+        <p>
+            Why not generate something?
+            <form method="post">
+                <label for="wordcount">Word count:</label>
+                <input type="range" min="1" max="1000" value="100" name="wordcount">
+                <input type="submit" value="generate" />
+            </form>
+            @if (Model.Data.WordCountTooLarge)
+            {
+                <span class="error">Word count is too large!</span>
+            }
+        </p>
+    }
+
+    @if (writing != null)
+    {
+        <h2>Generated writing</h2>
+        <p>Generated on @writing.Created.ToString("D") at @writing.Created.ToString("t")</p>
+        <p>@writing.Content</p>
     }
 </div>
