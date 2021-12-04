@@ -14,7 +14,7 @@ namespace IntegrationTests
 
             public DateTime Created { get; set; }
 
-            public string Content { get; set; }
+            public string Content { get; set; } = String.Empty;
         }
 
         public IEnumerable<SourceMaterial> Sources { get; set; } = Array.Empty<SourceMaterial>();

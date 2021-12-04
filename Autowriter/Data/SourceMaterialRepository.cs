@@ -42,7 +42,7 @@ namespace Autowriter.Data
             }
         }
 
-        public Source GetSource(int id) =>
+        public Source? GetSource(int id) =>
             _connection
                 .Query<Source>($"SELECT id, created, content FROM {TableName} WHERE id = @id", new { id = id })
                 .OrderByDescending(model => model.Created)
