@@ -1,4 +1,5 @@
 using Autowriter;
+using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -6,14 +7,14 @@ using Xunit;
 
 namespace IntegrationTests.Pages.Generate
 {
-    public class LoadPage : IClassFixture<MockDataWebAppFactory<Startup>>
+    public class LoadPage : IClassFixture<WebApplicationFactory<Startup>>
     {
         private const string Url = "/generate";
         private readonly HttpClient _client;
 
-        public LoadPage(MockDataWebAppFactory<Startup> factory)
+        public LoadPage(WebApplicationFactory<Startup> factory)
         {
-            _client = factory.CreateClient();
+            _client = factory.CreateTestClient();
         }
 
         [Fact]

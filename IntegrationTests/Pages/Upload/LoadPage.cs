@@ -1,4 +1,5 @@
 using Autowriter;
+using Microsoft.AspNetCore.Mvc.Testing;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -8,14 +9,14 @@ using Xunit;
 
 namespace IntegrationTests.Pages.Upload
 {
-    public class LoadPage : IClassFixture<MockDataWebAppFactory<Startup>>
+    public class LoadPage : IClassFixture<WebApplicationFactory<Startup>>
     {
         private const string Url = "/upload";
         private readonly HttpClient _client;
 
-        public LoadPage(MockDataWebAppFactory<Startup> factory)
+        public LoadPage(WebApplicationFactory<Startup> factory)
         {
-            _client = factory.CreateClient();
+            _client = factory.CreateTestClient();
         }
 
         [Fact]

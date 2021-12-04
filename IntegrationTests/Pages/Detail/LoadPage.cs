@@ -1,4 +1,6 @@
 using Autowriter;
+using Microsoft.AspNetCore.Mvc.Testing;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -6,14 +8,25 @@ using Xunit;
 
 namespace IntegrationTests.Pages.Detail
 {
-    public class LoadPage : IClassFixture<MockDataWebAppFactory<Startup>>
+    public class LoadPage : IClassFixture<WebApplicationFactory<Startup>>
     {
         private const string Url = "/upload/details?id=1";
         private readonly HttpClient _client;
 
-        public LoadPage(MockDataWebAppFactory<Startup> factory)
+        public LoadPage(WebApplicationFactory<Startup> factory)
         {
-            _client = factory.CreateClient();
+            var testData = new TestData
+            {
+                Sources = new[]
+                {
+                    new TestData.SourceMaterial
+                    {
+                        Created = new DateTime(2021, 12, 3, 17, 52, 0),
+                        Content = "Integration test",
+                    },
+                },
+            };
+            _client = factory.CreateTestClient(testData);
         }
 
         [Fact]
@@ -30,7 +43,7 @@ namespace IntegrationTests.Pages.Detail
             var response = await _client.GetAsync(Url);
             var body = await response.Content.ReadAsStringAsync();
 
-            Assert.Contains("Integration test", body);
+            Assert.Contains("Uploaded on Saturday, 4 December 2021 at 6:52:00 am", body);
         }
     }
 }
