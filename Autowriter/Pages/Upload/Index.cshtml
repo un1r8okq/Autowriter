@@ -26,7 +26,7 @@
         {
             var created = source.Created.ToLocalTime();
             <div>
-                <p>Uploaded on @created.ToString("D") at @created.ToString("T") (<a href="/upload/details?id=@source.Id">details</a>)</p>
+                <p>Uploaded on @created.ToString("D") at @created.ToString("t") (<a href="/upload/details?id=@source.Id">details</a>)</p>
                 <blockquote>@source.Content</blockquote>
             </div>
         }

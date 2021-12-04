@@ -43,7 +43,7 @@ namespace IntegrationTests.Pages.Detail
             var response = await _client.GetAsync(Url);
             var body = await response.Content.ReadAsStringAsync();
 
-            Assert.Contains("Uploaded on Saturday, 4 December 2021 at 6:52:00 am", body);
+            Assert.Contains("Uploaded on Saturday, 4 December 2021 at 6:52 am", body);
         }
     }
 }
