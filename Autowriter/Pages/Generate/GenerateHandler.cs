@@ -81,18 +81,25 @@ namespace Autowriter.Pages.Generate
                         .SelectMany(word => word.Split("\r"))
                         .SelectMany(word => word.Split("\n"))
                         .Select(word => RemoveIgnoredCharacters(word))
+                        .Where(word => word != null && word != string.Empty)
                         .Select(word => word.ToLower())
                         .ToList();
 
-                    for (var i = 0; i < words.Count() - 1; i++)
+                    for (var i = 0; i < words.Count; i++)
                     {
                         var currentWord = words[i];
-                        var nextWord = words[i + 1];
 
                         if (!_lexicon.ContainsKey(currentWord))
                         {
                             _lexicon.Add(currentWord, new Dictionary<string, int>());
                         }
+
+                        if (i == words.Count - 1)
+                        {
+                            break;
+                        }
+
+                        var nextWord = words[i + 1];
 
                         if (!_lexicon[currentWord].ContainsKey(nextWord))
                         {
@@ -106,7 +113,7 @@ namespace Autowriter.Pages.Generate
 
             private string RemoveIgnoredCharacters(string word)
             {
-                var charsToRemove = new string[] { ".", "\"", "“", "”" };
+                var charsToRemove = new string[] { ".", "!", "?", "\"", "“", "”" };
 
                 foreach (var character in charsToRemove)
                 {
@@ -133,10 +140,7 @@ namespace Autowriter.Pages.Generate
                 var words = new List<string>();
                 var desiredWordCount = _random.Next(3, 20);
 
-                var startingWordIndex = _random.Next(_lexicon.Count);
-                var randomStartingWord = _lexicon.ElementAt(startingWordIndex).Key;
-
-                var previousWord = randomStartingWord;
+                var previousWord = RandomWord();
 
                 while (words.Count < desiredWordCount)
                 {
@@ -154,19 +158,24 @@ namespace Autowriter.Pages.Generate
             {
                 if (_random.Next(4) < 1)
                 {
-                    var maxChoices = _lexicon[previousWord].Count;
-                    var randomChoiceIndex = _random.Next(maxChoices);
-                    return _lexicon[previousWord].ElementAt(randomChoiceIndex).Key;
+                    return RandomWord();
                 }
 
                 var mostCommonNextWord = _lexicon[previousWord].OrderBy(x => x.Value).FirstOrDefault().Key;
-                return mostCommonNextWord;
+
+                return mostCommonNextWord ?? RandomWord();
             }
 
             private string CapitaliseFirstChar(string word)
             {
                 var capitalisedFirstChar = char.ToUpper(word[0]);
                 return capitalisedFirstChar + word.Remove(0, 1);
+            }
+
+            private string RandomWord()
+            {
+                var index = _random.Next(_lexicon.Count);
+                return _lexicon.ElementAt(index).Key;
             }
         }
     }
