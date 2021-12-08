@@ -6,6 +6,11 @@ namespace Autowriter.Pages.Upload
 {
     public class CreateHandler
     {
+        public class Command : IRequest<Response>
+        {
+            public string Content { get; set; } = string.Empty;
+        }
+
         public class Response
         {
             public bool TextWasEmpty { get; set; }
@@ -20,11 +25,6 @@ namespace Autowriter.Pages.Upload
 
                 public string Content { get; set; } = string.Empty;
             }
-        }
-
-        public class Command : IRequest<Response>
-        {
-            public string Content { get; set; } = string.Empty;
         }
 
         public class Handler : RequestHandler<Command, Response>

@@ -5,14 +5,14 @@ namespace Autowriter.Pages.Generate
 {
     public class IndexHandler
     {
-        public class Model
+        public class Query : IRequest<Response> { }
+
+        public class Response
         {
             public int SourceCount { get; set; }
         }
 
-        public class Query : IRequest<Model> { }
-
-        public class Handler : RequestHandler<Query, Model>
+        public class Handler : RequestHandler<Query, Response>
         {
             private readonly IReadSourceMaterials _repository;
 
@@ -21,7 +21,7 @@ namespace Autowriter.Pages.Generate
                 _repository = repository;
             }
 
-            protected override Model Handle(Query request) =>
+            protected override Response Handle(Query request) =>
                 new()
                 {
                     SourceCount = _repository.GetSources().Count(),

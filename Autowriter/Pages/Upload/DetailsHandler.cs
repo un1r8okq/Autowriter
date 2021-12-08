@@ -6,6 +6,11 @@ namespace Autowriter.Pages.Upload
 {
     public class DetailsHandler
     {
+        public class Query : IRequest<Response>
+        {
+            public int Id { get; set; }
+        }
+
         public class Response
         {
             public int Id { get; set; }
@@ -13,11 +18,6 @@ namespace Autowriter.Pages.Upload
             public DateTime Created { get; set; }
 
             public string Content { get; set; } = string.Empty;
-        }
-
-        public class Query : IRequest<Response>
-        {
-            public int Id { get; set; }
         }
 
         public class Handler : RequestHandler<Query, Response>

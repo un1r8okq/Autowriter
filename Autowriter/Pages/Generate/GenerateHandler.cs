@@ -5,7 +5,12 @@ namespace Autowriter.Pages.Generate
 {
     public class GenerateHandler
     {
-        public class Model
+        public class Command : IRequest<Response>
+        {
+            public int WordCount { get; set; }
+        }
+
+        public class Response
         {
             public bool WordCountTooLarge { get; set; }
 
@@ -23,12 +28,7 @@ namespace Autowriter.Pages.Generate
             }
         }
 
-        public class Command : IRequest<Model>
-        {
-            public int WordCount { get; set; }
-        }
-
-        class Handler : RequestHandler<Command, Model>
+        class Handler : RequestHandler<Command, Response>
         {
             private readonly Random _random;
             private readonly IReadSourceMaterials _repository;
@@ -38,15 +38,16 @@ namespace Autowriter.Pages.Generate
             {
                 _random = new Random();
                 _repository = repository;
+                _lexicon = new Dictionary<string, Dictionary<string, int>>();
             }
 
-            protected override Model Handle(Command command)
+            protected override Response Handle(Command command)
             {
                 var sources = _repository.GetSources();
 
                 if (command.WordCount > 1000)
                 {
-                    return new Model
+                    return new Response
                     {
                         SourceCount = sources.Count(),
                         WordCountTooLarge = true
@@ -56,11 +57,11 @@ namespace Autowriter.Pages.Generate
                 BuildLexicon(sources);
                 var generatedWriting = GenerateWriting(command.WordCount);
 
-                return new Model
+                return new Response
                 {
                     SourceCount = sources.Count(),
                     WordCountTooLarge = false,
-                    Writing = new Model.GeneratedWriting
+                    Writing = new Response.GeneratedWriting
                     {
                         Id = 1,
                         Created = DateTime.UtcNow,
@@ -71,8 +72,6 @@ namespace Autowriter.Pages.Generate
 
             private void BuildLexicon(IEnumerable<SourceMaterial> sources)
             {
-                _lexicon = new Dictionary<string, Dictionary<string, int>>();
-
                 foreach (var source in sources)
                 {
                     var words = source.Content
