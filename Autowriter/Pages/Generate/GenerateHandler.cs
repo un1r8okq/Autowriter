@@ -24,26 +24,26 @@ namespace Autowriter.Pages.Generate
 
                 public DateTime Created { get; set; }
 
-                public string Content { get; set; } = String.Empty;
+                public string Content { get; set; } = string.Empty;
             }
         }
 
         class Handler : RequestHandler<Command, Response>
         {
             private readonly Random _random;
-            private readonly IReadSourceMaterials _repository;
-            private Dictionary<string, Dictionary<string, int>> _lexicon;
+            private readonly IReadSourceMaterials _sourceReader;
+            private readonly Dictionary<string, Dictionary<string, int>> _lexicon;
 
-            public Handler(IReadSourceMaterials repository)
+            public Handler(IReadSourceMaterials sourceReader)
             {
+                _sourceReader = sourceReader;
                 _random = new Random();
-                _repository = repository;
                 _lexicon = new Dictionary<string, Dictionary<string, int>>();
             }
 
             protected override Response Handle(Command command)
             {
-                var sources = _repository.GetSources();
+                var sources = _sourceReader.GetSources();
 
                 if (command.WordCount > 1000)
                 {
@@ -110,7 +110,7 @@ namespace Autowriter.Pages.Generate
                 }
             }
 
-            private string RemoveIgnoredCharacters(string word)
+            private static string RemoveIgnoredCharacters(string word)
             {
                 var charsToRemove = new string[] { ".", "!", "?", "\"", "“", "”" };
 
@@ -165,7 +165,7 @@ namespace Autowriter.Pages.Generate
                 return mostCommonNextWord ?? RandomWord();
             }
 
-            private string CapitaliseFirstChar(string word)
+            private static string CapitaliseFirstChar(string word)
             {
                 var capitalisedFirstChar = char.ToUpper(word[0]);
                 return capitalisedFirstChar + word.Remove(0, 1);

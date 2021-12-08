@@ -22,17 +22,17 @@ namespace Autowriter.Pages.Upload
 
         public class Handler : RequestHandler<Query, Response>
         {
-            private readonly IReadSourceMaterials _repository;
+            private readonly IReadSourceMaterials _sourceReader;
             private readonly IMapper _mapper;
 
-            public Handler(IReadSourceMaterials repository, IMapper mapper)
+            public Handler(IReadSourceMaterials sourceReader, IMapper mapper)
             {
                 _mapper = mapper;
-                _repository = repository;
+                _sourceReader = sourceReader;
             }
 
             protected override Response Handle(Query request) =>
-                _mapper.Map<Response>(_repository.GetSource(request.Id));
+                _mapper.Map<Response>(_sourceReader.GetSource(request.Id));
         }
     }
 }

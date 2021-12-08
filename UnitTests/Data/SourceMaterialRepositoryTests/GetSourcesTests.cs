@@ -15,10 +15,9 @@ namespace UnitTests.Data.SourceMaterialRepositoryTests
         public GetSourcesTests()
         {
             var mapperConfig = new MapperConfiguration(m => m.AddProfile<AutoMapperProfile>());
-            var mapper = mapperConfig.CreateMapper();
             var dbConnection = new SqliteConnection("Data Source=:memory:");
 
-            _repo = new SourceMaterialRepository(dbConnection, mapper);
+            _repo = new SourceMaterialRepository(dbConnection);
         }
 
         [Fact]

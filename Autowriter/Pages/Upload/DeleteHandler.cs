@@ -12,15 +12,15 @@ namespace Autowriter.Pages.Upload
 
         public class Handler : RequestHandler<Command>
         {
-            private readonly IDeleteSourceMaterial _repository;
+            private readonly IDeleteSourceMaterial _sourceDeletor;
 
-            public Handler(IDeleteSourceMaterial repository)
+            public Handler(IDeleteSourceMaterial sourceDeletor)
             {
-                _repository = repository;
+                _sourceDeletor = sourceDeletor;
             }
 
             protected override void Handle(Command command) =>
-                _repository.DeleteSource(command.Id);
+                _sourceDeletor.DeleteSource(command.Id);
         }
     }
 }

@@ -35,28 +35,20 @@ namespace Autowriter.Data
         internal class SourceCreationException : Exception { }
 
         private readonly IDbConnection _connection;
-        private readonly IMapper _mapper;
 
-        public SourceMaterialRepository(
-            IDbConnection connection,
-            IMapper mapper)
+        public SourceMaterialRepository(IDbConnection connection)
         {
             _connection = connection;
-            _mapper = mapper;
 
             DbHelpers.EnsureDbIsInitialised(connection);
         }
 
         public const string TableName = "source_material";
 
-        public void CreateSource(DateTime createdDateTime, string content)
+        public void CreateSource(DateTime created, string content)
         {
             const string query = $"INSERT INTO {TableName} (created, content) VALUES (@created, @content)";
-            var parameters = new
-            {
-                created = createdDateTime,
-                content = content,
-            };
+            var parameters = new { created, content };
             var affectedRowCount = _connection.Execute(query, parameters);
 
             if (affectedRowCount != 1)
@@ -67,7 +59,7 @@ namespace Autowriter.Data
 
         public SourceMaterial? GetSource(int id) =>
             _connection
-                .Query<SourceMaterial>($"SELECT id, created, content FROM {TableName} WHERE id = @id", new { id = id })
+                .Query<SourceMaterial>($"SELECT id, created, content FROM {TableName} WHERE id = @id", new { id })
                 .OrderByDescending(model => model.Created)
                 .FirstOrDefault();
 

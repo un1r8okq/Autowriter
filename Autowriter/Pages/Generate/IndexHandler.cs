@@ -14,17 +14,17 @@ namespace Autowriter.Pages.Generate
 
         public class Handler : RequestHandler<Query, Response>
         {
-            private readonly IReadSourceMaterials _repository;
+            private readonly IReadSourceMaterials _sourceReader;
 
-            public Handler(IReadSourceMaterials repository)
+            public Handler(IReadSourceMaterials sourceReader)
             {
-                _repository = repository;
+                _sourceReader = sourceReader;
             }
 
             protected override Response Handle(Query request) =>
                 new()
                 {
-                    SourceCount = _repository.GetSources().Count(),
+                    SourceCount = _sourceReader.GetSources().Count(),
                 };
         }
     }

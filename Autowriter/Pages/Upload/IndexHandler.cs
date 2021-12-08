@@ -19,18 +19,17 @@ namespace Autowriter.Pages.Upload
 
         public class Handler : RequestHandler<Query, IEnumerable<Response>>
         {
-            private readonly IReadSourceMaterials _repository;
+            private readonly IReadSourceMaterials _sourceReader;
             private readonly IMapper _mapper;
 
-            public Handler(IReadSourceMaterials repository, IMapper mapper)
+            public Handler(IReadSourceMaterials sourceReader, IMapper mapper)
             {
                 _mapper = mapper;
-                _repository = repository;
+                _sourceReader = sourceReader;
             }
 
-            protected override IEnumerable<Response> Handle(Query request) => _repository
-                .GetSources()
-                .Select(source => _mapper.Map<Response>(source));
+            protected override IEnumerable<Response> Handle(Query request) =>
+                _mapper.Map<IEnumerable<Response>>(_sourceReader.GetSources());
         }
     }
 }
