@@ -3,7 +3,7 @@
 
 @{
     ViewData["Title"] = "AutoWriter | Generate";
-    var sourceCount = Model.Data.SourceCount;
+    var sourceCount = Model.Data.NumberOfSources;
     var writing = Model.Data.Writing;
 }
 
@@ -21,12 +21,12 @@
             Why not generate something?
             <form method="post">
                 <label for="wordcount">Word count:</label>
-                <input type="range" min="1" max="1000" value="100" name="wordcount">
+                <input type="range" min="1" max="10000" value="@Model.Data.RequestedNumberOfWords" name="wordcount">
                 <input type="submit" value="generate" />
             </form>
-            @if (Model.Data.WordCountTooLarge)
+            @if (Model.Data.WordCountOutOfRange)
             {
-                <span class="error">Word count is too large!</span>
+                <span class="error">Word count was out of range</span>
             }
         </p>
     }

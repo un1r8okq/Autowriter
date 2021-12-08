@@ -12,9 +12,11 @@ namespace Autowriter.Pages.Generate
 
         public class Response
         {
-            public bool WordCountTooLarge { get; set; }
+            public int NumberOfSources { get; set; }
 
-            public int SourceCount { get; set; }
+            public int RequestedNumberOfWords { get; set; }
+
+            public bool WordCountOutOfRange { get; set; }
 
             public GeneratedWriting? Writing { get; set; }
 
@@ -28,8 +30,10 @@ namespace Autowriter.Pages.Generate
             }
         }
 
-        class Handler : RequestHandler<Command, Response>
+        public class Handler : RequestHandler<Command, Response>
         {
+            private const int MinimumWords = 3;
+            private const int MaximumWords = 10000;
             private readonly Random _random;
             private readonly IReadSourceMaterials _sourceReader;
             private readonly Dictionary<string, Dictionary<string, int>> _lexicon;
@@ -45,12 +49,13 @@ namespace Autowriter.Pages.Generate
             {
                 var sources = _sourceReader.GetSources();
 
-                if (command.WordCount > 1000)
+                if (command.WordCount < MinimumWords || command.WordCount > MaximumWords)
                 {
                     return new Response
                     {
-                        SourceCount = sources.Count(),
-                        WordCountTooLarge = true
+                        NumberOfSources = sources.Count(),
+                        RequestedNumberOfWords = command.WordCount,
+                        WordCountOutOfRange = true,
                     };
                 }
 
@@ -59,8 +64,9 @@ namespace Autowriter.Pages.Generate
 
                 return new Response
                 {
-                    SourceCount = sources.Count(),
-                    WordCountTooLarge = false,
+                    NumberOfSources = sources.Count(),
+                    RequestedNumberOfWords = command.WordCount,
+                    WordCountOutOfRange = false,
                     Writing = new Response.GeneratedWriting
                     {
                         Id = 1,
@@ -124,6 +130,11 @@ namespace Autowriter.Pages.Generate
 
             private string GenerateWriting(int wordCount)
             {
+                if (_lexicon.Count == 0)
+                {
+                    return string.Empty;
+                }
+
                 var words = new List<string>();
 
                 while (words.Count < wordCount)
@@ -137,7 +148,7 @@ namespace Autowriter.Pages.Generate
             private List<string> GenerateSentence()
             {
                 var words = new List<string>();
-                var desiredWordCount = _random.Next(3, 20);
+                var desiredWordCount = _random.Next(MinimumWords, 20);
 
                 var previousWord = RandomWord();
 

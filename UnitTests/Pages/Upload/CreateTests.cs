@@ -9,7 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace UnitTests.Pages.UploadTests
+namespace UnitTests.Pages.Upload
 {
     public class CreateTests
     {

@@ -24,7 +24,8 @@ namespace Autowriter.Pages.Generate
 
             Data = new ViewModel
             {
-                SourceCount = sources.SourceCount,
+                NumberOfSources = sources.SourceCount,
+                RequestedNumberOfWords = 100,
             };
         }
 
@@ -36,9 +37,11 @@ namespace Autowriter.Pages.Generate
 
         public class ViewModel
         {
-            public bool WordCountTooLarge { get; set; }
+            public int NumberOfSources { get; set; }
 
-            public int SourceCount { get; set; }
+            public int RequestedNumberOfWords { get; set; }
+
+            public bool WordCountOutOfRange { get; set; }
 
             public GeneratedWriting? Writing { get; set; }
 
