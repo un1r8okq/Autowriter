@@ -13,19 +13,27 @@ namespace UnitTests.Pages.UploadTests
 {
     public class CreateTests
     {
-        private readonly IMapper _mapper =
-            new MapperConfiguration(cfg => cfg.AddProfile(new AutoMapperProfile())).CreateMapper();
+        private readonly Mock<ICreateSourceMaterial> _createSourceMock;
+        private readonly IRequestHandler<CreateHandler.Command, CreateHandler.Response> _handler;
+
+        public CreateTests()
+        {
+            _createSourceMock = new Mock<ICreateSourceMaterial>();
+            var readSourceMock = new Mock<IReadSourceMaterials>();
+            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new AutoMapperProfile()));
+            var mapper = mapperConfig.CreateMapper();
+
+            _handler = new CreateHandler.Handler(_createSourceMock.Object, readSourceMock.Object, mapper);
+        }
 
         [Theory]
         [InlineData(null)]
         [InlineData("")]
         public async Task WhenTextIsNullOrEmpty_EmptyTextFlagIsTrue(string text)
         {
-            var repository = Mock.Of<ISourceMaterialRepository>();
-            IRequestHandler<CreateHandler.Command, CreateHandler.Response> sut = new CreateHandler.Handler(repository, _mapper);
             var command = new CreateHandler.Command { Content = text };
 
-            var result = await sut.Handle(command, CancellationToken.None);
+            var result = await _handler.Handle(command, CancellationToken.None);
 
             Assert.True(result.TextWasEmpty);
         }
@@ -33,11 +41,9 @@ namespace UnitTests.Pages.UploadTests
         [Fact]
         public async Task WhenTextHasContent_EmptyTextFlagIsFalse()
         {
-            var repository = Mock.Of<ISourceMaterialRepository>();
-            IRequestHandler<CreateHandler.Command, CreateHandler.Response> sut = new CreateHandler.Handler(repository, _mapper);
             var command = new CreateHandler.Command { Content = "Some text" };
 
-            var result = await sut.Handle(command, CancellationToken.None);
+            var result = await _handler.Handle(command, CancellationToken.None);
 
             Assert.False(result.TextWasEmpty);
         }
@@ -45,13 +51,11 @@ namespace UnitTests.Pages.UploadTests
         [Fact]
         public async Task WhenTextHasContent_QueryIsExecuted()
         {
-            var repository = new Mock<ISourceMaterialRepository>();
-            IRequestHandler<CreateHandler.Command, CreateHandler.Response> sut = new CreateHandler.Handler(repository.Object, _mapper);
             var command = new CreateHandler.Command { Content = "Some text" };
 
-            var result = await sut.Handle(command, CancellationToken.None);
+            var result = await _handler.Handle(command, CancellationToken.None);
 
-            repository.Verify(x => x.CreateSource(It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
+            _createSourceMock.Verify(x => x.CreateSource(It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
         }
     }
 }

@@ -22,10 +22,10 @@ namespace Autowriter.Pages.Upload
 
         public class Handler : RequestHandler<Query, Response>
         {
-            private readonly ISourceMaterialRepository _repository;
+            private readonly IReadSourceMaterials _repository;
             private readonly IMapper _mapper;
 
-            public Handler(ISourceMaterialRepository repository, IMapper mapper)
+            public Handler(IReadSourceMaterials repository, IMapper mapper)
             {
                 _mapper = mapper;
                 _repository = repository;

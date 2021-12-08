@@ -28,13 +28,13 @@ namespace Autowriter.Pages.Generate
             public int WordCount { get; set; }
         }
 
-        public class Handler : RequestHandler<Command, Model>
+        class Handler : RequestHandler<Command, Model>
         {
             private readonly Random _random;
-            private readonly ISourceMaterialRepository _repository;
+            private readonly IReadSourceMaterials _repository;
             private Dictionary<string, Dictionary<string, int>> _lexicon;
 
-            public Handler(ISourceMaterialRepository repository)
+            public Handler(IReadSourceMaterials repository)
             {
                 _random = new Random();
                 _repository = repository;
@@ -69,7 +69,7 @@ namespace Autowriter.Pages.Generate
                 };
             }
 
-            private void BuildLexicon(IEnumerable<SourceMaterialRepository.Source> sources)
+            private void BuildLexicon(IEnumerable<SourceMaterial> sources)
             {
                 _lexicon = new Dictionary<string, Dictionary<string, int>>();
 

@@ -29,13 +29,15 @@ namespace Autowriter.Pages.Upload
 
         public class Handler : RequestHandler<Command, Response>
         {
-            private readonly ISourceMaterialRepository _repository;
+            private readonly ICreateSourceMaterial _createRepo;
+            private readonly IReadSourceMaterials _readRepo;
             private readonly IMapper _mapper;
 
-            public Handler(ISourceMaterialRepository repository, IMapper mapper)
+            public Handler(ICreateSourceMaterial createRepo, IReadSourceMaterials readRepo, IMapper mapper)
             {
                 _mapper = mapper;
-                _repository = repository;
+                _createRepo = createRepo;
+                _readRepo = readRepo;
             }
 
             protected override Response Handle(Command command)
@@ -45,12 +47,12 @@ namespace Autowriter.Pages.Upload
                     return new Response { TextWasEmpty = true };
                 }
 
-                _repository.CreateSource(DateTime.UtcNow, command.Content);
+                _createRepo.CreateSource(DateTime.UtcNow, command.Content);
 
                 return new Response
                 {
                     TextWasEmpty = false,
-                    Sources = _repository
+                    Sources = _readRepo
                         .GetSources()
                         .Select(source => _mapper.Map<Response.Source>(source)),
                 };

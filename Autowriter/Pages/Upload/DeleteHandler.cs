@@ -12,9 +12,9 @@ namespace Autowriter.Pages.Upload
 
         public class Handler : RequestHandler<Command>
         {
-            private readonly ISourceMaterialRepository _repository;
+            private readonly IDeleteSourceMaterial _repository;
 
-            public Handler(ISourceMaterialRepository repository)
+            public Handler(IDeleteSourceMaterial repository)
             {
                 _repository = repository;
             }

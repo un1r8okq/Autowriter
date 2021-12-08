@@ -6,6 +6,8 @@ namespace Autowriter.Pages.Upload
 {
     public class IndexHandler
     {
+        public class Query : IRequest<IEnumerable<Response>> { }
+
         public class Response
         {
             public int Id { get; set; }
@@ -15,14 +17,12 @@ namespace Autowriter.Pages.Upload
             public string Content { get; set; } = string.Empty;
         }
 
-        public class Query : IRequest<IEnumerable<Response>> { }
-
         public class Handler : RequestHandler<Query, IEnumerable<Response>>
         {
-            private readonly ISourceMaterialRepository _repository;
+            private readonly IReadSourceMaterials _repository;
             private readonly IMapper _mapper;
 
-            public Handler(ISourceMaterialRepository repository, IMapper mapper)
+            public Handler(IReadSourceMaterials repository, IMapper mapper)
             {
                 _mapper = mapper;
                 _repository = repository;

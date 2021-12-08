@@ -14,9 +14,9 @@ namespace Autowriter.Pages.Generate
 
         public class Handler : RequestHandler<Query, Model>
         {
-            private readonly ISourceMaterialRepository _repository;
+            private readonly IReadSourceMaterials _repository;
 
-            public Handler(ISourceMaterialRepository repository)
+            public Handler(IReadSourceMaterials repository)
             {
                 _repository = repository;
             }

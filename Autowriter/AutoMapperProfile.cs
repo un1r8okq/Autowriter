@@ -1,6 +1,5 @@
 using AutoMapper;
 using Autowriter.Data;
-using Autowriter.Pages.Generate;
 
 namespace Autowriter
 {
@@ -8,12 +7,12 @@ namespace Autowriter
     {
         public AutoMapperProfile()
         {
-            CreateMap<SourceMaterialRepository.Source, Pages.Upload.IndexHandler.Response>();
-            CreateMap<SourceMaterialRepository.Source, Pages.Upload.DetailsHandler.Response>();
-            CreateMap<SourceMaterialRepository.Source, Pages.Upload.CreateHandler.Response.Source>();
+            CreateMap<SourceMaterial, Pages.Upload.IndexHandler.Response>();
+            CreateMap<SourceMaterial, Pages.Upload.DetailsHandler.Response>();
+            CreateMap<SourceMaterial, Pages.Upload.CreateHandler.Response.Source>();
 
-            CreateMap<GenerateHandler.Model, Pages.Generate.Index.ViewModel>();
-            CreateMap<GenerateHandler.Model.GeneratedWriting, Pages.Generate.Index.ViewModel.GeneratedWriting>();
+            CreateMap<Pages.Generate.GenerateHandler.Model, Pages.Generate.Index.ViewModel>();
+            CreateMap<Pages.Generate.GenerateHandler.Model.GeneratedWriting, Pages.Generate.Index.ViewModel.GeneratedWriting>();
         }
     }
 }
