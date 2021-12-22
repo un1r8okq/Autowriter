@@ -1,15 +1,18 @@
+using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Data;
 
 namespace Autowriter.Pages.Upload
 {
-    public class IndexPage : PageModel
+    public class Index : PageModel
     {
+        private readonly IMapper _mapper;
         private readonly IMediator _mediator;
 
-        public IndexPage(IMediator mediator)
+        public Index(IMapper mapper, IMediator mediator)
         {
+            _mapper = mapper;
             _mediator = mediator;
             Data = new ViewModel();
         }
@@ -22,12 +25,7 @@ namespace Autowriter.Pages.Upload
 
             Data = new ViewModel
             {
-                Sources = sources.Select(t => new ViewModel.Source
-                {
-                    Id = t.Id,
-                    Created = t.Created,
-                    Content = t.Content,
-                }),
+                Sources = _mapper.Map<IEnumerable<ViewModel.Source>>(sources),
             };
         }
 
