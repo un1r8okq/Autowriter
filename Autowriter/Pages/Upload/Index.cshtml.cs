@@ -1,7 +1,6 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Data;
 
 namespace Autowriter.Pages.Upload
 {
@@ -36,12 +35,7 @@ namespace Autowriter.Pages.Upload
             Data = new ViewModel
             {
                 TextWasEmpty = result.TextWasEmpty,
-                Sources = result.Sources.Select(t => new ViewModel.Source
-                {
-                    Id = t.Id,
-                    Created = t.Created,
-                    Content = t.Content,
-                }),
+                Sources = _mapper.Map<IEnumerable<ViewModel.Source>>(result.Sources),
             };
         }
 

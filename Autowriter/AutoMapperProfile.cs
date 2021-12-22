@@ -7,6 +7,7 @@ namespace Autowriter
     {
         public AutoMapperProfile()
         {
+            CreateMap<Pages.Upload.CreateHandler.Response.Source, Pages.Upload.Index.ViewModel.Source>();
             CreateMap<Pages.Upload.IndexHandler.Response, Pages.Upload.Index.ViewModel.Source>();
             CreateMap<Pages.Upload.SourceMaterial, Pages.Upload.IndexHandler.Response>();
             CreateMap<Pages.Upload.SourceMaterial, Pages.Upload.DetailsHandler.Response>();
