@@ -1,5 +1,5 @@
 using Autowriter.Data;
-using Autowriter.Pages.Generate;
+using Autowriter.Pages;
 using MediatR;
 using Microsoft.Data.Sqlite;
 using System.Data;
@@ -20,10 +20,13 @@ namespace Autowriter
             services.AddSingleton<IDbConnection>((serviceProvider) =>
                 new SqliteConnection(Configuration.GetSection("DatabaseName").Value));
 
-            services.AddSingleton<SourceMaterialRepository>();
-            services.AddSingleton<ICreateSourceMaterial>(x => x.GetRequiredService<SourceMaterialRepository>());
-            services.AddSingleton<IReadSourceMaterials>(x => x.GetRequiredService<SourceMaterialRepository>());
-            services.AddSingleton<IDeleteSourceMaterial>(x => x.GetRequiredService<SourceMaterialRepository>());
+            services.AddSingleton<Pages.Generate.IReadSourceMaterial, Pages.Generate.SourceMaterialReader>();
+
+            services.AddSingleton<Pages.Upload.SourceMaterialRepository>();
+            services.AddSingleton<Pages.Upload.ICreateSourceMaterial>(x => x.GetRequiredService<Pages.Upload.SourceMaterialRepository>());
+            services.AddSingleton<Pages.Upload.IReadSourceMaterials>(x => x.GetRequiredService<Pages.Upload.SourceMaterialRepository>());
+            services.AddSingleton<Pages.Upload.IDeleteSourceMaterial>(x => x.GetRequiredService<Pages.Upload.SourceMaterialRepository>());
+
             services.AddMediatR(typeof(Program));
             services.AddAutoMapper(typeof(Program));
             services.AddRazorPages();

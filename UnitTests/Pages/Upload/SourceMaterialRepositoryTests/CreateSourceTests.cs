@@ -1,12 +1,12 @@
 using AutoMapper;
 using Autowriter;
-using Autowriter.Data;
+using Autowriter.Pages.Upload;
 using Microsoft.Data.Sqlite;
 using System;
 using System.Linq;
 using Xunit;
 
-namespace UnitTests.Data.SourceMaterialRepositoryTests
+namespace UnitTests.Pages.Upload.SourceMaterialRepositoryTests
 {
     public class CreateSourceTests
     {

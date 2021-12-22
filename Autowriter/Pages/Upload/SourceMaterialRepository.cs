@@ -1,7 +1,8 @@
+using Autowriter.Data;
 using Dapper;
 using System.Data;
 
-namespace Autowriter.Data
+namespace Autowriter.Pages.Upload
 {
     public class SourceMaterial
     {

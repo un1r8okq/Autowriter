@@ -1,4 +1,3 @@
-using Autowriter.Data;
 using MediatR;
 
 namespace Autowriter.Pages.Generate
@@ -14,9 +13,9 @@ namespace Autowriter.Pages.Generate
 
         public class Handler : RequestHandler<Query, Response>
         {
-            private readonly IReadSourceMaterials _sourceReader;
+            private readonly IReadSourceMaterial _sourceReader;
 
-            public Handler(IReadSourceMaterials sourceReader)
+            public Handler(IReadSourceMaterial sourceReader)
             {
                 _sourceReader = sourceReader;
             }

@@ -5,6 +5,8 @@ namespace Autowriter.Data
 {
     public static class DbHelpers
     {
+        public const string SourceMaterialTableName = "source_material";
+
         public static void EnsureDbIsInitialised(IDbConnection conn)
         {
             EnsureDbConnectionIsOpen(conn);
@@ -23,9 +25,9 @@ namespace Autowriter.Data
         {
             lock (conn)
             {
-                if (conn.TableDoesNotExist(SourceMaterialRepository.TableName))
+                if (conn.TableDoesNotExist(SourceMaterialTableName))
                 {
-                    var query = $"CREATE TABLE {SourceMaterialRepository.TableName} (" +
+                    var query = $"CREATE TABLE {SourceMaterialTableName} (" +
                         "id INTEGER PRIMARY KEY," +
                         "created TEXT NOT NULL," +
                         "content BLOB NOT NULL" +

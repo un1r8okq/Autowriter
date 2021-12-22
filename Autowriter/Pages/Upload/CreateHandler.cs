@@ -1,5 +1,4 @@
 using AutoMapper;
-using Autowriter.Data;
 using MediatR;
 
 namespace Autowriter.Pages.Upload

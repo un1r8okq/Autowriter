@@ -1,4 +1,3 @@
-using Autowriter.Data;
 using MediatR;
 
 namespace Autowriter.Pages.Generate
@@ -30,15 +29,20 @@ namespace Autowriter.Pages.Generate
             }
         }
 
+        public class SourceMaterial
+        {
+            public string Content { get; set; } = string.Empty;
+        }
+
         public class Handler : RequestHandler<Command, Response>
         {
             private const int MinimumWords = 3;
             private const int MaximumWords = 10000;
             private readonly Random _random;
-            private readonly IReadSourceMaterials _sourceReader;
+            private readonly IReadSourceMaterial _sourceReader;
             private readonly Dictionary<string, Dictionary<string, int>> _lexicon;
 
-            public Handler(IReadSourceMaterials sourceReader)
+            public Handler(IReadSourceMaterial sourceReader)
             {
                 _sourceReader = sourceReader;
                 _random = new Random();

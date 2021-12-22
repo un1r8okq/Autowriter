@@ -31,7 +31,7 @@ namespace IntegrationTests
 
         private void InsertSourceMaterial(IDbConnection dbConnection, SourceMaterial source)
         {
-            var query = $"INSERT INTO {SourceMaterialRepository.TableName}" +
+            var query = $"INSERT INTO {DbHelpers.SourceMaterialTableName}" +
                 "(created, content) VALUES (@created, @content)";
             var parameters = new
             {

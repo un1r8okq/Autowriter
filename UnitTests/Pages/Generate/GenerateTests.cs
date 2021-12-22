@@ -1,4 +1,3 @@
-using Autowriter.Data;
 using Autowriter.Pages.Generate;
 using MediatR;
 using Moq;
@@ -14,7 +13,7 @@ namespace UnitTests.Pages.Generate
 
         public GenerateTests()
         {
-            var readSourceMock = Mock.Of<IReadSourceMaterials>();
+            var readSourceMock = Mock.Of<IReadSourceMaterial>();
             _handler = new GenerateHandler.Handler(readSourceMock);
         }
 

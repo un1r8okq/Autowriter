@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Autowriter\Autowriter.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>
