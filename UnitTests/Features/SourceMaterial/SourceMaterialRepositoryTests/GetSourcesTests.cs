@@ -6,7 +6,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace UnitTests.Data.SourceMaterialRepositoryTests
+namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 {
     public class GetSourcesTests
     {

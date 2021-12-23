@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace UnitTests.Pages.Generate
+namespace UnitTests.Features.WritingGeneration
 {
     public class GenerateTests
     {

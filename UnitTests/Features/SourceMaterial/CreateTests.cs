@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace UnitTests.Pages.Upload
+namespace UnitTests.Features.SourceMaterial
 {
     public class CreateTests
     {
