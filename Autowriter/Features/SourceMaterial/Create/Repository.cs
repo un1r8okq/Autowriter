@@ -13,8 +13,6 @@ namespace Autowriter.Features.SourceMaterial
 
         public class Repository : ICreateSourceMaterial
         {
-            public const string TableName = "source_material";
-
             private readonly IDbConnection _connection;
 
             public Repository(IDbConnection connection)
@@ -26,7 +24,7 @@ namespace Autowriter.Features.SourceMaterial
 
             public SourceMaterial CreateSource(DateTime created, string content)
             {
-                const string query = $"INSERT INTO {TableName} " +
+                const string query = $"INSERT INTO {DbHelpers.SourceMaterialTableName} " +
                     "(created, content) VALUES (@created, @content) " +
                     "RETURNING id, created, content";
                 var parameters = new { created, content };

@@ -3,6 +3,7 @@ using System.Data;
 using System.Linq;
 using AutoMapper;
 using Autowriter.Features.SourceMaterial;
+using Dapper;
 using Microsoft.Data.Sqlite;
 using Xunit;
 

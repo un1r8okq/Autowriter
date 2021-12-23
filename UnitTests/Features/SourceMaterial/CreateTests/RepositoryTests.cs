@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using AutoMapper;
+using Autowriter.Data;
 using Autowriter.Features.SourceMaterial;
 using Dapper;
 using Microsoft.Data.Sqlite;
@@ -106,7 +107,7 @@ namespace UnitTests.Features.SourceMaterial.CreateTests
 
         private IEnumerable<Create.SourceMaterial> GetSources() =>
             _conn
-                .Query<Create.SourceMaterial>($"SELECT id, created, content FROM {Create.Repository.TableName}")
+                .Query<Create.SourceMaterial>($"SELECT id, created, content FROM {DbHelpers.SourceMaterialTableName}")
                 .OrderByDescending(model => model.Created);
     }
 }
