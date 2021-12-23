@@ -21,22 +21,6 @@ namespace UnitTests.Features.WritingGeneration
         [InlineData(-1)]
         [InlineData(0)]
         [InlineData(1)]
-        [InlineData(123)]
-        [InlineData(1000)]
-        [InlineData(1001)]
-        public async Task RequestedNumberOfWords_IsAlwaysReturnedInTheResponse(int wordCount)
-        {
-            var command = new GenerateHandler.Command { WordCount = wordCount };
-
-            var response = await _handler.Handle(command, CancellationToken.None);
-
-            Assert.Equal(wordCount, response.RequestedNumberOfWords);
-        }
-
-        [Theory]
-        [InlineData(-1)]
-        [InlineData(0)]
-        [InlineData(1)]
         [InlineData(10001)]
         public async Task WhenRequestedNumberOfWordsIsNotWithinBounds_WordCountOutOfRange(int wordCount)
         {

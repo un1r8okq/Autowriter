@@ -4,17 +4,12 @@ namespace Autowriter.Features.WritingGeneration
 {
     public partial class GenerateHandler
     {
-        public class Command : IRequest<Response>
-        {
+        public class Command : IRequest<Response> {
             public int WordCount { get; set; }
         }
 
         public class Response
         {
-            public int NumberOfSources { get; set; }
-
-            public int RequestedNumberOfWords { get; set; }
-
             public bool WordCountOutOfRange { get; set; }
 
             public GeneratedWriting? Writing { get; set; }
@@ -52,8 +47,6 @@ namespace Autowriter.Features.WritingGeneration
                 {
                     return new Response
                     {
-                        NumberOfSources = sources.Count(),
-                        RequestedNumberOfWords = command.WordCount,
                         WordCountOutOfRange = true,
                     };
                 }
@@ -63,8 +56,6 @@ namespace Autowriter.Features.WritingGeneration
 
                 return new Response
                 {
-                    NumberOfSources = sources.Count(),
-                    RequestedNumberOfWords = command.WordCount,
                     WordCountOutOfRange = false,
                     Writing = new Response.GeneratedWriting
                     {

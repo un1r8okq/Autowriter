@@ -12,7 +12,6 @@ namespace Autowriter
             CreateMap<Features.SourceMaterial.SourceMaterial, Features.SourceMaterial.ReadSingle.Response>();
             CreateMap<Features.SourceMaterial.SourceMaterial, Features.SourceMaterial.Create.Response.Source>();
 
-            CreateMap<Features.WritingGeneration.GenerateHandler.Response, Pages.Generate.Index.ViewModel>();
             CreateMap<Features.WritingGeneration.GenerateHandler.Response.GeneratedWriting, Pages.Generate.Index.ViewModel.GeneratedWriting>();
         }
     }
