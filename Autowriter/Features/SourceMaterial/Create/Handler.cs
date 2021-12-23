@@ -1,4 +1,3 @@
-using AutoMapper;
 using MediatR;
 
 namespace Autowriter.Features.SourceMaterial
@@ -8,14 +7,10 @@ namespace Autowriter.Features.SourceMaterial
         public class Handler : RequestHandler<Command, Response>
         {
             private readonly ICreateSourceMaterial _sourceCreator;
-            private readonly IReadSourceMaterials _sourceReader;
-            private readonly IMapper _mapper;
 
-            public Handler(ICreateSourceMaterial sourceCreator, IReadSourceMaterials sourceReader, IMapper mapper)
+            public Handler(ICreateSourceMaterial sourceCreator)
             {
                 _sourceCreator = sourceCreator;
-                _sourceReader = sourceReader;
-                _mapper = mapper;
             }
 
             protected override Response Handle(Command command)
@@ -25,12 +20,12 @@ namespace Autowriter.Features.SourceMaterial
                     return new Response { TextWasEmpty = true };
                 }
 
-                _sourceCreator.CreateSource(DateTime.UtcNow, command.Content);
+                var createdSource = _sourceCreator.CreateSource(DateTime.UtcNow, command.Content);
 
                 return new Response
                 {
                     TextWasEmpty = false,
-                    Sources = _mapper.Map<IEnumerable<Response.Source>>(_sourceReader.GetSources()),
+                    CreatedSource = createdSource,
                 };
             }
         }

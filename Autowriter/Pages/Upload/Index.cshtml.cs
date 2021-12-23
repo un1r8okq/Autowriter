@@ -31,12 +31,13 @@ namespace Autowriter.Pages.Upload
 
         public async Task OnPostAsync(Create.Command command)
         {
-            var result = await _mediator.Send(command);
+            var createSourceResponse = await _mediator.Send(command);
+            var sources = await _mediator.Send(new ReadMany.Query());
 
             Data = new ViewModel
             {
-                TextWasEmpty = result.TextWasEmpty,
-                Sources = _mapper.Map<IEnumerable<ViewModel.Source>>(result.Sources),
+                TextWasEmpty = createSourceResponse.TextWasEmpty,
+                Sources = _mapper.Map<IEnumerable<ViewModel.Source>>(sources),
             };
         }
 

@@ -1,7 +1,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AutoMapper;
 using Autowriter.Features.SourceMaterial;
 using MediatR;
 using Moq;
@@ -17,11 +16,7 @@ namespace UnitTests.Features.SourceMaterial.CreateTests
         public HandlerTests()
         {
             _createSourceMock = new Mock<Create.ICreateSourceMaterial>();
-            var readSourceMock = new Mock<IReadSourceMaterials>();
-            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
-            var mapper = mapperConfig.CreateMapper();
-
-            _handler = new Create.Handler(_createSourceMock.Object, readSourceMock.Object, mapper);
+            _handler = new Create.Handler(_createSourceMock.Object);
         }
 
         [Theory]
