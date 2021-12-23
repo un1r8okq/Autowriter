@@ -6,7 +6,7 @@ namespace Autowriter.Pages.Generate
 {
     public interface IReadSourceMaterial
     {
-        IEnumerable<GenerateHandler.SourceMaterial> GetSources();
+        IEnumerable<string> GetSources();
     }
 
     public class SourceMaterialReader : IReadSourceMaterial
@@ -20,8 +20,8 @@ namespace Autowriter.Pages.Generate
             DbHelpers.EnsureDbIsInitialised(connection);
         }
 
-        public IEnumerable<GenerateHandler.SourceMaterial> GetSources() =>
-            _connection.Query<GenerateHandler.SourceMaterial>(
-                $"SELECT id, created, content FROM {DbHelpers.SourceMaterialTableName}");
+        public IEnumerable<string> GetSources() =>
+            _connection.Query<string>(
+                $"SELECT content FROM {DbHelpers.SourceMaterialTableName}");
     }
 }

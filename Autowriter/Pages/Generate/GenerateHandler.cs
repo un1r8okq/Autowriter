@@ -29,11 +29,6 @@ namespace Autowriter.Pages.Generate
             }
         }
 
-        public class SourceMaterial
-        {
-            public string Content { get; set; } = string.Empty;
-        }
-
         public class Handler : RequestHandler<Command, Response>
         {
             private const int MinimumWords = 3;
@@ -80,11 +75,11 @@ namespace Autowriter.Pages.Generate
                 };
             }
 
-            private void BuildLexicon(IEnumerable<SourceMaterial> sources)
+            private void BuildLexicon(IEnumerable<string> sources)
             {
                 foreach (var source in sources)
                 {
-                    var words = source.Content
+                    var words = source
                         .Split(' ')
                         .SelectMany(word => word.Split("\r\n"))
                         .SelectMany(word => word.Split("\r"))

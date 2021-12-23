@@ -1,5 +1,4 @@
 using AutoMapper;
-using Autowriter.Data;
 
 namespace Autowriter
 {
