@@ -7,8 +7,8 @@ namespace Autowriter
         public AutoMapperProfile()
         {
             CreateMap<Features.SourceMaterial.Create.Response.Source, Pages.Upload.Index.ViewModel.Source>();
-            CreateMap<Features.SourceMaterial.IndexHandler.Response, Pages.Upload.Index.ViewModel.Source>();
-            CreateMap<Features.SourceMaterial.SourceMaterial, Features.SourceMaterial.IndexHandler.Response>();
+            CreateMap<Features.SourceMaterial.ReadMany.Response, Pages.Upload.Index.ViewModel.Source>();
+            CreateMap<Features.SourceMaterial.SourceMaterial, Features.SourceMaterial.ReadMany.Response>();
             CreateMap<Features.SourceMaterial.SourceMaterial, Features.SourceMaterial.ReadSingle.Response>();
             CreateMap<Features.SourceMaterial.SourceMaterial, Features.SourceMaterial.Create.Response.Source>();
 

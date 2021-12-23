@@ -3,19 +3,8 @@ using AutoMapper;
 
 namespace Autowriter.Features.SourceMaterial
 {
-    public class IndexHandler
+    public partial class ReadMany
     {
-        public class Query : IRequest<IEnumerable<Response>> { }
-
-        public class Response
-        {
-            public int Id { get; set; }
-
-            public DateTime Created { get; set; }
-
-            public string Content { get; set; } = string.Empty;
-        }
-
         public class Handler : RequestHandler<Query, IEnumerable<Response>>
         {
             private readonly IReadSourceMaterials _sourceReader;

@@ -19,7 +19,7 @@ namespace Autowriter.Pages.Upload
 
         public ViewModel Data { get; private set; }
 
-        public async Task OnGetAsync(IndexHandler.Query query)
+        public async Task OnGetAsync(ReadMany.Query query)
         {
             var sources = await _mediator.Send(query);
 
