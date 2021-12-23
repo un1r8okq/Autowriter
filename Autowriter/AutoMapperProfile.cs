@@ -9,7 +9,7 @@ namespace Autowriter
             CreateMap<Features.SourceMaterial.Create.Response.Source, Pages.Upload.Index.ViewModel.Source>();
             CreateMap<Features.SourceMaterial.IndexHandler.Response, Pages.Upload.Index.ViewModel.Source>();
             CreateMap<Features.SourceMaterial.SourceMaterial, Features.SourceMaterial.IndexHandler.Response>();
-            CreateMap<Features.SourceMaterial.SourceMaterial, Features.SourceMaterial.DetailsHandler.Response>();
+            CreateMap<Features.SourceMaterial.SourceMaterial, Features.SourceMaterial.ReadSingle.Response>();
             CreateMap<Features.SourceMaterial.SourceMaterial, Features.SourceMaterial.Create.Response.Source>();
 
             CreateMap<Features.WritingGeneration.GenerateHandler.Response, Pages.Generate.Index.ViewModel>();

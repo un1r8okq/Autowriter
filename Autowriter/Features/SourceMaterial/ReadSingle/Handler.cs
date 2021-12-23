@@ -3,22 +3,8 @@ using MediatR;
 
 namespace Autowriter.Features.SourceMaterial
 {
-    public class DetailsHandler
+    public partial class ReadSingle
     {
-        public class Query : IRequest<Response>
-        {
-            public int Id { get; set; }
-        }
-
-        public class Response
-        {
-            public int Id { get; set; }
-
-            public DateTime Created { get; set; }
-
-            public string Content { get; set; } = string.Empty;
-        }
-
         public class Handler : RequestHandler<Query, Response>
         {
             private readonly IReadSourceMaterials _sourceReader;

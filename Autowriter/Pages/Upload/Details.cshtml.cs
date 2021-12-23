@@ -17,7 +17,7 @@ namespace Autowriter.Pages.Upload
 
         public ViewModel Data { get; private set; }
 
-        public async Task<IActionResult> OnGetAsync(DetailsHandler.Query query)
+        public async Task<IActionResult> OnGetAsync(ReadSingle.Query query)
         {
             var source = await _mediator.Send(query);
 
