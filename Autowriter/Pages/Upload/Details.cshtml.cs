@@ -35,7 +35,7 @@ namespace Autowriter.Pages.Upload
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(DeleteHandler.Command command)
+        public async Task<IActionResult> OnPostAsync(Delete.Command command)
         {
             var result = await _mediator.Send(command);
             return Redirect("/upload");

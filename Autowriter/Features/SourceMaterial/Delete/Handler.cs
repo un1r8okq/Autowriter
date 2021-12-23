@@ -2,13 +2,8 @@ using MediatR;
 
 namespace Autowriter.Features.SourceMaterial
 {
-    public class DeleteHandler
+    public partial class Delete
     {
-        public class Command : IRequest
-        {
-            public int Id { get; set; }
-        }
-
         public class Handler : RequestHandler<Command>
         {
             private readonly IDeleteSourceMaterial _sourceDeletor;
