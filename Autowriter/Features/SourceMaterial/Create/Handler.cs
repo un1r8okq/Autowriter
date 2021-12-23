@@ -3,29 +3,8 @@ using MediatR;
 
 namespace Autowriter.Features.SourceMaterial
 {
-    public class CreateHandler
+    public partial class Create
     {
-        public class Command : IRequest<Response>
-        {
-            public string Content { get; set; } = string.Empty;
-        }
-
-        public class Response
-        {
-            public bool TextWasEmpty { get; set; }
-
-            public IEnumerable<Source> Sources { get; set; } = Array.Empty<Source>();
-
-            public class Source
-            {
-                public int Id { get; set; }
-
-                public DateTime Created { get; set; }
-
-                public string Content { get; set; } = string.Empty;
-            }
-        }
-
         public class Handler : RequestHandler<Command, Response>
         {
             private readonly ICreateSourceMaterial _sourceCreator;

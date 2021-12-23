@@ -29,7 +29,7 @@ namespace Autowriter.Pages.Upload
             };
         }
 
-        public async Task OnPostAsync(CreateHandler.Command command)
+        public async Task OnPostAsync(Create.Command command)
         {
             var result = await _mediator.Send(command);
 

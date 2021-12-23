@@ -13,7 +13,7 @@ namespace UnitTests.Pages.Upload
     public class CreateTests
     {
         private readonly Mock<ICreateSourceMaterial> _createSourceMock;
-        private readonly IRequestHandler<CreateHandler.Command, CreateHandler.Response> _handler;
+        private readonly IRequestHandler<Create.Command, Create.Response> _handler;
 
         public CreateTests()
         {
@@ -22,7 +22,7 @@ namespace UnitTests.Pages.Upload
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new AutoMapperProfile()));
             var mapper = mapperConfig.CreateMapper();
 
-            _handler = new CreateHandler.Handler(_createSourceMock.Object, readSourceMock.Object, mapper);
+            _handler = new Create.Handler(_createSourceMock.Object, readSourceMock.Object, mapper);
         }
 
         [Theory]
@@ -30,7 +30,7 @@ namespace UnitTests.Pages.Upload
         [InlineData("")]
         public async Task WhenTextIsNullOrEmpty_EmptyTextFlagIsTrue(string text)
         {
-            var command = new CreateHandler.Command { Content = text };
+            var command = new Create.Command { Content = text };
 
             var result = await _handler.Handle(command, CancellationToken.None);
 
@@ -40,7 +40,7 @@ namespace UnitTests.Pages.Upload
         [Fact]
         public async Task WhenTextHasContent_EmptyTextFlagIsFalse()
         {
-            var command = new CreateHandler.Command { Content = "Some text" };
+            var command = new Create.Command { Content = "Some text" };
 
             var result = await _handler.Handle(command, CancellationToken.None);
 
@@ -50,7 +50,7 @@ namespace UnitTests.Pages.Upload
         [Fact]
         public async Task WhenTextHasContent_QueryIsExecuted()
         {
-            var command = new CreateHandler.Command { Content = "Some text" };
+            var command = new Create.Command { Content = "Some text" };
 
             var result = await _handler.Handle(command, CancellationToken.None);
 
