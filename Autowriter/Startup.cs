@@ -18,12 +18,8 @@ namespace Autowriter
             services.AddSingleton<IDbConnection>((serviceProvider) =>
                 new SqliteConnection(Configuration.GetSection("DatabaseName").Value));
 
-            services.AddSingleton<Features.WritingGeneration.Generate.IReadSourceMaterial, Features.WritingGeneration.Generate.SourceMaterialReader>();
-
-            services.AddSingleton<Features.SourceMaterial.SourceMaterialRepository>();
-            services.AddSingleton<Features.SourceMaterial.ICreateSourceMaterial>(x => x.GetRequiredService<Features.SourceMaterial.SourceMaterialRepository>());
-            services.AddSingleton<Features.SourceMaterial.IReadSourceMaterials>(x => x.GetRequiredService<Features.SourceMaterial.SourceMaterialRepository>());
-            services.AddSingleton<Features.SourceMaterial.IDeleteSourceMaterial>(x => x.GetRequiredService<Features.SourceMaterial.SourceMaterialRepository>());
+            Features.SourceMaterial.ConfigureServices.Configure(services);
+            Features.WritingGeneration.ConfigureServices.Configure(services);
 
             services.AddMediatR(typeof(Program));
             services.AddAutoMapper(typeof(Program));

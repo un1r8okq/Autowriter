@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using AutoMapper;
-using Autowriter;
 using Autowriter.Features.SourceMaterial;
 using Microsoft.Data.Sqlite;
 using Xunit;
@@ -14,7 +13,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 
         public GetSourcesTests()
         {
-            var mapperConfig = new MapperConfiguration(m => m.AddProfile<AutoMapperProfile>());
+            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
             var dbConnection = new SqliteConnection("Data Source=:memory:");
 
             _repo = new SourceMaterialRepository(dbConnection);
