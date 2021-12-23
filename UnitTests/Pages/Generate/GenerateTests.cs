@@ -1,4 +1,4 @@
-using Autowriter.Pages.Generate;
+using Autowriter.Features.WritingGeneration;
 using MediatR;
 using Moq;
 using System.Threading;

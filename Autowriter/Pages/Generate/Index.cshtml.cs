@@ -1,6 +1,7 @@
 using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Autowriter.Features.WritingGeneration;
 
 namespace Autowriter.Pages.Generate
 {

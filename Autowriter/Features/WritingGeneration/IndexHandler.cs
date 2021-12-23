@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Autowriter.Pages.Generate
+namespace Autowriter.Features.WritingGeneration
 {
     public class IndexHandler
     {
