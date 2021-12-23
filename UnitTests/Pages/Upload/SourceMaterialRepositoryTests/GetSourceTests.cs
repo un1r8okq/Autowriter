@@ -1,6 +1,6 @@
 using AutoMapper;
 using Autowriter;
-using Autowriter.Pages.Upload;
+using Autowriter.Features.SourceMaterial;
 using Microsoft.Data.Sqlite;
 using System;
 using Xunit;

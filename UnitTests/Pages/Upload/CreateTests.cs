@@ -1,7 +1,6 @@
 using AutoMapper;
 using Autowriter;
-using Autowriter.Data;
-using Autowriter.Pages.Upload;
+using Autowriter.Features.SourceMaterial;
 using MediatR;
 using Moq;
 using System;

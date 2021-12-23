@@ -20,10 +20,10 @@ namespace Autowriter
 
             services.AddSingleton<Features.WritingGeneration.IReadSourceMaterial, Features.WritingGeneration.SourceMaterialReader>();
 
-            services.AddSingleton<Pages.Upload.SourceMaterialRepository>();
-            services.AddSingleton<Pages.Upload.ICreateSourceMaterial>(x => x.GetRequiredService<Pages.Upload.SourceMaterialRepository>());
-            services.AddSingleton<Pages.Upload.IReadSourceMaterials>(x => x.GetRequiredService<Pages.Upload.SourceMaterialRepository>());
-            services.AddSingleton<Pages.Upload.IDeleteSourceMaterial>(x => x.GetRequiredService<Pages.Upload.SourceMaterialRepository>());
+            services.AddSingleton< Features.SourceMaterial.SourceMaterialRepository >();
+            services.AddSingleton<Features.SourceMaterial.ICreateSourceMaterial>(x => x.GetRequiredService<Features.SourceMaterial.SourceMaterialRepository>());
+            services.AddSingleton<Features.SourceMaterial.IReadSourceMaterials>(x => x.GetRequiredService<Features.SourceMaterial.SourceMaterialRepository>());
+            services.AddSingleton< Features.SourceMaterial.IDeleteSourceMaterial >(x => x.GetRequiredService<Features.SourceMaterial.SourceMaterialRepository>());
 
             services.AddMediatR(typeof(Program));
             services.AddAutoMapper(typeof(Program));

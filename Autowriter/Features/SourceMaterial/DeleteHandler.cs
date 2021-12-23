@@ -1,7 +1,6 @@
-using Autowriter.Data;
 using MediatR;
 
-namespace Autowriter.Pages.Upload
+namespace Autowriter.Features.SourceMaterial
 {
     public class DeleteHandler
     {

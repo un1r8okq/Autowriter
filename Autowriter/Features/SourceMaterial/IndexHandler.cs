@@ -1,8 +1,7 @@
 using MediatR;
-using Autowriter.Data;
 using AutoMapper;
 
-namespace Autowriter.Pages.Upload
+namespace Autowriter.Features.SourceMaterial
 {
     public class IndexHandler
     {

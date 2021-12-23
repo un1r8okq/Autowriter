@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Autowriter.Features.SourceMaterial;
 
 namespace Autowriter.Pages.Upload
 {
