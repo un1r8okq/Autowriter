@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Linq;
 using AutoMapper;
 using Autowriter.Features.SourceMaterial;
@@ -9,14 +10,14 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 {
     public class GetSourcesTests
     {
+        private readonly IDbConnection _conn;
         private readonly SourceMaterialRepository _repo;
 
         public GetSourcesTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
-            var dbConnection = new SqliteConnection("Data Source=:memory:");
-
-            _repo = new SourceMaterialRepository(dbConnection);
+            _conn = new SqliteConnection("Data Source=:memory:");
+            _repo = new SourceMaterialRepository(_conn);
         }
 
         [Fact]
@@ -34,7 +35,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
             var content = "Unit test content";
             for (var i = 0; i < 10; i++)
             {
-                _repo.CreateSource(createdDate, content);
+                CreateSource(createdDate, content);
             }
 
             var sources = _repo.GetSources();
@@ -47,7 +48,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
         {
             var createdDate = new DateTime(2021, 12, 4, 15, 47, 0);
             var content = "Unit test content";
-            _repo.CreateSource(createdDate, content);
+            CreateSource(createdDate, content);
 
             var source = _repo.GetSources().First();
             source.Created = DateTime.MinValue;
@@ -60,12 +61,19 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
         {
             var createdDate = new DateTime(2021, 12, 4, 15, 47, 0);
             var content = "Unit test content";
-            _repo.CreateSource(createdDate, content);
+            CreateSource(createdDate, content);
 
             var source = _repo.GetSources().First();
             source.Content = string.Empty;
 
             Assert.Equal(content, _repo.GetSources().First().Content);
+        }
+
+        private void CreateSource(DateTime created, string content)
+        {
+            const string query = $"INSERT INTO {SourceMaterialRepository.TableName} (created, content) VALUES (@created, @content)";
+            var parameters = new { created, content };
+            _conn.Execute(query, parameters);
         }
     }
 }

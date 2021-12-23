@@ -1,6 +1,8 @@
 using System;
+using System.Data;
 using AutoMapper;
 using Autowriter.Features.SourceMaterial;
+using Dapper;
 using Microsoft.Data.Sqlite;
 using Xunit;
 
@@ -8,14 +10,14 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 {
     public class DeleteSourceTests
     {
+        private readonly IDbConnection _conn;
         private readonly SourceMaterialRepository _repo;
 
         public DeleteSourceTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
-            var dbConnection = new SqliteConnection("Data Source=:memory:");
-
-            _repo = new SourceMaterialRepository(dbConnection);
+            _conn = new SqliteConnection("Data Source=:memory:");
+            _repo = new SourceMaterialRepository(_conn);
         }
 
         [Fact]
@@ -29,7 +31,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
         {
             var createdDate = new DateTime(2021, 12, 4, 15, 47, 0);
             var content = "Unit test content";
-            _repo.CreateSource(createdDate, content);
+            CreateSource(createdDate, content);
 
             _repo.DeleteSource(1);
 
@@ -44,8 +46,8 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
             var firstContent = "Unit test content 1";
             var secondCreatedDate = new DateTime(2021, 12, 4, 16, 17, 0);
             var secondContent = "Unit test content 2";
-            _repo.CreateSource(firstCreatedDate, firstContent);
-            _repo.CreateSource(secondCreatedDate, secondContent);
+            CreateSource(firstCreatedDate, firstContent);
+            CreateSource(secondCreatedDate, secondContent);
 
             _repo.DeleteSource(1);
             var source = _repo.GetSource(2);
@@ -62,8 +64,8 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
             var firstContent = "Unit test content 1";
             var secondCreatedDate = new DateTime(2021, 12, 4, 16, 17, 0);
             var secondContent = "Unit test content 2";
-            _repo.CreateSource(firstCreatedDate, firstContent);
-            _repo.CreateSource(secondCreatedDate, secondContent);
+            CreateSource(firstCreatedDate, firstContent);
+            CreateSource(secondCreatedDate, secondContent);
 
             _repo.DeleteSource(2);
             var source = _repo.GetSource(1);
@@ -71,6 +73,13 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
             Assert.Equal(1, source?.Id);
             Assert.Equal(firstCreatedDate, source?.Created);
             Assert.Equal(firstContent, source?.Content);
+        }
+
+        private void CreateSource(DateTime created, string content)
+        {
+            const string query = $"INSERT INTO {SourceMaterialRepository.TableName} (created, content) VALUES (@created, @content)";
+            var parameters = new { created, content };
+            _conn.Execute(query, parameters);
         }
     }
 }

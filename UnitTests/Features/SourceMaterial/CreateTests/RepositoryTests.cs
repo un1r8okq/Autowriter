@@ -1,22 +1,25 @@
 using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using AutoMapper;
 using Autowriter.Features.SourceMaterial;
+using Dapper;
 using Microsoft.Data.Sqlite;
 using Xunit;
 
-namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
+namespace UnitTests.Features.SourceMaterial.CreateTests
 {
-    public class CreateSourceTests
+    public class RepositoryTests
     {
-        private readonly SourceMaterialRepository _repo;
+        private readonly IDbConnection _conn;
+        private readonly Create.Repository _repo;
 
-        public CreateSourceTests()
+        public RepositoryTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
-            var dbConnection = new SqliteConnection("Data Source=:memory:");
-
-            _repo = new SourceMaterialRepository(dbConnection);
+            _conn = new SqliteConnection("Data Source=:memory:");
+            _repo = new Create.Repository(_conn);
         }
 
         [Fact]
@@ -26,7 +29,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
             var content = "Unit test content";
 
             _repo.CreateSource(createdDate, content);
-            var sources = _repo.GetSources();
+            var sources = GetSources();
 
             Assert.Single(sources);
         }
@@ -39,7 +42,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 
             _repo.CreateSource(createdDate, content);
             _repo.CreateSource(createdDate, content);
-            var sources = _repo.GetSources();
+            var sources = GetSources();
 
             Assert.Equal(2, sources.Count());
         }
@@ -51,7 +54,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
             var content = "Unit test content";
 
             _repo.CreateSource(createdDate, content);
-            var sources = _repo.GetSources();
+            var sources = GetSources();
 
             Assert.Contains(sources, source => source.Id == 1);
         }
@@ -64,7 +67,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 
             _repo.CreateSource(createdDate, content);
             _repo.CreateSource(createdDate, content);
-            var sources = _repo.GetSources();
+            var sources = GetSources();
 
             Assert.Contains(sources, source => source.Id == 2);
         }
@@ -79,7 +82,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 
             _repo.CreateSource(firstCreatedDate, firstContent);
             _repo.CreateSource(secondCreatedDate, secondContent);
-            var sources = _repo.GetSources();
+            var sources = GetSources();
 
             Assert.Contains(sources, (source) => source.Created == firstCreatedDate);
             Assert.Contains(sources, (source) => source.Content == firstContent);
@@ -95,10 +98,15 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 
             _repo.CreateSource(firstCreatedDate, firstContent);
             _repo.CreateSource(secondCreatedDate, secondContent);
-            var sources = _repo.GetSources();
+            var sources = GetSources();
 
             Assert.Contains(sources, (source) => source.Created == secondCreatedDate);
             Assert.Contains(sources, (source) => source.Content == secondContent);
         }
+
+        private IEnumerable<Create.Response.Source> GetSources() =>
+            _conn
+                .Query<Create.Response.Source>($"SELECT id, created, content FROM {Create.Repository.TableName}")
+                .OrderByDescending(model => model.Created);
     }
 }

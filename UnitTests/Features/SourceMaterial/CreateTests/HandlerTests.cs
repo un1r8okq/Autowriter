@@ -7,16 +7,16 @@ using MediatR;
 using Moq;
 using Xunit;
 
-namespace UnitTests.Features.SourceMaterial
+namespace UnitTests.Features.SourceMaterial.CreateTests
 {
-    public class CreateTests
+    public class HandlerTests
     {
-        private readonly Mock<ICreateSourceMaterial> _createSourceMock;
+        private readonly Mock<Create.ICreateSourceMaterial> _createSourceMock;
         private readonly IRequestHandler<Create.Command, Create.Response> _handler;
 
-        public CreateTests()
+        public HandlerTests()
         {
-            _createSourceMock = new Mock<ICreateSourceMaterial>();
+            _createSourceMock = new Mock<Create.ICreateSourceMaterial>();
             var readSourceMock = new Mock<IReadSourceMaterials>();
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
             var mapper = mapperConfig.CreateMapper();

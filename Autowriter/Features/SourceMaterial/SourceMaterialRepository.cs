@@ -4,11 +4,6 @@ using Dapper;
 
 namespace Autowriter.Features.SourceMaterial
 {
-    public interface ICreateSourceMaterial
-    {
-        public void CreateSource(DateTime createdDateTime, string content);
-    }
-
     public interface IReadSourceMaterials
     {
         public SourceMaterial? GetSource(int id);
@@ -30,7 +25,7 @@ namespace Autowriter.Features.SourceMaterial
         public string Content { get; set; } = string.Empty;
     }
 
-    public class SourceMaterialRepository : ICreateSourceMaterial, IReadSourceMaterials, IDeleteSourceMaterial
+    public class SourceMaterialRepository : IReadSourceMaterials, IDeleteSourceMaterial
     {
         public const string TableName = "source_material";
 
@@ -41,18 +36,6 @@ namespace Autowriter.Features.SourceMaterial
             _connection = connection;
 
             DbHelpers.EnsureDbIsInitialised(connection);
-        }
-
-        public void CreateSource(DateTime created, string content)
-        {
-            const string query = $"INSERT INTO {TableName} (created, content) VALUES (@created, @content)";
-            var parameters = new { created, content };
-            var affectedRowCount = _connection.Execute(query, parameters);
-
-            if (affectedRowCount != 1)
-            {
-                throw new SourceCreationException();
-            }
         }
 
         public SourceMaterial? GetSource(int id) =>
@@ -69,9 +52,5 @@ namespace Autowriter.Features.SourceMaterial
         public void DeleteSource(int id) =>
             _connection
                 .Execute($"DELETE FROM {TableName} WHERE id = @id", new { id });
-
-        internal class SourceCreationException : Exception
-        {
-        }
     }
 }

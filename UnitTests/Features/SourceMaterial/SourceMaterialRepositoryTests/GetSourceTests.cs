@@ -1,6 +1,8 @@
 using System;
+using System.Data;
 using AutoMapper;
 using Autowriter.Features.SourceMaterial;
+using Dapper;
 using Microsoft.Data.Sqlite;
 using Xunit;
 
@@ -8,14 +10,14 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 {
     public class GetSourceTests
     {
+        private readonly IDbConnection _conn;
         private readonly SourceMaterialRepository _repo;
 
         public GetSourceTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
-            var dbConnection = new SqliteConnection("Data Source=:memory:");
-
-            _repo = new SourceMaterialRepository(dbConnection);
+            _conn = new SqliteConnection("Data Source=:memory:");
+            _repo = new SourceMaterialRepository(_conn);
         }
 
         [Fact]
@@ -31,7 +33,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
         {
             var createdDate = new DateTime(2021, 12, 4, 15, 47, 0);
             var content = "Unit test content";
-            _repo.CreateSource(createdDate, content);
+            CreateSource(createdDate, content);
 
             var source = _repo.GetSource(1);
 
@@ -48,13 +50,20 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
             var secondCreatedDate = new DateTime(2021, 12, 4, 16, 17, 0);
             var secondContent = "Unit test content 2";
 
-            _repo.CreateSource(firstCreatedDate, firstContent);
-            _repo.CreateSource(secondCreatedDate, secondContent);
+            CreateSource(firstCreatedDate, firstContent);
+            CreateSource(secondCreatedDate, secondContent);
             var source = _repo.GetSource(2);
 
             Assert.Equal(2, source?.Id);
             Assert.Equal(secondCreatedDate, source?.Created);
             Assert.Equal(secondContent, source?.Content);
+        }
+
+        private void CreateSource(DateTime created, string content)
+        {
+            const string query = $"INSERT INTO {SourceMaterialRepository.TableName} (created, content) VALUES (@created, @content)";
+            var parameters = new { created, content };
+            _conn.Execute(query, parameters);
         }
     }
 }
