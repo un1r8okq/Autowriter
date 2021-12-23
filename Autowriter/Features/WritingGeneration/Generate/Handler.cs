@@ -1,30 +1,9 @@
 using MediatR;
 
-namespace Autowriter.Features.WritingGeneration
+namespace Autowriter.Features.WritingGeneration.Generate
 {
     public partial class GenerateHandler
     {
-        public class Command : IRequest<Response>
-        {
-            public int WordCount { get; set; }
-        }
-
-        public class Response
-        {
-            public bool WordCountOutOfRange { get; set; }
-
-            public GeneratedWriting? Writing { get; set; }
-
-            public class GeneratedWriting
-            {
-                public int Id { get; set; }
-
-                public DateTime Created { get; set; }
-
-                public string Content { get; set; } = string.Empty;
-            }
-        }
-
         public class Handler : RequestHandler<Command, Response>
         {
             private const int MinimumWords = 3;

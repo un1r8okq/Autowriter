@@ -18,7 +18,7 @@ namespace Autowriter
             services.AddSingleton<IDbConnection>((serviceProvider) =>
                 new SqliteConnection(Configuration.GetSection("DatabaseName").Value));
 
-            services.AddSingleton<Features.WritingGeneration.IReadSourceMaterial, Features.WritingGeneration.SourceMaterialReader>();
+            services.AddSingleton<Features.WritingGeneration.Generate.IReadSourceMaterial, Features.WritingGeneration.Generate.SourceMaterialReader>();
 
             services.AddSingleton<Features.SourceMaterial.SourceMaterialRepository>();
             services.AddSingleton<Features.SourceMaterial.ICreateSourceMaterial>(x => x.GetRequiredService<Features.SourceMaterial.SourceMaterialRepository>());

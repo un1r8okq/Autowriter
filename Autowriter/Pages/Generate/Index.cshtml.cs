@@ -1,6 +1,6 @@
 using AutoMapper;
 using Autowriter.Features.SourceMaterial;
-using Autowriter.Features.WritingGeneration;
+using Autowriter.Features.WritingGeneration.Generate;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 

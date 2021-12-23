@@ -2,7 +2,7 @@ using System.Data;
 using Autowriter.Data;
 using Dapper;
 
-namespace Autowriter.Features.WritingGeneration
+namespace Autowriter.Features.WritingGeneration.Generate
 {
     public interface IReadSourceMaterial
     {
