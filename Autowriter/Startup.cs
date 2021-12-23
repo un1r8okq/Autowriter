@@ -1,6 +1,6 @@
+using System.Data;
 using MediatR;
 using Microsoft.Data.Sqlite;
-using System.Data;
 
 namespace Autowriter
 {
@@ -20,10 +20,10 @@ namespace Autowriter
 
             services.AddSingleton<Features.WritingGeneration.IReadSourceMaterial, Features.WritingGeneration.SourceMaterialReader>();
 
-            services.AddSingleton< Features.SourceMaterial.SourceMaterialRepository >();
+            services.AddSingleton<Features.SourceMaterial.SourceMaterialRepository>();
             services.AddSingleton<Features.SourceMaterial.ICreateSourceMaterial>(x => x.GetRequiredService<Features.SourceMaterial.SourceMaterialRepository>());
             services.AddSingleton<Features.SourceMaterial.IReadSourceMaterials>(x => x.GetRequiredService<Features.SourceMaterial.SourceMaterialRepository>());
-            services.AddSingleton< Features.SourceMaterial.IDeleteSourceMaterial >(x => x.GetRequiredService<Features.SourceMaterial.SourceMaterialRepository>());
+            services.AddSingleton<Features.SourceMaterial.IDeleteSourceMaterial>(x => x.GetRequiredService<Features.SourceMaterial.SourceMaterialRepository>());
 
             services.AddMediatR(typeof(Program));
             services.AddAutoMapper(typeof(Program));

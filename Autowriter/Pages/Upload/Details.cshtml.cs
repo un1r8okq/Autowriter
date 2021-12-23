@@ -1,7 +1,7 @@
+using Autowriter.Features.SourceMaterial;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Autowriter.Features.SourceMaterial;
 
 namespace Autowriter.Pages.Upload
 {
@@ -37,7 +37,7 @@ namespace Autowriter.Pages.Upload
 
         public async Task<IActionResult> OnPostAsync(Delete.Command command)
         {
-            var result = await _mediator.Send(command);
+            await _mediator.Send(command);
             return Redirect("/upload");
         }
 

@@ -1,9 +1,9 @@
-using Autowriter;
-using Microsoft.AspNetCore.Mvc.Testing;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Autowriter;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
 namespace IntegrationTests.Pages.Detail

@@ -1,6 +1,6 @@
+using System.Data;
 using Autowriter.Data;
 using Dapper;
-using System.Data;
 
 namespace Autowriter.Features.WritingGeneration
 {

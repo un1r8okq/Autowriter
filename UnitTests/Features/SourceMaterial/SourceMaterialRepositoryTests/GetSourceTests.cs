@@ -1,8 +1,8 @@
+using System;
 using AutoMapper;
 using Autowriter;
 using Autowriter.Features.SourceMaterial;
 using Microsoft.Data.Sqlite;
-using System;
 using Xunit;
 
 namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests

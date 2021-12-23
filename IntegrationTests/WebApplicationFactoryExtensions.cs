@@ -1,10 +1,10 @@
+using System.Data;
+using System.Net.Http;
 using Autowriter;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data;
-using System.Net.Http;
 
 namespace IntegrationTests
 {
@@ -21,7 +21,7 @@ namespace IntegrationTests
                         {
                             testData.SeedWithTestData(dbConnection);
                         }
-                        
+
                         services.AddSingleton<IDbConnection>(dbConnection);
                     }))
                 .CreateClient();

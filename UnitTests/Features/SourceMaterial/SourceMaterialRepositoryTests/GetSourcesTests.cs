@@ -1,9 +1,9 @@
+using System;
+using System.Linq;
 using AutoMapper;
 using Autowriter;
 using Autowriter.Features.SourceMaterial;
 using Microsoft.Data.Sqlite;
-using System;
-using System.Linq;
 using Xunit;
 
 namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests

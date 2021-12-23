@@ -1,8 +1,8 @@
 using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Autowriter.Features.SourceMaterial;
 using Autowriter.Features.WritingGeneration;
+using MediatR;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Autowriter.Pages.Generate
 {
@@ -61,7 +61,7 @@ namespace Autowriter.Pages.Generate
 
                 public DateTime Created { get; set; }
 
-                public string Content { get; set; } = String.Empty;
+                public string Content { get; set; } = string.Empty;
             }
         }
     }

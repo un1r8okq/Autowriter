@@ -4,7 +4,8 @@ namespace Autowriter.Features.WritingGeneration
 {
     public partial class GenerateHandler
     {
-        public class Command : IRequest<Response> {
+        public class Command : IRequest<Response>
+        {
             public int WordCount { get; set; }
         }
 
@@ -133,7 +134,7 @@ namespace Autowriter.Features.WritingGeneration
                 }
 
                 return string.Join(" ", words);
-            } 
+            }
 
             private List<string> GenerateSentence()
             {
@@ -149,7 +150,7 @@ namespace Autowriter.Features.WritingGeneration
                 }
 
                 words[0] = CapitaliseFirstChar(words[0]);
-                words[words.Count - 1] += ".";
+                words[^1] += ".";
 
                 return words;
             }

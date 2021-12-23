@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="Tax.Settings.Service" Description=" " ToolsVersion="16.0">
+    <Rules AnalyzerId="Microsoft.CodeAnalysis.CSharp.Features" RuleNamespace="Microsoft.CodeAnalysis.CSharp.Features">
+        <Rule Id="IDE0005" Action="Warning" />
+        <Rule Id="IDE0028" Action="Warning" />
+        <Rule Id="IDE0044" Action="Warning" />
+        <Rule Id="IDE0059" Action="Warning" />
+        <Rule Id="IDE1006" Action="None" />
+    </Rules>
+    <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+        <Rule Id="SA0001" Action="None" />
+        <Rule Id="SA1101" Action="None" />
+        <Rule Id="SA1200" Action="None" />
+        <Rule Id="SA1204" Action="None" />
+        <Rule Id="SA1214" Action="None" />
+        <Rule Id="SA1309" Action="None" />
+        <Rule Id="SA1402" Action="None" />
+        <Rule Id="SA1600" Action="None" />
+        <Rule Id="SA1601" Action="None" />
+        <Rule Id="SA1633" Action="None" />
+        <Rule Id="SA1649" Action="None" />
+    </Rules>
+</RuleSet>

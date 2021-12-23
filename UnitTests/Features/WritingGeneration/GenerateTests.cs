@@ -1,8 +1,8 @@
+using System.Threading;
+using System.Threading.Tasks;
 using Autowriter.Features.WritingGeneration;
 using MediatR;
 using Moq;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace UnitTests.Features.WritingGeneration

@@ -1,11 +1,11 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using AutoMapper;
 using Autowriter;
 using Autowriter.Features.SourceMaterial;
 using MediatR;
 using Moq;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace UnitTests.Features.SourceMaterial

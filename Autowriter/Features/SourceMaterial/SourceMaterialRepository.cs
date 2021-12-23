@@ -1,18 +1,9 @@
+using System.Data;
 using Autowriter.Data;
 using Dapper;
-using System.Data;
 
 namespace Autowriter.Features.SourceMaterial
 {
-    public class SourceMaterial
-    {
-        public int Id { get; set; }
-
-        public DateTime Created { get; set; }
-
-        public string Content { get; set; } = string.Empty;
-    }
-
     public interface ICreateSourceMaterial
     {
         public void CreateSource(DateTime createdDateTime, string content);
@@ -30,9 +21,18 @@ namespace Autowriter.Features.SourceMaterial
         public void DeleteSource(int id);
     }
 
+    public class SourceMaterial
+    {
+        public int Id { get; set; }
+
+        public DateTime Created { get; set; }
+
+        public string Content { get; set; } = string.Empty;
+    }
+
     public class SourceMaterialRepository : ICreateSourceMaterial, IReadSourceMaterials, IDeleteSourceMaterial
     {
-        internal class SourceCreationException : Exception { }
+        public const string TableName = "source_material";
 
         private readonly IDbConnection _connection;
 
@@ -42,8 +42,6 @@ namespace Autowriter.Features.SourceMaterial
 
             DbHelpers.EnsureDbIsInitialised(connection);
         }
-
-        public const string TableName = "source_material";
 
         public void CreateSource(DateTime created, string content)
         {
@@ -71,5 +69,9 @@ namespace Autowriter.Features.SourceMaterial
         public void DeleteSource(int id) =>
             _connection
                 .Execute($"DELETE FROM {TableName} WHERE id = @id", new { id });
+
+        internal class SourceCreationException : Exception
+        {
+        }
     }
 }
