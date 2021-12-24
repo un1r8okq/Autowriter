@@ -1,9 +1,9 @@
 using System.Data;
 using System.Net.Http;
 using Autowriter;
+using Autowriter.Data;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace IntegrationTests
@@ -15,7 +15,7 @@ namespace IntegrationTests
                 .WithWebHostBuilder(builder =>
                     builder.ConfigureTestServices(services =>
                     {
-                        var dbConnection = new SqliteConnection("Data Source=:memory:");
+                        var dbConnection = DbConnectionFactory.Build("Data Source=:memory:");
 
                         if (testData != null)
                         {

@@ -3,23 +3,20 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using AutoMapper;
-using Autowriter.Data;
 using Autowriter.Features.SourceMaterial;
 using Dapper;
-using Microsoft.Data.Sqlite;
 using Xunit;
 
 namespace UnitTests.Features.SourceMaterial.DeleteTests
 {
-    public class RepositoryTests
+    public class RepositoryTests : SqliteBackedTest
     {
-        private readonly IDbConnection _conn;
+        private const string TableName = "source_material";
         private readonly Delete.Repository _repo;
 
         public RepositoryTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
-            _conn = new SqliteConnection("Data Source=:memory:");
             _repo = new Delete.Repository(_conn);
         }
 
@@ -80,20 +77,20 @@ namespace UnitTests.Features.SourceMaterial.DeleteTests
 
         private void CreateSource(DateTime created, string content)
         {
-            const string query = $"INSERT INTO {DbHelpers.SourceMaterialTableName} (created, content) VALUES (@created, @content)";
+            const string query = $"INSERT INTO {TableName} (created, content) VALUES (@created, @content)";
             var parameters = new { created, content };
             _conn.Execute(query, parameters);
         }
 
         private SourceMaterial? GetSource(int id) =>
             _conn
-                .Query<SourceMaterial>($"SELECT id, created, content FROM {DbHelpers.SourceMaterialTableName} WHERE id = @id", new { id })
+                .Query<SourceMaterial>($"SELECT id, created, content FROM {TableName} WHERE id = @id", new { id })
                 .OrderByDescending(model => model.Created)
                 .FirstOrDefault();
 
         private IEnumerable<SourceMaterial> GetSources() =>
             _conn
-                .Query<SourceMaterial>($"SELECT id, created, content FROM {DbHelpers.SourceMaterialTableName}")
+                .Query<SourceMaterial>($"SELECT id, created, content FROM {TableName}")
                 .OrderByDescending(model => model.Created);
 
         private class SourceMaterial

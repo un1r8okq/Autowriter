@@ -1,5 +1,4 @@
 using System.Data;
-using Autowriter.Data;
 using Dapper;
 
 namespace Autowriter.Features.SourceMaterial
@@ -18,8 +17,6 @@ namespace Autowriter.Features.SourceMaterial
             public Repository(IDbConnection connection)
             {
                 _connection = connection;
-
-                DbHelpers.EnsureDbIsInitialised(connection);
             }
 
             public SourceMaterial CreateSource(DateTime created, string content)

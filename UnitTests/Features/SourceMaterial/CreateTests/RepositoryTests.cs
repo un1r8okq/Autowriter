@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using AutoMapper;
-using Autowriter.Data;
 using Autowriter.Features.SourceMaterial;
 using Dapper;
-using Microsoft.Data.Sqlite;
 using Xunit;
 
 namespace UnitTests.Features.SourceMaterial.CreateTests
 {
-    public class RepositoryTests
+    public class RepositoryTests : SqliteBackedTest
     {
-        private readonly IDbConnection _conn;
         private readonly Create.Repository _repo;
 
         public RepositoryTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
-            _conn = new SqliteConnection("Data Source=:memory:");
             _repo = new Create.Repository(_conn);
         }
 
@@ -107,7 +103,7 @@ namespace UnitTests.Features.SourceMaterial.CreateTests
 
         private IEnumerable<Create.Response.SourceMaterial> GetSources() =>
             _conn
-                .Query<Create.Response.SourceMaterial>($"SELECT id, created, content FROM {DbHelpers.SourceMaterialTableName}")
+                .Query<Create.Response.SourceMaterial>("SELECT id, created, content FROM source_material")
                 .OrderByDescending(model => model.Created);
     }
 }

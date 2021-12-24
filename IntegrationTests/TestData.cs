@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using Autowriter.Data;
 using Dapper;
 
 namespace IntegrationTests
@@ -12,8 +11,6 @@ namespace IntegrationTests
 
         public void SeedWithTestData(IDbConnection dbConnection)
         {
-            DbHelpers.EnsureDbIsInitialised(dbConnection);
-
             foreach (var source in Sources)
             {
                 InsertSourceMaterial(dbConnection, source);
@@ -22,7 +19,7 @@ namespace IntegrationTests
 
         private static void InsertSourceMaterial(IDbConnection dbConnection, SourceMaterial source)
         {
-            var query = $"INSERT INTO {DbHelpers.SourceMaterialTableName}" +
+            var query = $"INSERT INTO source_material" +
                 "(created, content) VALUES (@created, @content)";
             var parameters = new
             {

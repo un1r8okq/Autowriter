@@ -1,5 +1,4 @@
 using System.Data;
-using Autowriter.Data;
 using Dapper;
 
 namespace Autowriter.Features.WritingGeneration.Generate
@@ -16,12 +15,9 @@ namespace Autowriter.Features.WritingGeneration.Generate
         public SourceMaterialReader(IDbConnection connection)
         {
             _connection = connection;
-
-            DbHelpers.EnsureDbIsInitialised(connection);
         }
 
         public IEnumerable<string> GetSources() =>
-            _connection.Query<string>(
-                $"SELECT content FROM {DbHelpers.SourceMaterialTableName}");
+            _connection.Query<string>("SELECT content FROM source_material");
     }
 }
