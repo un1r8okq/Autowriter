@@ -105,9 +105,9 @@ namespace UnitTests.Features.SourceMaterial.CreateTests
             Assert.Contains(sources, (source) => source.Content == secondContent);
         }
 
-        private IEnumerable<Create.SourceMaterial> GetSources() =>
+        private IEnumerable<Create.Response.SourceMaterial> GetSources() =>
             _conn
-                .Query<Create.SourceMaterial>($"SELECT id, created, content FROM {DbHelpers.SourceMaterialTableName}")
+                .Query<Create.Response.SourceMaterial>($"SELECT id, created, content FROM {DbHelpers.SourceMaterialTableName}")
                 .OrderByDescending(model => model.Created);
     }
 }

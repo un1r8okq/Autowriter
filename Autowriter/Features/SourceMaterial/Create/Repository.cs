@@ -8,7 +8,7 @@ namespace Autowriter.Features.SourceMaterial
     {
         public interface ICreateSourceMaterial
         {
-            public SourceMaterial CreateSource(DateTime createdDateTime, string content);
+            public Response.SourceMaterial CreateSource(DateTime createdDateTime, string content);
         }
 
         public class Repository : ICreateSourceMaterial
@@ -22,13 +22,13 @@ namespace Autowriter.Features.SourceMaterial
                 DbHelpers.EnsureDbIsInitialised(connection);
             }
 
-            public SourceMaterial CreateSource(DateTime created, string content)
+            public Response.SourceMaterial CreateSource(DateTime created, string content)
             {
                 const string query = $"INSERT INTO {DbHelpers.SourceMaterialTableName} " +
                     "(created, content) VALUES (@created, @content) " +
                     "RETURNING id, created, content";
                 var parameters = new { created, content };
-                var createdSource = _connection.QuerySingle<SourceMaterial>(query, parameters);
+                var createdSource = _connection.QuerySingle<Response.SourceMaterial>(query, parameters);
 
                 return createdSource;
             }
