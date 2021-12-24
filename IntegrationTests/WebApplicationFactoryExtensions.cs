@@ -1,7 +1,6 @@
 using System.Data;
 using System.Net.Http;
 using Autowriter;
-using Autowriter.Data;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;

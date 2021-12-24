@@ -2,7 +2,7 @@ using System.Data;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
-namespace Autowriter.Data
+namespace Autowriter
 {
     public static class DbConnectionFactory
     {
@@ -10,7 +10,7 @@ namespace Autowriter.Data
         {
             var conn = new SqliteConnection(connectionString);
             EnsureConnectionIsOpen(conn);
-            EnsureTableExists(conn, "source_material");
+            EnsureSourceMaterialTableExists(conn);
 
             return conn;
         }
@@ -23,11 +23,11 @@ namespace Autowriter.Data
             }
         }
 
-        private static void EnsureTableExists(IDbConnection conn, string tableName)
+        private static void EnsureSourceMaterialTableExists(IDbConnection conn)
         {
             lock (conn)
             {
-                var query = $"CREATE TABLE IF NOT EXISTS {tableName} (" +
+                var query = $"CREATE TABLE IF NOT EXISTS source_material (" +
                     "id INTEGER PRIMARY KEY," +
                     "created TEXT NOT NULL," +
                     "content BLOB NOT NULL" +
