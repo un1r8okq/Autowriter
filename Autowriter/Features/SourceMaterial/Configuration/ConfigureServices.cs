@@ -5,10 +5,8 @@ namespace Autowriter.Features.SourceMaterial
         public static void Configure(IServiceCollection services)
         {
             services.AddSingleton<Create.ICreateSourceMaterial, Create.Repository>();
-
-            services.AddSingleton<SourceMaterialRepository>();
-            services.AddSingleton<IReadSourceMaterials>(x => x.GetRequiredService<SourceMaterialRepository>());
-            services.AddSingleton<IDeleteSourceMaterial>(x => x.GetRequiredService<SourceMaterialRepository>());
+            services.AddSingleton<Delete.IDeleteSourceMaterial, Delete.Repository>();
+            services.AddSingleton<IReadSourceMaterials, SourceMaterialRepository>();
         }
     }
 }

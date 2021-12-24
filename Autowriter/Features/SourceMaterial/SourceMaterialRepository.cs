@@ -11,11 +11,6 @@ namespace Autowriter.Features.SourceMaterial
         public IEnumerable<SourceMaterial> GetSources();
     }
 
-    public interface IDeleteSourceMaterial
-    {
-        public void DeleteSource(int id);
-    }
-
     public class SourceMaterial
     {
         public int Id { get; set; }
@@ -25,7 +20,7 @@ namespace Autowriter.Features.SourceMaterial
         public string Content { get; set; } = string.Empty;
     }
 
-    public class SourceMaterialRepository : IReadSourceMaterials, IDeleteSourceMaterial
+    public class SourceMaterialRepository : IReadSourceMaterials
     {
         public const string TableName = "source_material";
 
@@ -48,9 +43,5 @@ namespace Autowriter.Features.SourceMaterial
             _connection
                 .Query<SourceMaterial>($"SELECT id, created, content FROM {TableName}")
                 .OrderByDescending(model => model.Created);
-
-        public void DeleteSource(int id) =>
-            _connection
-                .Execute($"DELETE FROM {TableName} WHERE id = @id", new { id });
     }
 }

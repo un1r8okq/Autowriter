@@ -1,23 +1,26 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using AutoMapper;
+using Autowriter.Data;
 using Autowriter.Features.SourceMaterial;
 using Dapper;
 using Microsoft.Data.Sqlite;
 using Xunit;
 
-namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
+namespace UnitTests.Features.SourceMaterial.DeleteTests
 {
-    public class DeleteSourceTests
+    public class RepositoryTests
     {
         private readonly IDbConnection _conn;
-        private readonly SourceMaterialRepository _repo;
+        private readonly Delete.Repository _repo;
 
-        public DeleteSourceTests()
+        public RepositoryTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
             _conn = new SqliteConnection("Data Source=:memory:");
-            _repo = new SourceMaterialRepository(_conn);
+            _repo = new Delete.Repository(_conn);
         }
 
         [Fact]
@@ -35,8 +38,8 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 
             _repo.DeleteSource(1);
 
-            Assert.Null(_repo.GetSource(1));
-            Assert.Empty(_repo.GetSources());
+            Assert.Null(GetSource(1));
+            Assert.Empty(GetSources());
         }
 
         [Fact]
@@ -50,7 +53,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
             CreateSource(secondCreatedDate, secondContent);
 
             _repo.DeleteSource(1);
-            var source = _repo.GetSource(2);
+            var source = GetSource(2);
 
             Assert.Equal(2, source?.Id);
             Assert.Equal(secondCreatedDate, source?.Created);
@@ -68,7 +71,7 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
             CreateSource(secondCreatedDate, secondContent);
 
             _repo.DeleteSource(2);
-            var source = _repo.GetSource(1);
+            var source = GetSource(1);
 
             Assert.Equal(1, source?.Id);
             Assert.Equal(firstCreatedDate, source?.Created);
@@ -77,9 +80,29 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 
         private void CreateSource(DateTime created, string content)
         {
-            const string query = $"INSERT INTO {SourceMaterialRepository.TableName} (created, content) VALUES (@created, @content)";
+            const string query = $"INSERT INTO {DbHelpers.SourceMaterialTableName} (created, content) VALUES (@created, @content)";
             var parameters = new { created, content };
             _conn.Execute(query, parameters);
+        }
+
+        private SourceMaterial? GetSource(int id) =>
+            _conn
+                .Query<SourceMaterial>($"SELECT id, created, content FROM {DbHelpers.SourceMaterialTableName} WHERE id = @id", new { id })
+                .OrderByDescending(model => model.Created)
+                .FirstOrDefault();
+
+        private IEnumerable<SourceMaterial> GetSources() =>
+            _conn
+                .Query<SourceMaterial>($"SELECT id, created, content FROM {DbHelpers.SourceMaterialTableName}")
+                .OrderByDescending(model => model.Created);
+
+        private class SourceMaterial
+        {
+            public int Id { get; set; }
+
+            public DateTime Created { get; set; }
+
+            public string Content { get; set; } = string.Empty;
         }
     }
 }
