@@ -4,15 +4,15 @@ using Autowriter.Features.SourceMaterial;
 using Dapper;
 using Xunit;
 
-namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
+namespace UnitTests.Features.SourceMaterial.ReadSingleTests
 {
-    public class GetSourceTests : SqliteBackedTest
+    public class RepositoryTests : SqliteBackedTest
     {
         private readonly ReadSingle.Repository _repo;
 
-        public GetSourceTests()
+        public RepositoryTests()
         {
-            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
+            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new ReadSingle.AutoMapper()));
             _repo = new ReadSingle.Repository(_conn);
         }
 

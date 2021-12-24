@@ -15,7 +15,7 @@ namespace UnitTests.Features.SourceMaterial.CreateTests
 
         public RepositoryTests()
         {
-            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
+            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Create.AutoMapper()));
             _repo = new Create.Repository(_conn);
         }
 

@@ -1,7 +1,7 @@
 using AutoMapper;
 using Autowriter.Features.SourceMaterial;
-using Autowriter.Features.WritingGeneration.Generate;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Autowriter.Pages.Generate
@@ -31,15 +31,16 @@ namespace Autowriter.Pages.Generate
             };
         }
 
-        public async Task OnPostAsync(GenerateHandler.Command command)
+        public async Task OnPostAsync([FromBody] int wordCount)
         {
             var sourceCount = await _mediator.Send(new Count.Query());
-            var generateWritingResponse = await _mediator.Send(command);
+            var generateWritingCommand = new Features.WritingGeneration.Generate.Command { WordCount = wordCount };
+            var generateWritingResponse = await _mediator.Send(generateWritingCommand);
 
             Data = new ViewModel
             {
                 NumberOfSources = sourceCount,
-                RequestedNumberOfWords = command.WordCount,
+                RequestedNumberOfWords = wordCount,
                 WordCountOutOfRange = generateWritingResponse.WordCountOutOfRange,
                 Writing = _mapper.Map<ViewModel.GeneratedWriting>(generateWritingResponse.Writing),
             };

@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace UnitTests.Features.SourceMaterial
+namespace UnitTests.Pages.Generate
 {
     public class AutomapperTests
     {
@@ -8,7 +8,7 @@ namespace UnitTests.Features.SourceMaterial
         public void ConfigurationIsValid()
         {
             var config = new AutoMapper.MapperConfiguration(mapper =>
-                mapper.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
+                mapper.AddProfile(new Autowriter.Pages.Generate.AutoMapperConfig()));
 
             config.AssertConfigurationIsValid();
         }

@@ -17,7 +17,7 @@ namespace UnitTests.Features.SourceMaterial.CreateTests
         public HandlerTests()
         {
             _createSourceMock = new Mock<Create.ICreateSourceMaterial>();
-            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
+            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Create.AutoMapper()));
             var mapper = mapperConfig.CreateMapper();
             _handler = new Create.Handler(_createSourceMock.Object, mapper);
         }

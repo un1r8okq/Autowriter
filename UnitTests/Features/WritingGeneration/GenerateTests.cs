@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Autowriter.Features.WritingGeneration.Generate;
+using Autowriter.Features.WritingGeneration;
 using MediatR;
 using Moq;
 using Xunit;
@@ -9,12 +9,12 @@ namespace UnitTests.Features.WritingGeneration
 {
     public class GenerateTests
     {
-        private readonly IRequestHandler<GenerateHandler.Command, GenerateHandler.Response> _handler;
+        private readonly IRequestHandler<Generate.Command, Generate.Response> _handler;
 
         public GenerateTests()
         {
-            var readSourceMock = Mock.Of<IReadSourceMaterial>();
-            _handler = new GenerateHandler.Handler(readSourceMock);
+            var readSourceMock = Mock.Of<Generate.IReadSourceMaterial>();
+            _handler = new Generate.Handler(readSourceMock);
         }
 
         [Theory]
@@ -24,7 +24,7 @@ namespace UnitTests.Features.WritingGeneration
         [InlineData(10001)]
         public async Task WhenRequestedNumberOfWordsIsNotWithinBounds_WordCountOutOfRange(int wordCount)
         {
-            var command = new GenerateHandler.Command { WordCount = wordCount };
+            var command = new Generate.Command { WordCount = wordCount };
 
             var response = await _handler.Handle(command, CancellationToken.None);
 
@@ -37,7 +37,7 @@ namespace UnitTests.Features.WritingGeneration
         [InlineData(1000)]
         public async Task WhenRequestedNumberOfWordsIsNotWithinBounds_WordCountNotOutOfRange(int wordCount)
         {
-            var command = new GenerateHandler.Command { WordCount = wordCount };
+            var command = new Generate.Command { WordCount = wordCount };
 
             var response = await _handler.Handle(command, CancellationToken.None);
 

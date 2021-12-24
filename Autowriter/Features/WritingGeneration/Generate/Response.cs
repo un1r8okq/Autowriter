@@ -1,6 +1,6 @@
-﻿namespace Autowriter.Features.WritingGeneration.Generate
+namespace Autowriter.Features.WritingGeneration
 {
-    public partial class GenerateHandler
+    public partial class Generate
     {
         public class Response
         {

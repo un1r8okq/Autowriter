@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using AutoMapper;
 using Autowriter.Features.SourceMaterial;
 using Dapper;
 using Xunit;
@@ -16,7 +15,6 @@ namespace UnitTests.Features.SourceMaterial.DeleteTests
 
         public RepositoryTests()
         {
-            var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
             _repo = new Delete.Repository(_conn);
         }
 
