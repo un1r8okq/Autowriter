@@ -7,6 +7,7 @@ namespace Autowriter.Features.SourceMaterial
         public AutoMapper()
         {
             CreateMap<Create.Repository.SourceMaterial, Create.Response.SourceMaterial>();
+            CreateMap<ReadMany.Repository.SourceMaterial, ReadMany.Response>();
             CreateMap<ReadMany.Response, Pages.Upload.Index.ViewModel.Source>();
             CreateMap<SourceMaterial, ReadMany.Response>();
             CreateMap<SourceMaterial, ReadSingle.Response>();

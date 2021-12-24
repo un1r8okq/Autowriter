@@ -6,8 +6,6 @@ namespace Autowriter.Features.SourceMaterial
     public interface IReadSourceMaterials
     {
         public SourceMaterial? GetSource(int id);
-
-        public IEnumerable<SourceMaterial> GetSources();
     }
 
     public class SourceMaterial
@@ -34,10 +32,5 @@ namespace Autowriter.Features.SourceMaterial
                 .Query<SourceMaterial>($"SELECT id, created, content FROM {TableName} WHERE id = @id", new { id })
                 .OrderByDescending(model => model.Created)
                 .FirstOrDefault();
-
-        public IEnumerable<SourceMaterial> GetSources() =>
-            _connection
-                .Query<SourceMaterial>($"SELECT id, created, content FROM {TableName}")
-                .OrderByDescending(model => model.Created);
     }
 }

@@ -20,8 +20,7 @@ namespace Autowriter.Features.SourceMaterial
             }
 
             public void DeleteSource(int id) =>
-                _connection
-                    .Execute($"DELETE FROM source_material WHERE id = @id", new { id });
+                _connection.Execute($"DELETE FROM source_material WHERE id = @id", new { id });
         }
     }
 }

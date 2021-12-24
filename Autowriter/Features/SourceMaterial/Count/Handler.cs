@@ -6,15 +6,15 @@ namespace Autowriter.Features.SourceMaterial
     {
         public class Handler : RequestHandler<Query, int>
         {
-            private readonly IReadSourceMaterials _sourceReader;
+            private readonly ICountSourceMaterials _sourceCounter;
 
-            public Handler(IReadSourceMaterials sourceReader)
+            public Handler(ICountSourceMaterials sourceReader)
             {
-                _sourceReader = sourceReader;
+                _sourceCounter = sourceReader;
             }
 
             protected override int Handle(Query query) =>
-                _sourceReader.GetSources().Count();
+                _sourceCounter.CountSources();
         }
     }
 }

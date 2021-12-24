@@ -9,12 +9,12 @@ namespace UnitTests.Features.SourceMaterial.SourceMaterialRepositoryTests
 {
     public class GetSourcesTests : SqliteBackedTest
     {
-        private readonly SourceMaterialRepository _repo;
+        private readonly ReadMany.Repository _repo;
 
         public GetSourcesTests()
         {
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Autowriter.Features.SourceMaterial.AutoMapper()));
-            _repo = new SourceMaterialRepository(_conn);
+            _repo = new ReadMany.Repository(_conn);
         }
 
         [Fact]
