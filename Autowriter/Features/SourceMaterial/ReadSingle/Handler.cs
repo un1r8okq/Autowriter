@@ -7,10 +7,10 @@ namespace Autowriter.Features.SourceMaterial
     {
         public class Handler : RequestHandler<Query, Response>
         {
-            private readonly IReadSourceMaterials _sourceReader;
+            private readonly IReadSourceMaterial _sourceReader;
             private readonly IMapper _mapper;
 
-            public Handler(IReadSourceMaterials sourceReader, IMapper mapper)
+            public Handler(IReadSourceMaterial sourceReader, IMapper mapper)
             {
                 _mapper = mapper;
                 _sourceReader = sourceReader;

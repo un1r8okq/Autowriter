@@ -8,7 +8,7 @@ namespace Autowriter.Features.SourceMaterial
             services.AddSingleton<Delete.IDeleteSourceMaterial, Delete.Repository>();
             services.AddSingleton<Count.ICountSourceMaterials, Count.Repository>();
             services.AddSingleton<ReadMany.IReadSourceMaterials, ReadMany.Repository>();
-            services.AddSingleton<IReadSourceMaterials, SourceMaterialRepository>();
+            services.AddSingleton<ReadSingle.IReadSourceMaterial, ReadSingle.Repository>();
         }
     }
 }
