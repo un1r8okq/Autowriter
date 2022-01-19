@@ -1,5 +1,4 @@
 using System.Data;
-using MediatR;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,8 +12,6 @@ namespace Autowriter.Core
 
             Features.SourceMaterial.Count.ConfigureServices(services);
             Features.SourceMaterial.Create.ConfigureServices(services);
-
-            services.AddMediatR(typeof(Features.SourceMaterial.Count));
         }
 
         private static void RegisterDbConnection(IServiceCollection services)

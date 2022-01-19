@@ -1,3 +1,4 @@
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Autowriter.Core.Features.SourceMaterial
@@ -7,6 +8,7 @@ namespace Autowriter.Core.Features.SourceMaterial
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<ICountSourceMaterials, Repository>();
+            services.AddMediatR(typeof(Count));
         }
     }
 }
