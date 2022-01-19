@@ -1,4 +1,5 @@
 using System.Data;
+using Autowriter.Core;
 using MediatR;
 using Microsoft.Data.Sqlite;
 
@@ -18,7 +19,7 @@ namespace Autowriter
             services.AddSingleton<IDbConnection>((serviceProvider) =>
                 new SqliteConnection(Configuration.GetSection("DatabaseName").Value));
 
-            Features.SourceMaterial.Count.ConfigureServices(services);
+            services.RegisterAutowriterCoreServices();
             Features.SourceMaterial.Create.ConfigureServices(services);
             Features.SourceMaterial.Delete.ConfigureServices(services);
             Features.SourceMaterial.ReadMany.ConfigureServices(services);

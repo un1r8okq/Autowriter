@@ -1,4 +1,6 @@
-namespace Autowriter.Features.SourceMaterial
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Autowriter.Core.Features.SourceMaterial
 {
     public partial class Count
     {

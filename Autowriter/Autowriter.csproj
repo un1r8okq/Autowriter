@@ -29,4 +29,8 @@
     <InternalsVisibleTo Include="IntegrationTests" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Autowriter.Core\Autowriter.Core.csproj" />
+  </ItemGroup>
+
 </Project>
