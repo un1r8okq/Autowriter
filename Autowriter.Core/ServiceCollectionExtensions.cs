@@ -12,6 +12,7 @@ namespace Autowriter.Core
             RegisterDbConnection(services);
 
             Features.SourceMaterial.Count.ConfigureServices(services);
+            Features.SourceMaterial.Create.ConfigureServices(services);
 
             services.AddMediatR(typeof(Features.SourceMaterial.Count));
         }

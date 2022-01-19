@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using AutoMapper;
-using Autowriter.Features.SourceMaterial;
+using Autowriter.Core.Features.SourceMaterial;
 using Dapper;
 using Xunit;
 

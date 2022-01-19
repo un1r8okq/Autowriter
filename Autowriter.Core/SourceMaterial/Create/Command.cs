@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Autowriter.Features.SourceMaterial
+namespace Autowriter.Core.Features.SourceMaterial
 {
     public partial class Create
     {

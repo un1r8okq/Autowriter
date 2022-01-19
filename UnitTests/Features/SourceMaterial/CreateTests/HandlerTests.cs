@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
-using Autowriter.Features.SourceMaterial;
+using Autowriter.Core.Features.SourceMaterial;
 using MediatR;
 using Moq;
 using Xunit;

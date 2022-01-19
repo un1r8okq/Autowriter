@@ -20,7 +20,6 @@ namespace Autowriter
                 new SqliteConnection(Configuration.GetSection("DatabaseName").Value));
 
             services.RegisterAutowriterCoreServices();
-            Features.SourceMaterial.Create.ConfigureServices(services);
             Features.SourceMaterial.Delete.ConfigureServices(services);
             Features.SourceMaterial.ReadMany.ConfigureServices(services);
             Features.SourceMaterial.ReadSingle.ConfigureServices(services);
