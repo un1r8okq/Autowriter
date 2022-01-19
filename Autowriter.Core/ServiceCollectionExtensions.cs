@@ -13,6 +13,7 @@ namespace Autowriter.Core
             Features.SourceMaterial.Count.ConfigureServices(services);
             Features.SourceMaterial.Create.ConfigureServices(services);
             Features.SourceMaterial.Delete.ConfigureServices(services);
+            Features.SourceMaterial.ReadMany.ConfigureServices(services);
         }
 
         private static void RegisterDbConnection(IServiceCollection services)

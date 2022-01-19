@@ -21,7 +21,6 @@ namespace Autowriter
 
             services.RegisterAutowriterCoreServices();
 
-            Features.SourceMaterial.ReadMany.ConfigureServices(services);
             Features.SourceMaterial.ReadSingle.ConfigureServices(services);
             Features.WritingGeneration.Generate.ConfigureServices(services);
 

@@ -1,12 +1,14 @@
 using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Autowriter.Features.SourceMaterial
+namespace Autowriter.Core.Features.SourceMaterial
 {
     public partial class ReadMany
     {
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IReadSourceMaterials, Repository>();
+            services.AddAutoMapper(typeof(ReadMany));
         }
 
         public class AutoMapper : Profile

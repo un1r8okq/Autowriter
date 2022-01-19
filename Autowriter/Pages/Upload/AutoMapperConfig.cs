@@ -6,7 +6,7 @@ namespace Autowriter.Pages.Upload
     {
         public AutoMapperConfig()
         {
-            CreateMap<Features.SourceMaterial.ReadMany.Response, Index.ViewModel.Source>();
+            CreateMap<Core.Features.SourceMaterial.ReadMany.Response, Index.ViewModel.Source>();
         }
     }
 }

@@ -1,7 +1,7 @@
 using System.Data;
 using Dapper;
 
-namespace Autowriter.Features.SourceMaterial
+namespace Autowriter.Core.Features.SourceMaterial
 {
     public partial class ReadMany
     {
