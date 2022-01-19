@@ -20,8 +20,8 @@
         <p>
             Why not generate something?
             <form method="post">
-                <label for="wordcount">Word count:</label>
-                <input type="range" min="1" max="10000" value="@Model.Data.RequestedNumberOfWords" name="wordcount">
+                <label for="wordcount">Word count (@Model.Data.MinWordCount-@Model.Data.MaxWordCount):</label>
+                <input type="number" min="@Model.Data.MinWordCount" max="@Model.Data.MaxWordCount" value="@Model.Data.RequestedNumberOfWords" name="wordcount">
                 <input type="submit" value="generate" />
             </form>
             @if (Model.Data.WordCountOutOfRange)

@@ -6,8 +6,6 @@ namespace Autowriter.Features.WritingGeneration
     {
         public class Handler : RequestHandler<Command, Response>
         {
-            private const int MinimumWords = 3;
-            private const int MaximumWords = 10000;
             private readonly Random _random;
             private readonly IReadSourceMaterial _sourceReader;
             private readonly Dictionary<string, Dictionary<string, int>> _lexicon;
@@ -23,7 +21,7 @@ namespace Autowriter.Features.WritingGeneration
             {
                 var sources = _sourceReader.GetSources();
 
-                if (command.WordCount < MinimumWords || command.WordCount > MaximumWords)
+                if (command.WordCount < Command.MinWordCount || command.WordCount > Command.MaxWordCount)
                 {
                     return new Response
                     {
@@ -118,7 +116,7 @@ namespace Autowriter.Features.WritingGeneration
             private List<string> GenerateSentence()
             {
                 var words = new List<string>();
-                var desiredWordCount = _random.Next(MinimumWords, 20);
+                var desiredWordCount = _random.Next(Command.MinWordCount, 20);
 
                 var previousWord = RandomWord();
 

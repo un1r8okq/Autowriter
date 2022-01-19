@@ -52,6 +52,10 @@ namespace Autowriter.Pages.Generate
 
             public int RequestedNumberOfWords { get; set; }
 
+            public int MinWordCount => Features.WritingGeneration.Generate.Command.MinWordCount;
+
+            public int MaxWordCount => Features.WritingGeneration.Generate.Command.MaxWordCount;
+
             public bool WordCountOutOfRange { get; set; }
 
             public GeneratedWriting? Writing { get; set; }
