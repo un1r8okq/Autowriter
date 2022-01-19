@@ -31,7 +31,7 @@ namespace Autowriter.Pages.Generate
             };
         }
 
-        public async Task OnPostAsync([FromBody] int wordCount)
+        public async Task OnPostAsync(int wordCount)
         {
             var sourceCount = await _mediator.Send(new Count.Query());
             var generateWritingCommand = new Features.WritingGeneration.Generate.Command { WordCount = wordCount };
