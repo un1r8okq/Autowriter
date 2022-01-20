@@ -21,7 +21,6 @@ namespace Autowriter
 
             services.RegisterAutowriterCoreServices();
 
-            Features.SourceMaterial.ReadSingle.ConfigureServices(services);
             Features.WritingGeneration.Generate.ConfigureServices(services);
 
             services.AddMediatR(typeof(Program));

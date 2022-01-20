@@ -1,6 +1,6 @@
 using System;
 using AutoMapper;
-using Autowriter.Features.SourceMaterial;
+using Autowriter.Core.Features.SourceMaterial;
 using Dapper;
 using Xunit;
 

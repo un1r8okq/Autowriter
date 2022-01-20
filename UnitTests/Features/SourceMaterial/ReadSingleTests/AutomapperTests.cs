@@ -8,7 +8,7 @@ namespace UnitTests.Features.SourceMaterial.ReadSingleTests
         public void ConfigurationIsValid()
         {
             var config = new AutoMapper.MapperConfiguration(mapper =>
-                mapper.AddProfile(new Autowriter.Features.SourceMaterial.ReadSingle.AutoMapper()));
+                mapper.AddProfile(new Autowriter.Core.Features.SourceMaterial.ReadSingle.AutoMapper()));
 
             config.AssertConfigurationIsValid();
         }

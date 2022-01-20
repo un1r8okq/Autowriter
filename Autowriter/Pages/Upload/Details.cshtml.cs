@@ -1,5 +1,4 @@
 using Autowriter.Core.Features.SourceMaterial;
-using Autowriter.Features.SourceMaterial;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
