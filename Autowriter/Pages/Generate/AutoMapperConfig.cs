@@ -6,7 +6,7 @@ namespace Autowriter.Pages.Generate
     {
         public AutoMapperConfig()
         {
-            CreateMap<Features.WritingGeneration.Generate.Response.GeneratedWriting, Index.ViewModel.GeneratedWriting>();
+            CreateMap<Core.Features.WritingGeneration.Generate.Response.GeneratedWriting, Index.ViewModel.GeneratedWriting>();
         }
     }
 }

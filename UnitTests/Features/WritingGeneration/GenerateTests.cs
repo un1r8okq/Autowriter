@@ -1,6 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
-using Autowriter.Features.WritingGeneration;
+using Autowriter.Core.Features.WritingGeneration;
 using MediatR;
 using Moq;
 using Xunit;

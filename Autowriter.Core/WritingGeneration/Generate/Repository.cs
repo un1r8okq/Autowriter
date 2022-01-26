@@ -1,7 +1,7 @@
 using System.Data;
 using Dapper;
 
-namespace Autowriter.Features.WritingGeneration
+namespace Autowriter.Core.Features.WritingGeneration
 {
     public partial class Generate
     {

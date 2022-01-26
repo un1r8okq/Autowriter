@@ -33,7 +33,7 @@ namespace Autowriter.Pages.Generate
         public async Task OnPostAsync(int wordCount)
         {
             var sourceCount = await _mediator.Send(new Count.Query());
-            var generateWritingCommand = new Features.WritingGeneration.Generate.Command { WordCount = wordCount };
+            var generateWritingCommand = new Core.Features.WritingGeneration.Generate.Command { WordCount = wordCount };
             var generateWritingResponse = await _mediator.Send(generateWritingCommand);
 
             Data = new ViewModel
@@ -51,9 +51,9 @@ namespace Autowriter.Pages.Generate
 
             public int RequestedNumberOfWords { get; set; }
 
-            public int MinWordCount => Features.WritingGeneration.Generate.Command.MinWordCount;
+            public int MinWordCount => Core.Features.WritingGeneration.Generate.Command.MinWordCount;
 
-            public int MaxWordCount => Features.WritingGeneration.Generate.Command.MaxWordCount;
+            public int MaxWordCount => Core.Features.WritingGeneration.Generate.Command.MaxWordCount;
 
             public bool WordCountOutOfRange { get; set; }
 

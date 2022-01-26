@@ -1,6 +1,5 @@
 using System.Data;
 using Autowriter.Core;
-using MediatR;
 using Microsoft.Data.Sqlite;
 
 namespace Autowriter
@@ -21,9 +20,6 @@ namespace Autowriter
 
             services.RegisterAutowriterCoreServices();
 
-            Features.WritingGeneration.Generate.ConfigureServices(services);
-
-            services.AddMediatR(typeof(Program));
             services.AddAutoMapper(typeof(Program));
             services.AddRazorPages();
         }

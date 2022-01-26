@@ -1,4 +1,4 @@
-namespace Autowriter.Features.WritingGeneration
+namespace Autowriter.Core.Features.WritingGeneration
 {
     public partial class Generate
     {
