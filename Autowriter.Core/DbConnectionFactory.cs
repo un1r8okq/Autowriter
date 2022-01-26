@@ -2,7 +2,7 @@ using System.Data;
 using Dapper;
 using Microsoft.Data.Sqlite;
 
-namespace Autowriter
+namespace Autowriter.Core
 {
     public static class DbConnectionFactory
     {

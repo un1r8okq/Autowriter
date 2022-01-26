@@ -1,5 +1,4 @@
 using System.Data;
-using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Autowriter.Core
@@ -21,7 +20,7 @@ namespace Autowriter.Core
         private static void RegisterDbConnection(IServiceCollection services)
         {
             const string dbConnectionString = "Data Source=Autowriter.sqlite";
-            var sqliteConnection = new SqliteConnection(dbConnectionString);
+            var sqliteConnection = DbConnectionFactory.Build(dbConnectionString);
             services.AddSingleton<IDbConnection>(_ => sqliteConnection);
         }
     }

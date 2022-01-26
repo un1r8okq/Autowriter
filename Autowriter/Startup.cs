@@ -1,6 +1,4 @@
-using System.Data;
 using Autowriter.Core;
-using Microsoft.Data.Sqlite;
 
 namespace Autowriter
 {
@@ -15,9 +13,6 @@ namespace Autowriter
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDbConnection>((serviceProvider) =>
-                new SqliteConnection(Configuration.GetSection("DatabaseName").Value));
-
             services.RegisterAutowriterCoreServices();
 
             services.AddAutoMapper(typeof(Program));

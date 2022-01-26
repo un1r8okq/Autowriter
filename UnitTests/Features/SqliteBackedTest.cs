@@ -1,5 +1,5 @@
 using System.Data;
-using Autowriter;
+using Autowriter.Core;
 
 namespace UnitTests.Features
 {
