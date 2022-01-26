@@ -22,7 +22,8 @@ namespace Autowriter.Core.Features.SourceMaterial
             public IEnumerable<SourceMaterial> GetSources() =>
                 _connection
                     .Query<SourceMaterial>($"SELECT id, created, content FROM source_material")
-                    .OrderByDescending(model => model.Created);
+                    .OrderByDescending(model => model.Created)
+                    .ToList();
 
             public class SourceMaterial
             {
