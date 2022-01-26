@@ -17,7 +17,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "Integra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{04F70B5C-C268-4A02-96C7-1C3F9F4FF39D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autowriter.Core", "Autowriter.Core\Autowriter.Core.csproj", "{5B6133B9-B963-43AF-B7B9-80B08C3C127D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Autowriter.Core", "Autowriter.Core\Autowriter.Core.csproj", "{5B6133B9-B963-43AF-B7B9-80B08C3C127D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{410CDC37-EF45-42DE-980A-F597E38B62FA}"
+	ProjectSection(SolutionItems) = preProject
+		.github\dependabot.yml = .github\dependabot.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +49,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{410CDC37-EF45-42DE-980A-F597E38B62FA} = {DFB3FFD7-E7D2-43A6-B491-6E2D8A56C57A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5626F085-AB04-4897-B011-7934D5DDB918}
