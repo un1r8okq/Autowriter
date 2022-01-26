@@ -1,6 +1,6 @@
 using Autowriter.Core;
 
-namespace Autowriter
+namespace Autowriter.RazorPages
 {
     public class Startup
     {

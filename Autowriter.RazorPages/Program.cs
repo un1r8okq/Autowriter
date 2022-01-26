@@ -1,4 +1,4 @@
-namespace Autowriter
+namespace Autowriter.RazorPages
 {
     public class Program
     {

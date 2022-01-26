@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Autowriter\Autowriter.csproj" />
+    <ProjectReference Include="..\Autowriter.RazorPages\Autowriter.RazorPages.csproj" />
   </ItemGroup>
 
 </Project>

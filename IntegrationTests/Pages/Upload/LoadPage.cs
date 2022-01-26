@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Autowriter;
+using Autowriter.RazorPages;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 

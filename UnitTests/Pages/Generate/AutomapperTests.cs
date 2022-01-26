@@ -8,7 +8,7 @@ namespace UnitTests.Pages.Generate
         public void ConfigurationIsValid()
         {
             var config = new AutoMapper.MapperConfiguration(mapper =>
-                mapper.AddProfile(new Autowriter.Pages.Generate.AutoMapperConfig()));
+                mapper.AddProfile(new Autowriter.RazorPages.Pages.Generate.AutoMapperConfig()));
 
             config.AssertConfigurationIsValid();
         }

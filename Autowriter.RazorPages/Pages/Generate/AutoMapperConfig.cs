@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace Autowriter.Pages.Generate
+namespace Autowriter.RazorPages.Pages.Generate
 {
     public class AutoMapperConfig : Profile
     {

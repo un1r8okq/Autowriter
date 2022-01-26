@@ -1,6 +1,6 @@
 using AutoMapper;
 
-namespace Autowriter.Pages.Upload
+namespace Autowriter.RazorPages.Pages.Upload
 {
     public class AutoMapperConfig : Profile
     {

@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Autowriter.Pages.Upload
+namespace Autowriter.RazorPages.Pages.Upload
 {
     public class Details : PageModel
     {

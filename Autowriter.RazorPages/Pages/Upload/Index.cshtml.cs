@@ -3,7 +3,7 @@ using Autowriter.Core.Features.SourceMaterial;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Autowriter.Pages.Upload
+namespace Autowriter.RazorPages.Pages.Upload
 {
     public class Index : PageModel
     {
