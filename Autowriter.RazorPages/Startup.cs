@@ -1,4 +1,7 @@
+using System.Data;
 using Autowriter.Core;
+using Autowriter.RazorPages.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace Autowriter.RazorPages
 {
@@ -16,7 +19,14 @@ namespace Autowriter.RazorPages
             services.RegisterAutowriterCoreServices();
 
             services.AddAutoMapper(typeof(Program));
-            services.AddRazorPages();
+
+            ConfigureIdentityServices(services);
+
+            services.AddRazorPages(options =>
+            {
+                options.Conventions.AuthorizeFolder("/");
+                options.Conventions.AllowAnonymousToFolder("/User");
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -29,9 +39,40 @@ namespace Autowriter.RazorPages
 
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapRazorPages());
             app.UseStatusCodePages();
+        }
+
+        private void ConfigureIdentityServices(IServiceCollection services)
+        {
+            var dbConnectionString = Configuration.GetSection("IdentityDatabaseName").Value;
+            var sqliteConnection = Data.BuildIdentityDbConnection(dbConnectionString);
+            services.AddSingleton<IDbConnection>(_ => sqliteConnection);
+
+            services
+                .AddAuthentication(IdentityConstants.ApplicationScheme)
+                .AddCookie(IdentityConstants.ApplicationScheme, options =>
+                {
+                    options.LoginPath = "/User/Login";
+                })
+                .AddCookie(IdentityConstants.ExternalScheme)
+                .AddCookie(IdentityConstants.TwoFactorUserIdScheme);
+
+            services.AddTransient<IUserStore<AutowriterUser>, UserStore>();
+            services.AddTransient<IUserPasswordStore<AutowriterUser>, UserStore>();
+            services
+                .AddIdentityCore<AutowriterUser>(options =>
+                {
+                    options.Password.RequiredLength = 1;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredUniqueChars = 1;
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireLowercase = false;
+                })
+                .AddSignInManager();
         }
     }
 }
