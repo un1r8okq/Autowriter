@@ -1,0 +1,23 @@
+name: Run tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.x
+    - name: Run unit tests
+      run: dotnet test ./UnitTests/UnitTests.csproj
+    - name: Run integration tests
+      run: dotnet test ./IntegrationTests/IntegrationTests.csproj
