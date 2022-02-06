@@ -1,4 +1,3 @@
-using System.Data;
 using Autowriter.Core;
 using Autowriter.RazorPages.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -48,8 +47,8 @@ namespace Autowriter.RazorPages
         private void ConfigureIdentityServices(IServiceCollection services)
         {
             var dbConnectionString = Configuration.GetSection("IdentityDatabaseName").Value;
-            var sqliteConnection = Data.BuildIdentityDbConnection(dbConnectionString);
-            services.AddSingleton<IDbConnection>(_ => sqliteConnection);
+            var userDbConnection = new UserDbConnection(dbConnectionString);
+            services.AddSingleton(userDbConnection);
 
             services
                 .AddAuthentication(IdentityConstants.ApplicationScheme)

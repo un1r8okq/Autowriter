@@ -8,7 +8,7 @@ using Xunit;
 
 namespace UnitTests.Features.SourceMaterial.DeleteTests
 {
-    public class RepositoryTests : SqliteBackedTest
+    public class RepositoryTests : CoreDbBackedTest
     {
         private const string TableName = "source_material";
         private readonly Delete.Repository _repo;

@@ -1,4 +1,3 @@
-using System.Data;
 using Dapper;
 using Microsoft.AspNetCore.Identity;
 
@@ -6,16 +5,16 @@ namespace Autowriter.RazorPages.Identity
 {
     public class UserStore : IUserStore<AutowriterUser>, IUserPasswordStore<AutowriterUser>
     {
-        private readonly IDbConnection _conn;
+        private readonly UserDbConnection _conn;
 
-        public UserStore(IDbConnection dbConnection)
+        public UserStore(UserDbConnection dbConnection)
         {
             _conn = dbConnection;
         }
 
         public async Task<IdentityResult> CreateAsync(AutowriterUser user, CancellationToken cancellationToken)
         {
-            var command = $"INSERT INTO {Data.UsersTableName} " +
+            var command = $"INSERT INTO {UserDbConnection.UsersTableName} " +
                 "(concurrencyStamp, normalizedUserName, passwordHash, securityStamp, userName) " +
                 "VALUES (@concurrencyStamp, @normalizedUserName, @passwordHash, @securityStamp, @userName)";
             var parameters = new
@@ -39,7 +38,7 @@ namespace Autowriter.RazorPages.Identity
 
         public async Task<IdentityResult> DeleteAsync(AutowriterUser user, CancellationToken cancellationToken)
         {
-            var command = $"DELETE FROM {Data.UsersTableName} " +
+            var command = $"DELETE FROM {UserDbConnection.UsersTableName} " +
                 "WHERE id = @id OR userName = @userName";
             var parameters = new
             {
@@ -60,7 +59,7 @@ namespace Autowriter.RazorPages.Identity
         public async Task<AutowriterUser> FindByIdAsync(string userId, CancellationToken cancellationToken)
         {
             var query = "SELECT concurrencyStamp, email, id, securityStamp, userName " +
-                $"FROM {Data.UsersTableName} " +
+                $"FROM {UserDbConnection.UsersTableName} " +
                 "WHERE id = @id";
             var parameters = new
             {
@@ -74,7 +73,7 @@ namespace Autowriter.RazorPages.Identity
         public async Task<string> GetPasswordHashAsync(AutowriterUser user, CancellationToken cancellationToken)
         {
             var query = "SELECT passwordHash " +
-                $"FROM {Data.UsersTableName} " +
+                $"FROM {UserDbConnection.UsersTableName} " +
                 "WHERE id = @id";
             var parameters = new
             {
@@ -88,7 +87,7 @@ namespace Autowriter.RazorPages.Identity
         public async Task<bool> HasPasswordAsync(AutowriterUser user, CancellationToken cancellationToken)
         {
             var query = "SELECT passwordHash " +
-                $"FROM {Data.UsersTableName} " +
+                $"FROM {UserDbConnection.UsersTableName} " +
                 "WHERE id = @id";
             var parameters = new
             {
@@ -107,7 +106,7 @@ namespace Autowriter.RazorPages.Identity
 
         public async Task<IdentityResult> UpdateAsync(AutowriterUser user, CancellationToken cancellationToken)
         {
-            var command = $"UPDATE {Data.UsersTableName} " +
+            var command = $"UPDATE {UserDbConnection.UsersTableName} " +
                 "SET concurrencyStamp = @concurrencyStamp, " +
                 "normalizedUserName = @normalizedUserName, " +
                 "passwordHash = @passwordHash, " +
@@ -136,17 +135,15 @@ namespace Autowriter.RazorPages.Identity
 
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
         }
 
         public async Task<AutowriterUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             var query = "SELECT * " +
-                $"FROM {Data.UsersTableName} " +
+                $"FROM {UserDbConnection.UsersTableName} " +
                 "WHERE normalizedUserName = @normalizedUserName";
-            var parameters = new
-            {
-                normalizedUserName = normalizedUserName,
-            };
+            var parameters = new { normalizedUserName };
             var user = await _conn.QueryFirstOrDefaultAsync<AutowriterUser>(query, parameters);
 
             return user;

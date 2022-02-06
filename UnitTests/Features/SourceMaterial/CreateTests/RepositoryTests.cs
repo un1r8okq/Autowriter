@@ -9,7 +9,7 @@ using Xunit;
 
 namespace UnitTests.Features.SourceMaterial.CreateTests
 {
-    public class RepositoryTests : SqliteBackedTest
+    public class RepositoryTests : CoreDbBackedTest
     {
         private readonly Create.Repository _repo;
 

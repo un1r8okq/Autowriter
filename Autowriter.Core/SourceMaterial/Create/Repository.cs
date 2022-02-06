@@ -1,4 +1,3 @@
-using System.Data;
 using Dapper;
 
 namespace Autowriter.Core.Features.SourceMaterial
@@ -12,9 +11,9 @@ namespace Autowriter.Core.Features.SourceMaterial
 
         public class Repository : ICreateSourceMaterial
         {
-            private readonly IDbConnection _connection;
+            private readonly CoreDbConnection _connection;
 
-            public Repository(IDbConnection connection)
+            public Repository(CoreDbConnection connection)
             {
                 _connection = connection;
             }

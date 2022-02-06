@@ -6,7 +6,7 @@ using Xunit;
 
 namespace UnitTests.Features.SourceMaterial.ReadSingleTests
 {
-    public class RepositoryTests : SqliteBackedTest
+    public class RepositoryTests : CoreDbBackedTest
     {
         private readonly ReadSingle.Repository _repo;
 
