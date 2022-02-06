@@ -6,16 +6,13 @@ namespace Autowriter.RazorPages.Pages.User
 {
     public class Login : PageModel
     {
-        private readonly ILogger<Register> _logger;
         private readonly SignInManager<AutowriterUser> _signInManager;
         private readonly UserManager<AutowriterUser> _userManager;
 
         public Login(
-            ILogger<Register> logger,
             SignInManager<AutowriterUser> signInManager,
             UserManager<AutowriterUser> userManager)
         {
-            _logger = logger;
             _signInManager = signInManager;
             _userManager = userManager;
         }

@@ -7,14 +7,11 @@ namespace Autowriter.RazorPages.Pages.User
 {
     public class Logout : PageModel
     {
-        private readonly ILogger<Register> _logger;
         private readonly SignInManager<AutowriterUser> _signInManager;
 
         public Logout(
-            ILogger<Register> logger,
             SignInManager<AutowriterUser> signInManager)
         {
-            _logger = logger;
             _signInManager = signInManager;
         }
 
