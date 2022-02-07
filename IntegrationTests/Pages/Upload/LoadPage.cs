@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Autowriter.RazorPages;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -39,17 +38,12 @@ namespace IntegrationTests.Pages.Upload
         [Fact]
         public async Task CanUploadSourceContent()
         {
-            var pageResponse = await _client.GetAsync(Url);
-            var pageBody = await pageResponse.Content.ReadAsStringAsync();
-            var xsrfTokenRegex = new Regex("<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"(?<token>.+)\"");
-            var xsrfToken = xsrfTokenRegex.Match(pageBody).Groups[1].Value;
-            var content = new FormUrlEncodedContent(new KeyValuePair<string, string>[]
+            var requestBody = new Dictionary<string, string>
             {
-                new KeyValuePair<string, string>("content", "Integration test content"),
-                new KeyValuePair<string, string>("__RequestVerificationToken", xsrfToken),
-            });
+                { "content", "Integration test content" },
+            };
 
-            var response = await _client.PostAsync(Url, content);
+            var response = await _client.PostXsrfProtectedForm(Url, requestBody);
             await response.Content.ReadAsStringAsync();
 
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);

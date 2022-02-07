@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using Autowriter.Core;
 using Dapper;
 
 namespace IntegrationTests
@@ -9,11 +10,11 @@ namespace IntegrationTests
     {
         public IEnumerable<SourceMaterial> Sources { get; set; } = Array.Empty<SourceMaterial>();
 
-        public void SeedWithTestData(IDbConnection dbConnection)
+        public void SeedWithTestData(CoreDbConnection coreConn)
         {
             foreach (var source in Sources)
             {
-                InsertSourceMaterial(dbConnection, source);
+                InsertSourceMaterial(coreConn, source);
             }
         }
 
