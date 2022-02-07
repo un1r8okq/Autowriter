@@ -14,7 +14,7 @@ namespace IntegrationTests.Pages
 
         public IndexTests(WebApplicationFactory<Startup> factory)
         {
-            _client = factory.CreateTestClient();
+            _client = factory.CreateAuthenticatedTestClient();
         }
 
         [Fact]

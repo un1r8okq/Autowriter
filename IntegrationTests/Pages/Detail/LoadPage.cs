@@ -26,7 +26,7 @@ namespace IntegrationTests.Pages.Detail
                     },
                 },
             };
-            _client = factory.CreateTestClient(testData);
+            _client = factory.CreateAuthenticatedTestClient(testData);
         }
 
         [Fact]
