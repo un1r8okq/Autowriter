@@ -15,7 +15,7 @@ namespace IntegrationTests.Pages.Upload
 
         public LoadPage(WebApplicationFactory<Startup> factory)
         {
-            _client = factory.CreateTestClient();
+            _client = factory.CreateAuthenticatedTestClient();
         }
 
         [Fact]
