@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using Autowriter.Core;
-using Autowriter.RazorPages;
 using Autowriter.RazorPages.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace IntegrationTests
+namespace Autowriter.RazorPages.Tests.IntegrationTests
 {
     public static class WebApplicationFactoryExtensions
     {

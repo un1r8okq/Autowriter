@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Autowriter.RazorPages;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
-namespace IntegrationTests.Pages.Upload
+namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Upload
 {
     public class LoadPage : IClassFixture<WebApplicationFactory<Startup>>
     {

@@ -4,7 +4,7 @@ using System.Data;
 using Autowriter.Core;
 using Dapper;
 
-namespace IntegrationTests
+namespace Autowriter.RazorPages.Tests.IntegrationTests
 {
     public class TestData
     {

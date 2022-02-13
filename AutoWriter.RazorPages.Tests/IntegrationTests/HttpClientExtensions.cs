@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace IntegrationTests
+namespace Autowriter.RazorPages.Tests.IntegrationTests
 {
     public static class HttpClientExtensions
     {

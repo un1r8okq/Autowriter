@@ -1,11 +1,10 @@
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Autowriter.RazorPages;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
-namespace IntegrationTests.Pages.Generate
+namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Generate
 {
     public class LoadPage : IClassFixture<WebApplicationFactory<Startup>>
     {

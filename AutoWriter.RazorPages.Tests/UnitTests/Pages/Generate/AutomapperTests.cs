@@ -1,6 +1,6 @@
 using Xunit;
 
-namespace UnitTests.Pages.Generate
+namespace Autowriter.RazorPages.Tests.UnitTests.Pages.Generate
 {
     public class AutomapperTests
     {
@@ -8,7 +8,7 @@ namespace UnitTests.Pages.Generate
         public void ConfigurationIsValid()
         {
             var config = new AutoMapper.MapperConfiguration(mapper =>
-                mapper.AddProfile(new Autowriter.RazorPages.Pages.Generate.AutoMapperConfig()));
+                mapper.AddProfile(new RazorPages.Pages.Generate.AutoMapperConfig()));
 
             config.AssertConfigurationIsValid();
         }
