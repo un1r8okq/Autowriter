@@ -4,7 +4,7 @@ using Autowriter.Core.Features.SourceMaterial;
 using Dapper;
 using Xunit;
 
-namespace UnitTests.Features.SourceMaterial.ReadSingleTests
+namespace Autowriter.Core.Tests.SourceMaterial.ReadSingleTests
 {
     public class RepositoryTests : CoreDbBackedTest
     {

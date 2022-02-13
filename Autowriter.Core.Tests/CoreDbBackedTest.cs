@@ -1,6 +1,4 @@
-using Autowriter.Core;
-
-namespace UnitTests.Features
+namespace Autowriter.Core.Tests
 {
     public class CoreDbBackedTest
     {

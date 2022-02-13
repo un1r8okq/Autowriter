@@ -6,7 +6,7 @@ using Autowriter.Core.Features.SourceMaterial;
 using Dapper;
 using Xunit;
 
-namespace UnitTests.Features.SourceMaterial.DeleteTests
+namespace Autowriter.Core.Tests.SourceMaterial.DeleteTests
 {
     public class RepositoryTests : CoreDbBackedTest
     {

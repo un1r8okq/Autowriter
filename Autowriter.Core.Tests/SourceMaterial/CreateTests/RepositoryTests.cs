@@ -7,7 +7,7 @@ using Autowriter.Core.Features.SourceMaterial;
 using Dapper;
 using Xunit;
 
-namespace UnitTests.Features.SourceMaterial.CreateTests
+namespace Autowriter.Core.Tests.SourceMaterial.CreateTests
 {
     public class RepositoryTests : CoreDbBackedTest
     {

@@ -5,7 +5,7 @@ using MediatR;
 using Moq;
 using Xunit;
 
-namespace UnitTests.Features.WritingGeneration
+namespace Autowriter.Core.Tests.WritingGeneration
 {
     public class GenerateTests
     {

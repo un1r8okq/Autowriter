@@ -7,7 +7,7 @@ using MediatR;
 using Moq;
 using Xunit;
 
-namespace UnitTests.Features.SourceMaterial.CreateTests
+namespace Autowriter.Core.Tests.SourceMaterial.CreateTests
 {
     public class HandlerTests
     {
