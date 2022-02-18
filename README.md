@@ -1,6 +1,6 @@
 This is a .NET application that I wrote after watching [Jimmy Bogard's talk on vertical slice architecture](https://www.youtube.com/watch?v=5kOzZz2vj2o) as a way of understanding what it might look like in practice.
 
-![A screenshot of the Autowriter home screen](app-screenshot.png)
+![A screenshot of the Autowriter home screen](./app-screenshot.png)
 
 # Running the app
 1. Ensure you have [the .NET 6 SDK installed](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
