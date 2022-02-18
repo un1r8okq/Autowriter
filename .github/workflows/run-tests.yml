@@ -22,4 +22,4 @@ jobs:
     - name: Run Autowriter.Core.Tests
       run: dotnet test ./Autowriter.Core.Tests/Autowriter.Core.Tests.csproj
     - name: Run Autowriter.RazorPages.Tests
-      run: dotnet test --blame-hang --blame-hang-timeout 10sec ./Autowriter.RazorPages.Tests/Autowriter.RazorPages.Tests.csproj
+      run: dotnet test --blame-hang --blame-hang-timeout 5min ./Autowriter.RazorPages.Tests/Autowriter.RazorPages.Tests.csproj
