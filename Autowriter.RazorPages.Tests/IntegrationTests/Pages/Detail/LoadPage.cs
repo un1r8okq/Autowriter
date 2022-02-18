@@ -36,7 +36,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Detail
             Assert.Equal(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [Fact]
+        [Fact(Skip = "Testing GitHub Actions")]
         public async Task BodyContainsSourceMaterialText()
         {
             var response = await _client.GetAsync(Url);
