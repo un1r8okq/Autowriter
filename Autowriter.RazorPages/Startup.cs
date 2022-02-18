@@ -25,8 +25,7 @@ namespace Autowriter.RazorPages
 
             services.AddRazorPages(options =>
             {
-                options.Conventions.AuthorizeFolder("/");
-                options.Conventions.AllowAnonymousToFolder("/User");
+                options.Conventions.AllowAnonymousToFolder("/");
             });
         }
 
