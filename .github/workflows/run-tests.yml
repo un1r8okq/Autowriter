@@ -19,9 +19,7 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    - name: Install dependencies
-      run: dotnet restore ./Autowriter.sln
     - name: Run Autowriter.Core.Tests
-      run: dotnet test --no-restore ./Autowriter.Core.Tests/Autowriter.Core.Tests.csproj
+      run: dotnet test ./Autowriter.Core.Tests/Autowriter.Core.Tests.csproj
     - name: Run Autowriter.RazorPages.Tests
-      run: dotnet test --no-restore  ./Autowriter.RazorPages.Tests/Autowriter.RazorPages.Tests.csproj
+      run: dotnet test ./Autowriter.RazorPages.Tests/Autowriter.RazorPages.Tests.csproj
