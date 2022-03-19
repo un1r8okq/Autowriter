@@ -17,7 +17,11 @@
     <input type="submit" value="Register" />
 </form>
 
-@if(Model.Data != null)
+@if(Model.Data.Errors.Any())
 {
-    @(Model.Data.UserCreated ? "User created" : "Failed to create user");
+    <h1>Error creating user:</h1>
+    foreach (var error in Model.Data.Errors)
+    {
+        @error
+    }
 }

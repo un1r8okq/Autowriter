@@ -1,10 +1,12 @@
 using Autowriter.RazorPages.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Autowriter.RazorPages.Pages.User
 {
+    [AllowAnonymous]
     public class Register : PageModel
     {
         private readonly ILogger<Register> _logger;
@@ -16,9 +18,10 @@ namespace Autowriter.RazorPages.Pages.User
         {
             _logger = logger;
             _userManager = userManager;
+            Data = new ViewModel();
         }
 
-        public ViewModel? Data { get; set; }
+        public ViewModel Data { get; set; }
 
         public async Task<IActionResult> OnPostAsync(string email, string password)
         {
@@ -36,12 +39,12 @@ namespace Autowriter.RazorPages.Pages.User
             if (errors.Count > 0)
             {
                 _logger.LogError("Failed to create user. Error(s): {errors}", string.Join(',', errors));
-                Data = new ViewModel { UserCreated = false };
-                return new OkResult();
+                Data = new ViewModel { Errors = errors };
+                return Page();
             }
             else
             {
-                Data = new ViewModel { UserCreated = true };
+                Data = new ViewModel();
                 return Redirect("/user/login");
             }
         }
@@ -80,7 +83,12 @@ namespace Autowriter.RazorPages.Pages.User
 
         public class ViewModel
         {
-            public bool UserCreated { get; set; }
+            public ViewModel()
+            {
+                Errors = Array.Empty<string>();
+            }
+
+            public IList<string> Errors { get; set; }
         }
     }
 }
