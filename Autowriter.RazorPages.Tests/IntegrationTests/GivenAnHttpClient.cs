@@ -59,6 +59,11 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
             Assert.Contains(str, await ResponseBody());
         }
 
+        public void TheLocationHeaderIs(string expectedValue)
+        {
+            Assert.Equal(expectedValue, _httpResponseMessage!.Headers.Location!.ToString());
+        }
+
         private static void RegisterCoreDb(IServiceCollection services, TestData? testData)
         {
             var connection = new CoreDbConnection("Data Source=:memory:");

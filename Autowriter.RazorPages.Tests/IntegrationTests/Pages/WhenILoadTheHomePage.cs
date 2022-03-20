@@ -13,6 +13,15 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages
         }
 
         [Fact]
+        public async Task AndIAmNotAuthenticated_UserIsRedirectedToLogin()
+        {
+            await WhenIGetThePageAt("/");
+
+            TheResponseStatusIs(HttpStatusCode.Found);
+            TheLocationHeaderIs("http://localhost/User/Login?ReturnUrl=%2F");
+        }
+
+        [Fact]
         public async Task AndIAmAuthenticated_ResponseStatusIsOK()
         {
             GivenTheHttpClientIsAuthenticated();
