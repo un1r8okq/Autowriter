@@ -5,9 +5,9 @@ using Xunit;
 
 namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages
 {
-    public class WhenILoadTheHomePage : GivenAnHttpClient
+    public class WhenIVisitTheHomePage : GivenAnHttpClient
     {
-        public WhenILoadTheHomePage(WebApplicationFactory<Startup> factory)
+        public WhenIVisitTheHomePage(WebApplicationFactory<Startup> factory)
             : base(factory)
         {
         }
