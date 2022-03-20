@@ -40,8 +40,8 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
 
         public async Task GivenTheHttpClientIsAuthenticated()
         {
-            await RegisterTestUser(_httpClient!);
-            await AuthenticateAsTestUser(_httpClient!);
+            await RegisterTestUser();
+            await AuthenticateAsTestUser();
         }
 
         public async Task WhenIVisitThePageAt(string url)
@@ -92,7 +92,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
             return _responseBody;
         }
 
-        private async Task RegisterTestUser(HttpClient client)
+        private async Task RegisterTestUser()
         {
             var formContent = new Dictionary<string, string>
                 {
@@ -102,7 +102,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
             await PostXsrfProtectedForm("/User/Register", formContent);
         }
 
-        private async Task AuthenticateAsTestUser(HttpClient client)
+        private async Task AuthenticateAsTestUser()
         {
             var formContent = new Dictionary<string, string>
                 {
