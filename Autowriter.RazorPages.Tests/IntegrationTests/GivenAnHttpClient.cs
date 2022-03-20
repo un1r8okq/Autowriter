@@ -44,7 +44,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
             AuthenticateAsTestUser(_httpClient!);
         }
 
-        public async Task WhenIGetThePageAt(string url)
+        public async Task WhenIVisitThePageAt(string url)
         {
             _httpResponseMessage = await _httpClient!.GetAsync(url);
         }

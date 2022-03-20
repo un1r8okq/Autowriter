@@ -5,48 +5,48 @@ using Xunit;
 
 namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages
 {
-    public class WhenILoadTheHomePage : GivenAnHttpClient
+    public class WhenIVisitTheHomePage : GivenAnHttpClient
     {
-        public WhenILoadTheHomePage(WebApplicationFactory<Startup> factory)
+        public WhenIVisitTheHomePage(WebApplicationFactory<Startup> factory)
             : base(factory)
         {
         }
 
         [Fact]
-        public async Task AndIAmNotAuthenticated_UserIsRedirectedToLogin()
+        public async Task AndIAmNotAuthenticated_IAmRedirectedToTheLoginPage()
         {
-            await WhenIGetThePageAt("/");
+            await WhenIVisitThePageAt("/");
 
             TheResponseStatusIs(HttpStatusCode.Found);
             TheLocationHeaderIs("http://localhost/User/Login?ReturnUrl=%2F");
         }
 
         [Fact]
-        public async Task AndIAmAuthenticated_ResponseStatusIsOK()
+        public async Task ResponseStatusIsOK()
         {
             GivenTheHttpClientIsAuthenticated();
 
-            await WhenIGetThePageAt("/");
+            await WhenIVisitThePageAt("/");
 
             TheResponseStatusIs(HttpStatusCode.OK);
         }
 
         [Fact]
-        public async Task AndIAmAuthenticated_BodyContainsNav()
+        public async Task BodyContainsNav()
         {
             GivenTheHttpClientIsAuthenticated();
 
-            await WhenIGetThePageAt("/");
+            await WhenIVisitThePageAt("/");
 
             await TheResponseBodyContains("<nav>");
         }
 
         [Fact]
-        public async Task AndIAmAuthenticated_BodyContainsInstructions()
+        public async Task BodyContainsInstructions()
         {
             GivenTheHttpClientIsAuthenticated();
 
-            await WhenIGetThePageAt("/");
+            await WhenIVisitThePageAt("/");
 
             await TheResponseBodyContains("Welcome to Autowriter 👋🏻");
             await TheResponseBodyContains("<h2>Step one: <a href=\"/upload\">upload some source material</a></h2>");

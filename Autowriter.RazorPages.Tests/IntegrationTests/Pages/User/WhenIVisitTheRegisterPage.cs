@@ -5,9 +5,9 @@ using Xunit;
 
 namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.User
 {
-    public class WhenIVisitTheRegisterPage_AndIAmNotAuthenticated : GivenAnHttpClient
+    public class WhenIVisitTheRegisterPage : GivenAnHttpClient
     {
-        public WhenIVisitTheRegisterPage_AndIAmNotAuthenticated(WebApplicationFactory<Startup> factory)
+        public WhenIVisitTheRegisterPage(WebApplicationFactory<Startup> factory)
         : base(factory)
         {
         }
@@ -15,7 +15,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.User
         [Fact]
         public async Task TheResponseStatusIsOK()
         {
-            await WhenIGetThePageAt("/user/register");
+            await WhenIVisitThePageAt("/user/register");
 
             TheResponseStatusIs(HttpStatusCode.OK);
         }
@@ -23,7 +23,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.User
         [Fact]
         public async Task TheBodyContainsTheRegisterButton()
         {
-            await WhenIGetThePageAt("/user/register");
+            await WhenIVisitThePageAt("/user/register");
 
             await TheResponseBodyContains("<input type=\"submit\" value=\"Register\" />");
         }
