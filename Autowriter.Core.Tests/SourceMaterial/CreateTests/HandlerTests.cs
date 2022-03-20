@@ -4,22 +4,20 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Autowriter.Core.Features.SourceMaterial;
 using MediatR;
-using Moq;
 using Xunit;
 
 namespace Autowriter.Core.Tests.SourceMaterial.CreateTests
 {
     public class HandlerTests
     {
-        private readonly Mock<Create.ICreateSourceMaterial> _createSourceMock;
         private readonly IRequestHandler<Create.Command, Create.Response> _handler;
 
         public HandlerTests()
         {
-            _createSourceMock = new Mock<Create.ICreateSourceMaterial>();
+            var createSourceStub = new CreateSourceStub();
             var mapperConfig = new MapperConfiguration(cfg => cfg.AddProfile(new Create.AutoMapper()));
             var mapper = mapperConfig.CreateMapper();
-            _handler = new Create.Handler(_createSourceMock.Object, mapper);
+            _handler = new Create.Handler(createSourceStub, mapper);
         }
 
         [Theory]
@@ -44,14 +42,9 @@ namespace Autowriter.Core.Tests.SourceMaterial.CreateTests
             Assert.False(result.TextWasEmpty);
         }
 
-        [Fact]
-        public async Task WhenTextHasContent_QueryIsExecuted()
+        private class CreateSourceStub : Create.ICreateSourceMaterial
         {
-            var command = new Create.Command { Content = "Some text" };
-
-            var result = await _handler.Handle(command, CancellationToken.None);
-
-            _createSourceMock.Verify(x => x.CreateSource(It.IsAny<DateTime>(), It.IsAny<string>()), Times.Once);
+            public Create.Repository.SourceMaterial CreateSource(DateTime createdDateTime, string content) => new ();
         }
     }
 }

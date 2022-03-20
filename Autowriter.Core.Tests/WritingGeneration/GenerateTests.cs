@@ -1,8 +1,9 @@
+using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autowriter.Core.Features.WritingGeneration;
 using MediatR;
-using Moq;
 using Xunit;
 
 namespace Autowriter.Core.Tests.WritingGeneration
@@ -13,8 +14,8 @@ namespace Autowriter.Core.Tests.WritingGeneration
 
         public GenerateTests()
         {
-            var readSourceMock = Mock.Of<Generate.IReadSourceMaterial>();
-            _handler = new Generate.Handler(readSourceMock);
+            var readSourceStub = new ReadSourceStub();
+            _handler = new Generate.Handler(readSourceStub);
         }
 
         [Theory]
@@ -42,6 +43,11 @@ namespace Autowriter.Core.Tests.WritingGeneration
             var response = await _handler.Handle(command, CancellationToken.None);
 
             Assert.False(response.WordCountOutOfRange);
+        }
+
+        private class ReadSourceStub : Generate.IReadSourceMaterial
+        {
+            public IEnumerable<string> GetSources() => Array.Empty<string>();
         }
     }
 }
