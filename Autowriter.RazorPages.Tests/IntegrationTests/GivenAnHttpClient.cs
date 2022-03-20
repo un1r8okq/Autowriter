@@ -49,6 +49,11 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
             _httpResponseMessage = await _httpClient!.GetAsync(url);
         }
 
+        public async Task WhenISubmitTheForm(string url, Dictionary<string, string> keyValuePairs)
+        {
+            _httpResponseMessage = await _httpClient!.PostXsrfProtectedForm(url, keyValuePairs);
+        }
+
         public void TheResponseStatusIs(HttpStatusCode statusCode)
         {
             Assert.Equal(statusCode, _httpResponseMessage!.StatusCode);
