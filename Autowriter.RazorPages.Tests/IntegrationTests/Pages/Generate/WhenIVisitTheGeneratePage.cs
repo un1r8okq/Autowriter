@@ -15,7 +15,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Generate
         [Fact]
         public async Task TheResponseStatusIsOK()
         {
-            GivenTheHttpClientIsAuthenticated();
+            await GivenTheHttpClientIsAuthenticated();
 
             await WhenIVisitThePageAt("/generate");
 
@@ -25,7 +25,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Generate
         [Fact]
         public async Task TheBodyContainsTheTitle()
         {
-            GivenTheHttpClientIsAuthenticated();
+            await GivenTheHttpClientIsAuthenticated();
 
             await WhenIVisitThePageAt("/generate");
 

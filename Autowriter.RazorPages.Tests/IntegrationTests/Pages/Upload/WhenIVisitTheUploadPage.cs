@@ -15,7 +15,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Upload
         [Fact]
         public async Task TheResponseStatusIsOK()
         {
-            GivenTheHttpClientIsAuthenticated();
+            await GivenTheHttpClientIsAuthenticated();
 
             await WhenIVisitThePageAt("/upload");
 
@@ -25,7 +25,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Upload
         [Fact]
         public async Task TheBodyContainsInstructions()
         {
-            GivenTheHttpClientIsAuthenticated();
+            await GivenTheHttpClientIsAuthenticated();
 
             await WhenIVisitThePageAt("/upload");
 

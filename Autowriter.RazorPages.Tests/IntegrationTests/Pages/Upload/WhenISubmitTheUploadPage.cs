@@ -20,7 +20,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Upload
             {
                 { "content", "Integration test content" },
             };
-            GivenTheHttpClientIsAuthenticated();
+            await GivenTheHttpClientIsAuthenticated();
 
             await WhenISubmitTheForm("/upload", formContent);
 

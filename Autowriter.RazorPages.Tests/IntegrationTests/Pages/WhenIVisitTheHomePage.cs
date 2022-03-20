@@ -24,7 +24,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages
         [Fact]
         public async Task ResponseStatusIsOK()
         {
-            GivenTheHttpClientIsAuthenticated();
+            await GivenTheHttpClientIsAuthenticated();
 
             await WhenIVisitThePageAt("/");
 
@@ -34,7 +34,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages
         [Fact]
         public async Task BodyContainsNav()
         {
-            GivenTheHttpClientIsAuthenticated();
+            await GivenTheHttpClientIsAuthenticated();
 
             await WhenIVisitThePageAt("/");
 
@@ -44,7 +44,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages
         [Fact]
         public async Task BodyContainsInstructions()
         {
-            GivenTheHttpClientIsAuthenticated();
+            await GivenTheHttpClientIsAuthenticated();
 
             await WhenIVisitThePageAt("/");
 

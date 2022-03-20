@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Autowriter.Core;
 using Autowriter.RazorPages.Identity;
@@ -23,13 +24,12 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
 
         public GivenAnHttpClient(WebApplicationFactory<Startup> factory)
         {
-            TestData? testData = null;
             _factory = factory;
             _httpClient = _factory
                 .WithWebHostBuilder(builder =>
                     builder.ConfigureTestServices(services =>
                     {
-                        RegisterCoreDb(services, testData);
+                        RegisterCoreDb(services);
                         RegisterUserDb(services);
                     }))
                 .CreateClient(new WebApplicationFactoryClientOptions
@@ -38,10 +38,10 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
                 });
         }
 
-        public void GivenTheHttpClientIsAuthenticated()
+        public async Task GivenTheHttpClientIsAuthenticated()
         {
-            RegisterTestUser(_httpClient!);
-            AuthenticateAsTestUser(_httpClient!);
+            await RegisterTestUser(_httpClient!);
+            await AuthenticateAsTestUser(_httpClient!);
         }
 
         public async Task WhenIVisitThePageAt(string url)
@@ -51,7 +51,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
 
         public async Task WhenISubmitTheForm(string url, Dictionary<string, string> keyValuePairs)
         {
-            _httpResponseMessage = await _httpClient!.PostXsrfProtectedForm(url, keyValuePairs);
+            _httpResponseMessage = await PostXsrfProtectedForm(url, keyValuePairs);
         }
 
         public void TheResponseStatusIs(HttpStatusCode statusCode)
@@ -69,14 +69,9 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
             Assert.Equal(expectedValue, _httpResponseMessage!.Headers.Location!.ToString());
         }
 
-        private static void RegisterCoreDb(IServiceCollection services, TestData? testData)
+        private static void RegisterCoreDb(IServiceCollection services)
         {
             var connection = new CoreDbConnection("Data Source=:memory:");
-
-            if (testData != null)
-            {
-                testData.SeedWithTestData(connection);
-            }
 
             services.AddSingleton(connection);
         }
@@ -97,26 +92,43 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
             return _responseBody;
         }
 
-        private static void RegisterTestUser(HttpClient client)
+        private async Task RegisterTestUser(HttpClient client)
         {
             var formContent = new Dictionary<string, string>
                 {
                     { "email", TestEmail },
                     { "password", TestPassword },
                 };
-            var responseTask = client.PostXsrfProtectedForm("/User/Register", formContent);
-            responseTask.Wait();
+            await PostXsrfProtectedForm("/User/Register", formContent);
         }
 
-        private static void AuthenticateAsTestUser(HttpClient client)
+        private async Task AuthenticateAsTestUser(HttpClient client)
         {
             var formContent = new Dictionary<string, string>
                 {
                     { "email", TestEmail },
                     { "password", TestPassword },
                 };
-            var responseTask = client.PostXsrfProtectedForm("/User/Login", formContent);
-            responseTask.Wait();
+            await PostXsrfProtectedForm("/User/Login", formContent);
+        }
+
+        private async Task<HttpResponseMessage> PostXsrfProtectedForm(string url, Dictionary<string, string> body)
+        {
+            var xsrfToken = await GetXsrfToken(url);
+            body.Add("__RequestVerificationToken", xsrfToken);
+            var content = new FormUrlEncodedContent(body);
+            var response = await _httpClient!.PostAsync(url, content);
+
+            return response;
+        }
+
+        private async Task<string> GetXsrfToken(string url)
+        {
+            var pageResponse = await _httpClient!.GetAsync(url);
+            var pageBody = await pageResponse.Content.ReadAsStringAsync();
+            var xsrfTokenRegex = new Regex("<input name=\"__RequestVerificationToken\" type=\"hidden\" value=\"(?<token>.+)\"");
+            var xsrfToken = xsrfTokenRegex.Match(pageBody).Groups[1].Value;
+            return xsrfToken;
         }
     }
 }

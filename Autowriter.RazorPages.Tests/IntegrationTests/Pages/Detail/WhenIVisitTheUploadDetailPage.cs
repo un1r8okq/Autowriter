@@ -9,7 +9,6 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Detail
 {
     public class WhenIVisitTheUploadDetailPage : GivenAnHttpClient
     {
-        private const string Url = "/upload/details?id=1";
         private readonly Dictionary<string, string> _testFormContent = new ()
         {
             { "content", "Integration test content" },
@@ -23,7 +22,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Detail
         [Fact]
         public async Task TheResponseStatusIsOK()
         {
-            GivenTheHttpClientIsAuthenticated();
+            await GivenTheHttpClientIsAuthenticated();
             await WhenISubmitTheForm("/upload", _testFormContent);
 
             await WhenIVisitThePageAt("/upload/details?id=1");
@@ -34,7 +33,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Detail
         [Fact]
         public async Task BodyContainsSourceMaterialText()
         {
-            GivenTheHttpClientIsAuthenticated();
+            await GivenTheHttpClientIsAuthenticated();
             await WhenISubmitTheForm("/upload", _testFormContent);
 
             await WhenIVisitThePageAt("/upload/details?id=1");
