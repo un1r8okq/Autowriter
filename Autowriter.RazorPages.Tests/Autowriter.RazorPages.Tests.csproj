@@ -9,7 +9,7 @@
 
   <PropertyGroup>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <CodeAnalysisRuleSet>..\linting.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\Linting.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
