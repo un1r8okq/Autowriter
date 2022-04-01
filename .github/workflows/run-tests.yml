@@ -13,7 +13,5 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    - name: Run Autowriter.Core.Tests
-      run: dotnet test ./Autowriter.Core.Tests/Autowriter.Core.Tests.csproj
-    - name: Run Autowriter.RazorPages.Tests
-      run: dotnet test ./Autowriter.RazorPages.Tests/Autowriter.RazorPages.Tests.csproj
+    - name: Run tests
+      run: dotnet test
