@@ -25,6 +25,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Debug Autowriter.sln
     - name: Run core tests
-      run: dotnet test --no-restore Autowriter.Core.Tests\Autowriter.Core.Tests.csproj
+      run: dotnet test --no-restore Autowriter.Core.Tests/Autowriter.Core.Tests.csproj
     - name: Run RazorPages tests
-      run: dotnet test --no-restore Autowriter.RazorPages.Tests\Autowriter.RazorPages.csproj
+      run: dotnet test --no-restore Autowriter.RazorPages.Tests/Autowriter.RazorPages.csproj
