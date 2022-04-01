@@ -24,6 +24,8 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore --configuration Debug Autowriter.sln
+    - name: Where am I
+      run: pwd && ls -la
     - name: Run core tests
       run: dotnet test --no-restore Autowriter.Core.Tests/Autowriter.Core.Tests.csproj
     - name: Run RazorPages tests
