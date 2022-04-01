@@ -38,7 +38,7 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.Detail
 
             await WhenIVisitThePageAt("/upload/details?id=1");
 
-            await TheResponseBodyContains($"Uploaded on {DateTime.Now:dddd, d MMMM yyyy} at {DateTime.Now:H:mm tt}");
+            await TheResponseBodyContains($"Uploaded on {DateTime.Now:D} at {DateTime.Now:t}");
         }
     }
 }
