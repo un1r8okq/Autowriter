@@ -24,12 +24,12 @@ This is an [ASP.NET Core 6 Razor Pages application](https://docs.microsoft.com/e
 This is a collection of tests for Autowriter.RazorPages. It is made up of
 
 ### Autowriter.RazorPages.UnitTests
-These use [xUnit](https://xunit.net/) to exercise code units of code in the project. At the time of writing, this is only validates the [AutoMapper](https://automapper.org/) configuration.
+These use [xUnit](https://xunit.net/) to validate the [AutoMapper](https://automapper.org/) configuration. There isn't any domain logic in this project to test, only presentation code (which is very brittle).
 
 ### Autowriter.RazorPages.IntegrationTests
-These use [an in memory test server](https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-6.0) to exercise everything that can be easily exercised by unit tests. Things like
-* [Dependency injection](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0)
-* [Routing](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-6.0)
+These use [an in memory test server](https://docs.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-6.0) to check that everything is talking. Things like
+* Testing that [dependency injection](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0) works
+* Testing [Routing](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-6.0)
 
 ## Autowriter.Core
 This is the domain logic and storage layer for the application.
