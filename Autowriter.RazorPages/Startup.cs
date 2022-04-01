@@ -1,8 +1,6 @@
-using System.Globalization;
 using Autowriter.Core;
 using Autowriter.RazorPages.Identity;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Localization;
 
 namespace Autowriter.RazorPages
 {
@@ -41,20 +39,8 @@ namespace Autowriter.RazorPages
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-            UseNzLocalisation(app);
             app.UseEndpoints(endpoints => endpoints.MapRazorPages());
             app.UseStatusCodePages();
-        }
-
-        private void UseNzLocalisation(IApplicationBuilder app)
-        {
-            var localizationOptions = new RequestLocalizationOptions
-            {
-                SupportedCultures = new List<CultureInfo> { new CultureInfo(Configuration["SiteLocale"]) },
-                SupportedUICultures = new List<CultureInfo> { new CultureInfo(Configuration["SiteLocale"]) },
-                DefaultRequestCulture = new RequestCulture(Configuration["SiteLocale"]),
-            };
-            app.UseRequestLocalization(localizationOptions);
         }
 
         private void ConfigureIdentityServices(IServiceCollection services)
