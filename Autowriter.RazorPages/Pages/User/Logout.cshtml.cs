@@ -15,11 +15,6 @@ namespace Autowriter.RazorPages.Pages.User
             _signInManager = signInManager;
         }
 
-        public Task OnGetAsync()
-        {
-            return Task.CompletedTask;
-        }
-
         public async Task<IActionResult> OnPost(string? returnUrl = null)
         {
             await _signInManager.SignOutAsync();
@@ -31,7 +26,7 @@ namespace Autowriter.RazorPages.Pages.User
             {
                 // This needs to be a redirect so that the browser performs a new
                 // request and the identity for the user gets updated.
-                return RedirectToPage();
+                return RedirectToPage("/user/login");
             }
         }
     }

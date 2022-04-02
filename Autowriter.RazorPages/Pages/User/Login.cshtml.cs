@@ -17,23 +17,54 @@ namespace Autowriter.RazorPages.Pages.User
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            Data = new ViewModel();
         }
 
-        public IList<string> RegisteredUserNames => _userManager.Users.Select(u => u.UserName).ToList();
+        public ViewModel Data { get; set; }
+
+        public void OnGet()
+        {
+            Data = new ViewModel
+            {
+                LoginFailed = false,
+            };
+        }
 
         public async Task OnPostAsync(string email, string password)
         {
             var user = await _userManager.FindByNameAsync(email);
 
-            if (user != null)
+            if (user is null)
             {
-                var passwordCorrect = await _userManager.CheckPasswordAsync(user, password);
-
-                if (passwordCorrect)
+                Data = new ViewModel
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: true);
-                }
+                    LoginFailed = true,
+                };
+                return;
             }
+
+            var passwordCorrect = await _userManager.CheckPasswordAsync(user, password);
+
+            if (passwordCorrect)
+            {
+                await _signInManager.SignInAsync(user, isPersistent: true);
+                Data = new ViewModel
+                {
+                    LoginFailed = false,
+                };
+                Redirect("/");
+                return;
+            }
+
+            Data = new ViewModel
+            {
+                LoginFailed = true,
+            };
+        }
+
+        public class ViewModel
+        {
+            public bool LoginFailed { get; set; }
         }
     }
 }
