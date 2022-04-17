@@ -49,9 +49,9 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
             _httpResponseMessage = await _httpClient!.GetAsync(url);
         }
 
-        public async Task WhenISubmitTheForm(string url, Dictionary<string, string> keyValuePairs)
+        public async Task WhenISubmitTheForm(string url, Dictionary<string, string> formBody)
         {
-            _httpResponseMessage = await PostXsrfProtectedForm(url, keyValuePairs);
+            _httpResponseMessage = await PostXsrfProtectedForm(url, formBody);
         }
 
         public void TheResponseStatusIs(HttpStatusCode statusCode)

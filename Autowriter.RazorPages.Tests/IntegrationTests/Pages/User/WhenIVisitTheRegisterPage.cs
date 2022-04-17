@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -26,6 +27,35 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.User
             await WhenIVisitThePageAt("/user/register");
 
             await TheResponseBodyContains("<input type=\"submit\" value=\"Register\" />");
+        }
+
+        [Fact]
+        public async Task AndTheFormIsValid_AndISubmitTheForm_IAmRedirectedToLogin()
+        {
+            var formBody = new Dictionary<string, string>
+            {
+                { "email", "test@example.com" },
+                { "password", "password" },
+            };
+            await WhenISubmitTheForm("/user/register", formBody);
+
+            TheResponseStatusIs(HttpStatusCode.Redirect);
+            TheLocationHeaderIs("/user/login");
+        }
+
+        [Fact]
+        public async Task AndTheEmailIsInvalid_AndISubmitTheForm_TheResponseContainsValidationMessages()
+        {
+            var formBody = new Dictionary<string, string>
+            {
+                { "email", "NotAnEmailAddress" },
+                { "password", string.Empty },
+            };
+            await WhenISubmitTheForm("/user/register", formBody);
+
+            TheResponseStatusIs(HttpStatusCode.OK);
+            await TheResponseBodyContains("The Email field is not a valid e-mail address.");
+            await TheResponseBodyContains("The Password field is required.");
         }
     }
 }

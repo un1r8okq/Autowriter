@@ -7,20 +7,22 @@
 <h1>Please register</h1>
 <form method="post">
     <div>
-        <label for="email">Email:</label>
-        <input name="email" type="email" />
+        <label asp-for="Email">Email:</label>
+        <input asp-for="Email" />
+        <span asp-validation-for="Email"></span>
     </div>
     <div>
-        <label for="password">Password:</label>
-        <input name="password" type="password" />
+        <label asp-for="Password">Password:</label>
+        <input asp-for="Password" />
+        <span asp-validation-for="Password"></span>
     </div>
     <input type="submit" value="Register" />
 </form>
 
-@if(Model.Data.Errors.Any())
+@if(Model.Errors.Any())
 {
     <h1>Error creating user:</h1>
-    foreach (var error in Model.Data.Errors)
+    foreach (var error in Model.Errors)
     {
         @error
     }

@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using Autowriter.RazorPages.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,17 +19,33 @@ namespace Autowriter.RazorPages.Pages.User
         {
             _logger = logger;
             _userManager = userManager;
-            Data = new ViewModel();
+            Email = string.Empty;
+            Password = string.Empty;
+            Errors = new List<string>();
         }
 
-        public ViewModel Data { get; set; }
+        [Required]
+        [EmailAddress]
+        [BindProperty]
+        public string Email { get; set; }
 
-        public async Task<IActionResult> OnPostAsync(string email, string password)
+        [Required]
+        [BindProperty]
+        public string Password { get; set; }
+
+        public IList<string> Errors { get; set; }
+
+        public async Task<IActionResult> OnPostAsync()
         {
             var errors = new List<string>();
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             try
             {
-                var result = await CreateUser(email, password);
+                var result = await CreateUser(Email, Password);
                 errors.AddRange(result.Errors.Select(error => error.Description));
             }
             catch (Exception ex)
@@ -39,12 +56,11 @@ namespace Autowriter.RazorPages.Pages.User
             if (errors.Count > 0)
             {
                 _logger.LogError("Failed to create user. Error(s): {errors}", string.Join(',', errors));
-                Data = new ViewModel { Errors = errors };
-                return Page();
+                Errors = errors;
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
             else
             {
-                Data = new ViewModel();
                 return Redirect("/user/login");
             }
         }
@@ -79,16 +95,6 @@ namespace Autowriter.RazorPages.Pages.User
             }
 
             return IdentityResult.Success;
-        }
-
-        public class ViewModel
-        {
-            public ViewModel()
-            {
-                Errors = Array.Empty<string>();
-            }
-
-            public IList<string> Errors { get; set; }
         }
     }
 }

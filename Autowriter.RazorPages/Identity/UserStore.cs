@@ -1,3 +1,5 @@
+using System.Globalization;
+using System.Text.RegularExpressions;
 using Dapper;
 using Microsoft.AspNetCore.Identity;
 
@@ -14,6 +16,11 @@ namespace Autowriter.RazorPages.Identity
 
         public async Task<IdentityResult> CreateAsync(AutowriterUser user, CancellationToken cancellationToken)
         {
+            if (ValidationErrors(user).Any())
+            {
+                return IdentityResult.Failed(ValidationErrors(user));
+            }
+
             var command = $"INSERT INTO {UserDbConnection.UsersTableName} " +
                 "(concurrencyStamp, normalizedUserName, passwordHash, securityStamp, userName) " +
                 "VALUES (@concurrencyStamp, @normalizedUserName, @passwordHash, @securityStamp, @userName)";
@@ -106,6 +113,11 @@ namespace Autowriter.RazorPages.Identity
 
         public async Task<IdentityResult> UpdateAsync(AutowriterUser user, CancellationToken cancellationToken)
         {
+            if (ValidationErrors(user).Any())
+            {
+                return IdentityResult.Failed(ValidationErrors(user));
+            }
+
             var command = $"UPDATE {UserDbConnection.UsersTableName} " +
                 "SET concurrencyStamp = @concurrencyStamp, " +
                 "normalizedUserName = @normalizedUserName, " +
@@ -174,6 +186,73 @@ namespace Autowriter.RazorPages.Identity
         {
             user.UserName = userName;
             return Task.CompletedTask;
+        }
+
+        private static IdentityError[] ValidationErrors(AutowriterUser user)
+        {
+            var errors = new List<string>();
+
+            if (!IsValidEmail(user.Email))
+            {
+                errors.Add($"'{user.Email}' is not a valid email address.");
+            }
+
+            return errors
+                .Select(error => new IdentityError { Description = error })
+                .ToArray();
+        }
+
+        // From https://docs.microsoft.com/en-us/dotnet/standard/base-types/how-to-verify-that-strings-are-in-valid-email-format
+        private static bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return false;
+            }
+
+            try
+            {
+                // Normalize the domain
+                email = Regex.Replace(
+                    email,
+                    @"(@)(.+)$",
+                    DomainMapper,
+                    RegexOptions.None,
+                    TimeSpan.FromMilliseconds(200));
+
+                // Examines the domain part of the email and normalizes it.
+                static string DomainMapper(Match match)
+                {
+                    // Use IdnMapping class to convert Unicode domain names.
+                    var idn = new IdnMapping();
+
+                    // Pull out and process domain name (throws ArgumentException on invalid)
+                    string domainName = idn.GetAscii(match.Groups[2].Value);
+
+                    return match.Groups[1].Value + domainName;
+                }
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+
+            try
+            {
+                return Regex.IsMatch(
+                    email,
+                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                    RegexOptions.IgnoreCase,
+                    TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
         }
     }
 }
