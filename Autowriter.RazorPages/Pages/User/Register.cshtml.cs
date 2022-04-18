@@ -57,7 +57,7 @@ namespace Autowriter.RazorPages.Pages.User
             {
                 _logger.LogError("Failed to create user. Error(s): {errors}", string.Join(',', errors));
                 Errors = errors;
-                return StatusCode(StatusCodes.Status500InternalServerError);
+                return Page();
             }
             else
             {

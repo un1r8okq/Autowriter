@@ -41,3 +41,8 @@ header a:hover {
 main {
     padding: 1rem;
 }
+
+/* From clrs.cc */
+.red {
+    color: #FF4136;
+}
