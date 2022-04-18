@@ -112,10 +112,13 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests
             await PostXsrfProtectedForm("/User/Login", formContent);
         }
 
-        private async Task<HttpResponseMessage> PostXsrfProtectedForm(string url, Dictionary<string, string> body)
+        private async Task<HttpResponseMessage> PostXsrfProtectedForm(string url, Dictionary<string, string> formElements)
         {
             var xsrfToken = await GetXsrfToken(url);
-            body.Add("__RequestVerificationToken", xsrfToken);
+            var body = new Dictionary<string, string>(formElements)
+            {
+                { "__RequestVerificationToken", xsrfToken },
+            };
             var content = new FormUrlEncodedContent(body);
             var response = await _httpClient!.PostAsync(url, content);
 

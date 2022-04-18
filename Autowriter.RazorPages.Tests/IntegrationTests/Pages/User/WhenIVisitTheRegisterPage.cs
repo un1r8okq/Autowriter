@@ -57,5 +57,21 @@ namespace Autowriter.RazorPages.Tests.IntegrationTests.Pages.User
             await TheResponseBodyContains("The Email field is not a valid e-mail address.");
             await TheResponseBodyContains("The Password field is required.");
         }
+
+        [Fact]
+        public async Task AndTheUsernameAlreadyExists_TheResponseContainsErrorMessage()
+        {
+            var formBody = new Dictionary<string, string>
+            {
+                { "email", "test@example.com" },
+                { "password", "password" },
+            };
+            await WhenISubmitTheForm("/user/register", formBody);
+            await WhenISubmitTheForm("/user/register", formBody);
+
+            TheResponseStatusIs(HttpStatusCode.OK);
+            await TheResponseBodyContains("Error creating user:");
+            await TheResponseBodyContains("Username &#x27;test@example.com&#x27; is already taken.");
+        }
     }
 }
