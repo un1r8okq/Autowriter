@@ -1,0 +1,25 @@
+@using Autowriter.UI.Identity
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AutowriterUser> SignInManager
+@inject UserManager<AutowriterUser> UserManager
+
+<ul id="auth-links">
+@if (SignInManager.IsSignedIn(User))
+{
+    <li>Hello @User.Identity?.Name!</li>
+    <li>
+        <form asp-page="/User/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
+            <button type="submit">Logout</button>
+        </form>
+    </li>
+}
+else
+{
+    <li>
+        <a href="/User/Login">Login</a>
+    </li>
+    <li>
+        <a href="/User/Register">Register</a>
+    </li>
+}
+</ul>
