@@ -12,17 +12,17 @@ using Xunit;
 
 namespace Autowriter.UI.Tests.IntegrationTests
 {
-    public abstract class GivenAnHttpClient : IClassFixture<WebApplicationFactory<Startup>>
+    public class TestHttpClient : IClassFixture<WebApplicationFactory<Startup>>
     {
         private const string TestEmail = "test-user@example.com";
         private const string TestPassword = "100% secure passphrase - for tests!";
 
         private HttpResponseMessage? _httpResponseMessage;
         private string? _responseBody;
-        private readonly TestHttpClient? _httpClient;
+        private readonly HttpClient? _httpClient;
         private readonly WebApplicationFactory<Startup> _factory;
 
-        public GivenAnHttpClient(WebApplicationFactory<Startup> factory)
+        public TestHttpClient(WebApplicationFactory<Startup> factory)
         {
             _factory = factory;
             _httpClient = _factory
@@ -38,13 +38,13 @@ namespace Autowriter.UI.Tests.IntegrationTests
                 });
         }
 
-        public async Task GivenTheHttpClientIsAuthenticated()
+        public async Task IsAuthenticated()
         {
             await RegisterTestUser();
             await AuthenticateAsTestUser();
         }
 
-        public async Task WhenIVisitThePageAt(string url)
+        public async Task VisitsThePageAt(string url)
         {
             _httpResponseMessage = await _httpClient!.GetAsync(url);
         }
@@ -54,17 +54,17 @@ namespace Autowriter.UI.Tests.IntegrationTests
             _httpResponseMessage = await PostXsrfProtectedForm(url, formBody);
         }
 
-        public void TheResponseStatusIs(HttpStatusCode statusCode)
+        public void ResponseStatusIs(HttpStatusCode statusCode)
         {
             Assert.Equal(statusCode, _httpResponseMessage!.StatusCode);
         }
 
-        public async Task TheResponseBodyContains(string str)
+        public async Task ResponseBodyContains(string str)
         {
             Assert.Contains(str, await ResponseBody());
         }
 
-        public void TheLocationHeaderIs(string expectedValue)
+        public void LocationHeaderIs(string expectedValue)
         {
             Assert.Equal(expectedValue, _httpResponseMessage!.Headers.Location!.ToString());
         }
