@@ -82,7 +82,7 @@ namespace Autowriter.UI.Tests.IntegrationTests
         private static void RegisterUserDb(IServiceCollection services)
         {
             services.Remove(services.Single(s => s.ServiceType == typeof(UserDbConnection)));
-            services.AddScoped(_ => new UserDbConnection("Data Source=TestUserDb.db;Cache=Shared"));
+            services.AddScoped(_ => new UserDbConnection("Data Source=TestUserDb.sqlite"));
         }
 
         private async Task<string> ResponseBody()
