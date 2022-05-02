@@ -17,7 +17,10 @@ namespace Autowriter.Core.Tests.Architecture
             Architecture = new ArchLoader()
                 .LoadAssemblies(typeof(Autowriter.Core.ServiceCollectionExtensions).Assembly)
                 .Build();
-            CommandsOrQueries = Classes().That().ImplementInterface("IRequest").And().DoNotHaveName("Handler").As("CommandsOrQueries");
+            CommandsOrQueries = Classes().That()
+                .ImplementInterface("MediatR.IRequest", useRegularExpressions: true)
+                .And().DoNotHaveNameEndingWith("Handler")
+                .As("CommandsOrQueries");
         }
 
         [Fact]

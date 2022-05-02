@@ -18,7 +18,7 @@ namespace Autowriter.Core.Tests.Architecture
             Architecture = new ArchLoader()
                 .LoadAssemblies(typeof(Autowriter.Core.ServiceCollectionExtensions).Assembly)
                 .Build();
-            Handlers = Classes().That().ImplementInterface("RequestHandler").As("Handlers");
+            Handlers = Classes().That().AreAssignableTo("MediatR.RequestHandler", useRegularExpressions: true).As("Handlers");
             FeatureClasses = Classes().That().ResideInNamespace("Autowriter.Core.Features");
         }
 
@@ -34,7 +34,7 @@ namespace Autowriter.Core.Tests.Architecture
         [Fact]
         public void ClassesCalledHandlerShouldBeHandlers()
         {
-            var rule = Classes().That().HaveName("Handler")
+            var rule = Classes().That().HaveNameEndingWith("Handler")
                 .Should().Be(Handlers);
 
             rule.Check(Architecture);
