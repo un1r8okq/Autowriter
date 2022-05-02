@@ -46,8 +46,7 @@ namespace Autowriter.UI
         private void ConfigureIdentityServices(IServiceCollection services)
         {
             var dbConnectionString = Configuration.GetSection("IdentityDatabaseName").Value;
-            var userDbConnection = new UserDbConnection(dbConnectionString);
-            services.AddSingleton(userDbConnection);
+            services.AddScoped(_ => new UserDbConnection(dbConnectionString));
 
             services
                 .AddAuthentication(IdentityConstants.ApplicationScheme)

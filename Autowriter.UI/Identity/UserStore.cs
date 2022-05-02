@@ -8,10 +8,12 @@ namespace Autowriter.UI.Identity
     public class UserStore : IUserStore<AutowriterUser>, IUserPasswordStore<AutowriterUser>
     {
         private readonly UserDbConnection _conn;
+        private bool _disposed;
 
         public UserStore(UserDbConnection dbConnection)
         {
             _conn = dbConnection;
+            _conn.Open();
         }
 
         public async Task<IdentityResult> CreateAsync(AutowriterUser user, CancellationToken cancellationToken)
@@ -145,11 +147,6 @@ namespace Autowriter.UI.Identity
             throw new Exception($"{affectedRowCount} rows affected when updating user, expected {expected}");
         }
 
-        public void Dispose()
-        {
-            GC.SuppressFinalize(this);
-        }
-
         public async Task<AutowriterUser> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken)
         {
             var query = "SELECT * " +
@@ -186,6 +183,27 @@ namespace Autowriter.UI.Identity
         {
             user.UserName = userName;
             return Task.CompletedTask;
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _conn.Dispose();
+            }
+
+            _disposed = true;
         }
 
         private static IdentityError[] ValidationErrors(AutowriterUser user)

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -14,8 +16,8 @@ namespace Autowriter.UI.Tests.IntegrationTests
 {
     public abstract class GivenAnHttpClient : IClassFixture<WebApplicationFactory<Startup>>
     {
-        private const string TestEmail = "test-user@example.com";
-        private const string TestPassword = "100% secure passphrase - for tests!";
+        private readonly string _testEmail;
+        private readonly string _testPassword;
 
         private HttpResponseMessage? _httpResponseMessage;
         private string? _responseBody;
@@ -36,6 +38,8 @@ namespace Autowriter.UI.Tests.IntegrationTests
                 {
                     AllowAutoRedirect = false,
                 });
+            _testEmail = $"{Guid.NewGuid()}@example.com";
+            _testPassword = Guid.NewGuid().ToString();
         }
 
         public async Task GivenTheHttpClientIsAuthenticated()
@@ -71,15 +75,14 @@ namespace Autowriter.UI.Tests.IntegrationTests
 
         private static void RegisterCoreDb(IServiceCollection services)
         {
-            var connection = new CoreDbConnection("Data Source=:memory:");
-
-            services.AddSingleton(connection);
+            services.Remove(services.Single(s => s.ServiceType == typeof(CoreDbConnection)));
+            services.AddSingleton(_ => new CoreDbConnection("Data Source=:memory:"));
         }
 
         private static void RegisterUserDb(IServiceCollection services)
         {
-            var connection = new UserDbConnection("Data Source=:memory:");
-            services.AddSingleton(connection);
+            services.Remove(services.Single(s => s.ServiceType == typeof(UserDbConnection)));
+            services.AddScoped(_ => new UserDbConnection("Data Source=TestUserDb.db;Cache=Shared"));
         }
 
         private async Task<string> ResponseBody()
@@ -96,8 +99,8 @@ namespace Autowriter.UI.Tests.IntegrationTests
         {
             var formContent = new Dictionary<string, string>
                 {
-                    { "email", TestEmail },
-                    { "password", TestPassword },
+                    { "email", _testEmail },
+                    { "password", _testPassword },
                 };
             await PostXsrfProtectedForm("/User/Register", formContent);
         }
@@ -106,8 +109,8 @@ namespace Autowriter.UI.Tests.IntegrationTests
         {
             var formContent = new Dictionary<string, string>
                 {
-                    { "email", TestEmail },
-                    { "password", TestPassword },
+                    { "email", _testEmail },
+                    { "password", _testPassword },
                 };
             await PostXsrfProtectedForm("/User/Login", formContent);
         }

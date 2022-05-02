@@ -7,6 +7,7 @@ namespace Autowriter.UI.Identity
     public class UserDbConnection : IDbConnection
     {
         private readonly SqliteConnection _conn;
+        private bool _alreadyDisposed;
 
         public UserDbConnection(string connectionString)
         {
@@ -50,13 +51,29 @@ namespace Autowriter.UI.Identity
 
         public IDbCommand CreateCommand() => _conn.CreateCommand();
 
+        public void Open() => _conn.Open();
+
         public void Dispose()
         {
-            _conn.Dispose();
+            Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
 
-        public void Open() => _conn.Open();
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_alreadyDisposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                _conn.Close();
+                _conn.Dispose();
+            }
+
+            _alreadyDisposed = true;
+        }
 
         private void EnsureConnectionIsOpen()
         {

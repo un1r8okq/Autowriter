@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
@@ -34,7 +35,7 @@ namespace Autowriter.UI.Tests.IntegrationTests.Pages.User
         {
             var formBody = new Dictionary<string, string>
             {
-                { "email", "test@example.com" },
+                { "email", $"{Guid.NewGuid()}@example.com" },
                 { "password", "password" },
             };
             await WhenISubmitTheForm("/user/register", formBody);
