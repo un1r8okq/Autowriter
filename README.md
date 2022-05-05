@@ -36,3 +36,10 @@ This is the domain logic and storage layer for the application.
 
 ## Autowriter.Core.Tests
 These use xUnit to test the core domain and storage logic of the application.
+
+## Autowriter.Performance.Tests
+This contains performance tests for Autowriter written in [K6](https://k6.io/).
+
+1. [Install K6](https://k6.io/docs/getting-started/installation)
+2. From the repository root, start Autowriter like `dotnet run --project Autowriter.UI/Autowriter.UI.csproj`
+3. Run the tests like `k6 run Autowriter.Performance.Tests/index.js`
