@@ -6,7 +6,7 @@ namespace Autowriter.Core.Features.SourceMaterial
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IDeleteSourceMaterial, Repository>();
+            services.AddTransient<IDeleteSourceMaterial, Repository>();
             services.AddAutoMapper(typeof(Delete));
         }
     }

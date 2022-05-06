@@ -76,13 +76,13 @@ namespace Autowriter.UI.Tests.IntegrationTests
         private static void RegisterCoreDb(IServiceCollection services)
         {
             services.Remove(services.Single(s => s.ServiceType == typeof(CoreDbConnection)));
-            services.AddSingleton(_ => new CoreDbConnection("Data Source=:memory:"));
+            services.AddTransient(_ => new CoreDbConnection("Data Source=TestCoreDb.sqlite"));
         }
 
         private static void RegisterUserDb(IServiceCollection services)
         {
             services.Remove(services.Single(s => s.ServiceType == typeof(UserDbConnection)));
-            services.AddScoped(_ => new UserDbConnection("Data Source=TestUserDb.sqlite"));
+            services.AddTransient(_ => new UserDbConnection("Data Source=TestUserDb.sqlite"));
         }
 
         private async Task<string> ResponseBody()

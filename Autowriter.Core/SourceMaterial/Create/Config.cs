@@ -8,7 +8,7 @@ namespace Autowriter.Core.Features.SourceMaterial
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<ICreateSourceMaterial, Repository>();
+            services.AddTransient<ICreateSourceMaterial, Repository>();
             services.AddMediatR(typeof(Create));
             services.AddAutoMapper(typeof(Create));
         }

@@ -19,8 +19,7 @@ namespace Autowriter.Core
         private static void RegisterDbConnection(IServiceCollection services)
         {
             const string dbConnectionString = "Data Source=Autowriter.sqlite";
-            var coreDbConnection = new CoreDbConnection(dbConnectionString);
-            services.AddSingleton(coreDbConnection);
+            services.AddTransient(_ => new CoreDbConnection(dbConnectionString));
         }
     }
 }
