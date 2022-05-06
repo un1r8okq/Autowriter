@@ -73,6 +73,15 @@ namespace Autowriter.UI.Tests.IntegrationTests
             Assert.Equal(expectedValue, _httpResponseMessage!.Headers.Location!.ToString());
         }
 
+        public async Task<int> LatestUploadId()
+        {
+            var body = await ResponseBody();
+            var regex = new Regex("/upload/details\\?id=(?<id>\\d+)");
+            var lastIdStr = regex.Match(body).Groups.Values.Last().Value;
+
+            return int.Parse(lastIdStr);
+        }
+
         private static void RegisterCoreDb(IServiceCollection services)
         {
             services.Remove(services.Single(s => s.ServiceType == typeof(CoreDbConnection)));

@@ -36,7 +36,7 @@ namespace Autowriter.UI.Tests.IntegrationTests.Pages.Detail
             await GivenTheHttpClientIsAuthenticated();
             await WhenISubmitTheForm("/upload", _testFormContent);
 
-            await WhenIVisitThePageAt("/upload/details?id=1");
+            await WhenIVisitThePageAt($"/upload/details?id={await LatestUploadId()}");
 
             await TheResponseBodyContains($"Uploaded on {DateTime.Now:D} at {DateTime.Now:t}");
         }
