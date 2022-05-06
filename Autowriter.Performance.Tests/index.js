@@ -6,7 +6,7 @@ export const options = {
     duration: '1m', // Run for one minute
     thresholds: {
         http_req_failed: ['rate<0.001'],     // Fewer than 0.1% of requests should fail
-        http_req_duration: ['p(95)<100'],   // 99% of requests should be faster than 200ms
+        http_req_duration: ['p(95)<200'],   // 99% of requests should be faster than 200ms
     },
 };
 
@@ -20,13 +20,14 @@ export function setup() {
 
     post(`${baseUrl}/user/register`, creds);
 
-    return creds;
+    const loginResponse = post(`${baseUrl}/user/login`, creds);
+
+    const sessionCookie = loginResponse.cookies['.AspNetCore.Identity.Application'][0];
+    return { [sessionCookie.name]: sessionCookie.value };
 }
 
-export default function(creds) {
-    post(`${baseUrl}/user/login`, creds);
-
-    var res = post(`${baseUrl}/generate`, { wordcount: 1000 });
+export default function(cookies) {
+    var res = post(`${baseUrl}/generate`, { wordcount: 1000 }, cookies);
     check(res, { 'status was 200': (r) => r.status == 200 });
     check(res, { 'contains generated text': (r) => /<h2>Generated writing<\/h2>/.test(r.body) });
 }
@@ -44,12 +45,12 @@ function nanoId() {
     return id
 }
 
-function post(url, body) {
-    const res = http.get(url);
+function post(url, body, cookies = null) {
+    const res = http.get(url, { cookies });
     const tokenExpr = /__RequestVerificationToken" type="hidden" value="(.+)"/;
     const token = res.body.match(tokenExpr)[1];
 
-    var postBody = { __RequestVerificationToken: token };
+    const postBody = { __RequestVerificationToken: token };
     Object.assign(postBody, body);
-    return http.post(url, postBody);
+    return http.post(url, postBody, { cookies });
 }
