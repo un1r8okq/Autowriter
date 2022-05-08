@@ -14,16 +14,16 @@ const baseUrl = 'http://localhost:5067';
 
 export function setup() {
     const creds = {
-        email: `${nanoId()}@example.com`,
-        password: nanoId(),
+        Email: `${nanoId()}@example.com`,
+        Password: nanoId(),
     };
 
     post(`${baseUrl}/user/register`, creds);
+    post(`${baseUrl}/user/login`, creds);
 
-    const loginResponse = post(`${baseUrl}/user/login`, creds);
-
-    const sessionCookie = loginResponse.cookies['.AspNetCore.Identity.Application'][0];
-    return { [sessionCookie.name]: sessionCookie.value };
+    const cookies = http.cookieJar().cookiesForURL(baseUrl);
+    const sessionCookie = cookies['.AspNetCore.Identity.Application'][0];
+    return { '.AspNetCore.Identity.Application': sessionCookie };
 }
 
 export default function(cookies) {
