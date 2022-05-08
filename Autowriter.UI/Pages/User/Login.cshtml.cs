@@ -1,6 +1,8 @@
+using System.ComponentModel.DataAnnotations;
 using Autowriter.UI.Identity;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Autowriter.UI.Pages.User
@@ -17,30 +19,35 @@ namespace Autowriter.UI.Pages.User
         {
             _signInManager = signInManager;
             _userManager = userManager;
-            Data = new ViewModel();
+
+            LoginFailed = false;
         }
 
-        public ViewModel Data { get; set; }
+        public bool LoginFailed { get; set; }
 
-        public void OnGet()
+        [Required]
+        [EmailAddress]
+        [BindProperty]
+        public string? Email { get; set; }
+
+        [Required]
+        [BindProperty]
+        [DataType(DataType.Password)]
+        public string? Password { get; set; }
+
+        public void OnGet(string? email)
         {
-            Data = new ViewModel
-            {
-                LoginFailed = false,
-            };
+            Email = email;
         }
 
-        public async Task OnPostAsync(string email, string password)
+        public async Task<IActionResult> OnPostAsync(string email, string password)
         {
             var user = await _userManager.FindByNameAsync(email);
 
             if (user is null)
             {
-                Data = new ViewModel
-                {
-                    LoginFailed = true,
-                };
-                return;
+                LoginFailed = true;
+                return Page();
             }
 
             var passwordCorrect = await _userManager.CheckPasswordAsync(user, password);
@@ -48,23 +55,11 @@ namespace Autowriter.UI.Pages.User
             if (passwordCorrect)
             {
                 await _signInManager.SignInAsync(user, isPersistent: true);
-                Data = new ViewModel
-                {
-                    LoginFailed = false,
-                };
-                Redirect("/");
-                return;
+                return Redirect("/");
             }
 
-            Data = new ViewModel
-            {
-                LoginFailed = true,
-            };
-        }
-
-        public class ViewModel
-        {
-            public bool LoginFailed { get; set; }
+            LoginFailed = true;
+            return Page();
         }
     }
 }

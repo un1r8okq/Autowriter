@@ -33,15 +33,16 @@ namespace Autowriter.UI.Tests.IntegrationTests.Pages.User
         [Fact]
         public async Task AndTheFormIsValid_AndISubmitTheForm_IAmRedirectedToLogin()
         {
+            var email = $"{Guid.NewGuid()}@example.com";
             var formBody = new Dictionary<string, string>
             {
-                { "email", $"{Guid.NewGuid()}@example.com" },
+                { "email", email },
                 { "password", "password" },
             };
             await WhenISubmitTheForm("/user/register", formBody);
 
             TheResponseStatusIs(HttpStatusCode.Redirect);
-            TheLocationHeaderIs("/user/login");
+            TheLocationHeaderIs($"/user/login?email={email}");
         }
 
         [Fact]

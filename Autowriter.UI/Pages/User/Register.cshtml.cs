@@ -61,7 +61,7 @@ namespace Autowriter.UI.Pages.User
             }
             else
             {
-                return Redirect("/user/login");
+                return Redirect($"/user/login?email={Email}");
             }
         }
 

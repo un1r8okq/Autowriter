@@ -46,3 +46,12 @@ main {
 .red {
     color: #FF4136;
 }
+
+form > div {
+    margin: 1rem 0;
+}
+
+label {
+    display: block;
+    margin: 0.1rem 0;
+}
