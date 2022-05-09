@@ -1,3 +1,4 @@
+using Autowriter.Data;
 using MediatR;
 
 namespace Autowriter.Core.Features.WritingGeneration
@@ -7,10 +8,10 @@ namespace Autowriter.Core.Features.WritingGeneration
         public class Handler : RequestHandler<Command, Response>
         {
             private readonly Random _random;
-            private readonly IReadSourceMaterial _sourceReader;
+            private readonly IReadSourceMaterials _sourceReader;
             private readonly Dictionary<string, Dictionary<string, int>> _lexicon;
 
-            public Handler(IReadSourceMaterial sourceReader)
+            public Handler(IReadSourceMaterials sourceReader)
             {
                 _sourceReader = sourceReader;
                 _random = new Random();
@@ -29,7 +30,7 @@ namespace Autowriter.Core.Features.WritingGeneration
                     };
                 }
 
-                BuildLexicon(sources);
+                BuildLexicon(sources.Select(source => source.Content));
                 var generatedWriting = GenerateWriting(command.WordCount);
 
                 return new Response

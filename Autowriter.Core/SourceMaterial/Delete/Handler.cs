@@ -1,3 +1,4 @@
+using Autowriter.Data;
 using MediatR;
 
 namespace Autowriter.Core.Features.SourceMaterial
@@ -14,7 +15,7 @@ namespace Autowriter.Core.Features.SourceMaterial
             }
 
             protected override void Handle(Command command) =>
-                _sourceDeletor.DeleteSource(command.Id);
+                _sourceDeletor.DeleteSourceAsync(command.Id);
         }
     }
 }

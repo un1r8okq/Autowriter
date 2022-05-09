@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Autowriter.Core;
 using Autowriter.UI.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
@@ -31,7 +30,6 @@ namespace Autowriter.UI.Tests.IntegrationTests
                 .WithWebHostBuilder(builder =>
                     builder.ConfigureTestServices(services =>
                     {
-                        RegisterCoreDb(services);
                         RegisterUserDb(services);
                     }))
                 .CreateClient(new WebApplicationFactoryClientOptions
@@ -80,12 +78,6 @@ namespace Autowriter.UI.Tests.IntegrationTests
             var lastIdStr = regex.Match(body).Groups.Values.Last().Value;
 
             return int.Parse(lastIdStr);
-        }
-
-        private static void RegisterCoreDb(IServiceCollection services)
-        {
-            services.Remove(services.Single(s => s.ServiceType == typeof(CoreDbConnection)));
-            services.AddTransient(_ => new CoreDbConnection("Data Source=TestCoreDb.sqlite"));
         }
 
         private static void RegisterUserDb(IServiceCollection services)

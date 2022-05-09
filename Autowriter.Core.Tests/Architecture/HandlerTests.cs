@@ -18,7 +18,10 @@ namespace Autowriter.Core.Tests.Architecture
             Architecture = new ArchLoader()
                 .LoadAssemblies(typeof(Autowriter.Core.ServiceCollectionExtensions).Assembly)
                 .Build();
-            Handlers = Classes().That().AreAssignableTo("MediatR.RequestHandler", useRegularExpressions: true).As("Handlers");
+            Handlers = Classes().That()
+                .AreAssignableTo("MediatR.RequestHandler", useRegularExpressions: true).Or()
+                .ImplementInterface("MediatR.IRequestHandler", useRegularExpressions: true)
+                .As("Handlers");
             FeatureClasses = Classes().That().ResideInNamespace("Autowriter.Core.Features");
         }
 

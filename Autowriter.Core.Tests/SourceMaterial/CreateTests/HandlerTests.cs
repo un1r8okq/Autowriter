@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Autowriter.Core.Features.SourceMaterial;
+using Autowriter.Data;
 using MediatR;
 using Xunit;
 
@@ -42,9 +43,12 @@ namespace Autowriter.Core.Tests.SourceMaterial.CreateTests
             Assert.False(result.TextWasEmpty);
         }
 
-        private class CreateSourceStub : Create.ICreateSourceMaterial
+        private class CreateSourceStub : ICreateSourceMaterials
         {
-            public Create.Repository.SourceMaterial CreateSource(DateTime createdDateTime, string content) => new ();
+            public Task<Data.Models.SourceMaterial> CreateSourceAsync(DateTime created, string content, CancellationToken cancellationToken)
+            {
+                return Task.FromResult<Data.Models.SourceMaterial>(new ());
+            }
         }
     }
 }

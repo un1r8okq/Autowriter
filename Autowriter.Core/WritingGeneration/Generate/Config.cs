@@ -7,7 +7,6 @@ namespace Autowriter.Core.Features.WritingGeneration
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IReadSourceMaterial, Repository>();
             services.AddMediatR(typeof(Generate));
         }
     }

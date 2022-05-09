@@ -7,7 +7,6 @@ namespace Autowriter.Core.Features.SourceMaterial
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ICountSourceMaterials, Repository>();
             services.AddMediatR(typeof(Count));
         }
     }

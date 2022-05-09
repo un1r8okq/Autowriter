@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autowriter.Core.Features.WritingGeneration;
+using Autowriter.Data;
 using MediatR;
 using Xunit;
 
@@ -14,8 +15,8 @@ namespace Autowriter.Core.Tests.WritingGeneration
 
         public GenerateTests()
         {
-            var readSourceStub = new ReadSourceStub();
-            _handler = new Generate.Handler(readSourceStub);
+            var readSourcesStub = new ReadSourcesStub();
+            _handler = new Generate.Handler(readSourcesStub);
         }
 
         [Theory]
@@ -45,9 +46,9 @@ namespace Autowriter.Core.Tests.WritingGeneration
             Assert.False(response.WordCountOutOfRange);
         }
 
-        private class ReadSourceStub : Generate.IReadSourceMaterial
+        private class ReadSourcesStub : IReadSourceMaterials
         {
-            public IEnumerable<string> GetSources() => Array.Empty<string>();
+            public IReadOnlyList<Data.Models.SourceMaterial> GetSources() => Array.Empty<Data.Models.SourceMaterial>();
         }
     }
 }

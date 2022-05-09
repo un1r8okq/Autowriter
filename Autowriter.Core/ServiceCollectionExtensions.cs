@@ -1,3 +1,4 @@
+using Autowriter.Data;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Autowriter.Core
@@ -6,7 +7,7 @@ namespace Autowriter.Core
     {
         public static void RegisterAutowriterCoreServices(this IServiceCollection services)
         {
-            RegisterDbConnection(services);
+            services.RegisterAutowriterDataServices();
 
             Features.SourceMaterial.Count.ConfigureServices(services);
             Features.SourceMaterial.Create.ConfigureServices(services);
@@ -14,12 +15,6 @@ namespace Autowriter.Core
             Features.SourceMaterial.ReadSingle.ConfigureServices(services);
             Features.SourceMaterial.ReadMany.ConfigureServices(services);
             Features.WritingGeneration.Generate.ConfigureServices(services);
-        }
-
-        private static void RegisterDbConnection(IServiceCollection services)
-        {
-            const string dbConnectionString = "Data Source=Autowriter.sqlite";
-            services.AddTransient(_ => new CoreDbConnection(dbConnectionString));
         }
     }
 }

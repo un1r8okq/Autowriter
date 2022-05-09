@@ -7,7 +7,6 @@ namespace Autowriter.Core.Features.SourceMaterial
     {
         public static void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IReadSourceMaterials, Repository>();
             services.AddAutoMapper(typeof(ReadMany));
         }
 
@@ -15,7 +14,7 @@ namespace Autowriter.Core.Features.SourceMaterial
         {
             public AutoMapper()
             {
-                CreateMap<Repository.SourceMaterial, Response>();
+                CreateMap<Autowriter.Data.Models.SourceMaterial, Response>();
             }
         }
     }

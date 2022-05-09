@@ -1,4 +1,5 @@
 using AutoMapper;
+using Autowriter.Data;
 using MediatR;
 
 namespace Autowriter.Core.Features.SourceMaterial

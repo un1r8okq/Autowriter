@@ -1,3 +1,4 @@
+using Autowriter.Data;
 using MediatR;
 
 namespace Autowriter.Core.Features.SourceMaterial
@@ -14,7 +15,7 @@ namespace Autowriter.Core.Features.SourceMaterial
             }
 
             protected override int Handle(Query query) =>
-                _sourceCounter.CountSources();
+                _sourceCounter.SourceMaterialCount();
         }
     }
 }

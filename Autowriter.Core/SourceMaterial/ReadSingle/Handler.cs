@@ -1,4 +1,5 @@
 using AutoMapper;
+using Autowriter.Data;
 using MediatR;
 
 namespace Autowriter.Core.Features.SourceMaterial
@@ -17,7 +18,7 @@ namespace Autowriter.Core.Features.SourceMaterial
             }
 
             protected override Response Handle(Query request) =>
-                _mapper.Map<Response>(_sourceReader.GetSource(request.Id));
+                _mapper.Map<Response>(_sourceReader.GetSourceMaterial(request.Id));
         }
     }
 }

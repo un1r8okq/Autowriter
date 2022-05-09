@@ -1,4 +1,5 @@
 using Autowriter.Core;
+using Autowriter.Data;
 using Autowriter.UI.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -34,6 +35,9 @@ namespace Autowriter.UI
             {
                 app.UseExceptionHandler("/Error");
             }
+
+            using var scope = app.ApplicationServices.CreateScope();
+            scope.ServiceProvider.EnsureDbCreated();
 
             app.UseStaticFiles();
             app.UseRouting();
