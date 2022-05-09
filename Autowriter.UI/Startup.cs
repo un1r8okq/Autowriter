@@ -2,6 +2,7 @@ using Autowriter.Core;
 using Autowriter.Data;
 using Autowriter.UI.Identity;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Autowriter.UI
 {
@@ -37,6 +38,8 @@ namespace Autowriter.UI
             }
 
             using var scope = app.ApplicationServices.CreateScope();
+            scope.ServiceProvider.GetRequiredService<AutowriterIdentityDbContext>().Database.EnsureCreated();
+
             scope.ServiceProvider.EnsureDbCreated();
 
             app.UseStaticFiles();
@@ -50,30 +53,10 @@ namespace Autowriter.UI
         private void ConfigureIdentityServices(IServiceCollection services)
         {
             var dbConnectionString = Configuration.GetSection("IdentityDatabaseName").Value;
-            services.AddScoped(_ => new UserDbConnection(dbConnectionString));
+            services.AddDbContext<AutowriterIdentityDbContext>(options => options.UseSqlite(dbConnectionString));
 
-            services
-                .AddAuthentication(IdentityConstants.ApplicationScheme)
-                .AddCookie(IdentityConstants.ApplicationScheme, options =>
-                {
-                    options.LoginPath = "/User/Login";
-                })
-                .AddCookie(IdentityConstants.ExternalScheme)
-                .AddCookie(IdentityConstants.TwoFactorUserIdScheme);
-
-            services.AddTransient<IUserStore<AutowriterUser>, UserStore>();
-            services.AddTransient<IUserPasswordStore<AutowriterUser>, UserStore>();
-            services
-                .AddIdentityCore<AutowriterUser>(options =>
-                {
-                    options.Password.RequiredLength = 1;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequiredUniqueChars = 1;
-                    options.Password.RequireDigit = false;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireLowercase = false;
-                })
-                .AddSignInManager();
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<AutowriterIdentityDbContext>();
         }
     }
 }
