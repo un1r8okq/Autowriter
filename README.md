@@ -15,13 +15,37 @@ This is a .NET application that I wrote after watching [Jimmy Bogard's talk on v
 * Register with an email and password
 * Authenticate with email and password
 
+# Architecture
+
+```
+Autowriter.UI    __________   _______  
+                | Register | | Login | 
+                |__________| |_______|
+                 ________________________   ___________                    __________
+                | Upload Source Material | | View S.M. |                  | Generate |
+                |________________________| |___________|                  |__________|
+                       |_____________            |___________                   |_____________
+Autowriter.Core        |             |           |           |                  |             |
+                       V             V           V           V                  V             V
+                 _____________   __________   __________   _____________   ____________   __________  
+                | Create S.M. | | Get S.Ms | | Get S.M. | | Delete S.M. | | Count S.M. | | Generate |
+                |_____________| |__________| |__________| |_____________| |____________| |__________|
+                       |             |          |            |                |                |
+Autowriter.Data        |             |__________|___________ | ______________ | _______________|
+                       V             V                       V                V
+                  ___________     ________               ___________      __________
+                 | ICreateSM |   | IGetSM |             | IDeleteSM |    | ICountSM |
+                 |___________|   |________|             |___________|    |__________|
+
+```
+
 # Repository Structure
 
 ## Autowriter.UI
 This is an [ASP.NET Core 6 Razor Pages application](https://docs.microsoft.com/en-us/aspnet/core/razor-pages/?view=aspnetcore-6.0&tabs=visual-studio) that acts as a basic UI over my application. It handles authentication of users and presentation of the functionality.
 
 ## Autowriter.UI.Tests
-This is a collection of tests for Autowriter.UI. It is made up of
+This is a collection of tests for Autowriter.UI. It is made up of:
 
 ### UnitTests
 These use [xUnit](https://xunit.net/) to validate the [AutoMapper](https://automapper.org/) configuration. There isn't any domain logic in this project to test, only presentation code (which is very brittle).
@@ -32,10 +56,13 @@ These use [an in memory test server](https://docs.microsoft.com/en-us/aspnet/cor
 * Testing [Routing](https://docs.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-6.0)
 
 ## Autowriter.Core
-This is the domain logic and storage layer for the application.
+This is the domain logic layer for the application.
 
 ## Autowriter.Core.Tests
 These use xUnit to test the core domain and storage logic of the application.
+
+## Autowriter.Data
+This layer provides interfaces and implementation for data access.
 
 ## Autowriter.Performance.Tests
 This contains performance tests for Autowriter written in [K6](https://k6.io/).
