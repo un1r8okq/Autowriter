@@ -1,6 +1,6 @@
 using Autowriter.Core;
 using Autowriter.Data;
-using Autowriter.UI.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Autowriter.UI
@@ -22,7 +22,7 @@ namespace Autowriter.UI
                     options.UseSqlite(
                         Configuration.GetConnectionString("IdentityContextConnection")));
 
-            services.AddDefaultIdentity<AutowriterUIUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<IdentityContext>();
 
             services.AddAutoMapper(typeof(Program));
