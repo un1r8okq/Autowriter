@@ -6,3 +6,4 @@ obj
 **/*ncrunch*
 **/*.sqlite
 **/*.exe
+**/*.db

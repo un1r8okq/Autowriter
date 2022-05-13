@@ -1,7 +1,6 @@
 using Autowriter.Core;
 using Autowriter.Data;
-using Autowriter.UI.Identity;
-using Microsoft.AspNetCore.Identity;
+using Autowriter.UI.Areas.Identity.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Autowriter.UI
@@ -19,9 +18,14 @@ namespace Autowriter.UI
         {
             services.RegisterAutowriterCoreServices();
 
-            services.AddAutoMapper(typeof(Program));
+            services.AddDbContext<IdentityContext>(options =>
+                    options.UseSqlite(
+                        Configuration.GetConnectionString("IdentityContextConnection")));
 
-            ConfigureIdentityServices(services);
+            services.AddDefaultIdentity<AutowriterUIUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<IdentityContext>();
+
+            services.AddAutoMapper(typeof(Program));
 
             services.AddRazorPages(options =>
             {
@@ -38,8 +42,6 @@ namespace Autowriter.UI
             }
 
             using var scope = app.ApplicationServices.CreateScope();
-            scope.ServiceProvider.GetRequiredService<AutowriterIdentityDbContext>().Database.EnsureCreated();
-
             scope.ServiceProvider.EnsureDbCreated();
 
             app.UseStaticFiles();
@@ -48,15 +50,6 @@ namespace Autowriter.UI
             app.UseAuthorization();
             app.UseEndpoints(endpoints => endpoints.MapRazorPages());
             app.UseStatusCodePages();
-        }
-
-        private void ConfigureIdentityServices(IServiceCollection services)
-        {
-            var dbConnectionString = Configuration.GetSection("IdentityDatabaseName").Value;
-            services.AddDbContext<AutowriterIdentityDbContext>(options => options.UseSqlite(dbConnectionString));
-
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<AutowriterIdentityDbContext>();
         }
     }
 }
